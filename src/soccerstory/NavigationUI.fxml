@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.NavigationUICntl">
+   <children>
+      <Text fx:id="tester" layoutX="327.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="navigationUI" />
+      <Text layoutX="178.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your team name is:" />
+   </children>
+</AnchorPane>
