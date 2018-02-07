@@ -12,6 +12,8 @@ package soccerstory;
 public class Team {
     
     private String teamName;
+    private int points;
+    private int gamesPlayed;
     private String ownerName;
     private String coach;
 
@@ -20,52 +22,80 @@ public class Team {
         this.teamName = newTeamName;
         this.ownerName = newOwnerName;
         this.coach = newCoach;
+        this.points = 0;
+        this.gamesPlayed = 0;
     }
+
     /**
      * @return the teamName
      */
-    private String getTeamName() {
+    public String getTeamName() {
         return teamName;
     }
 
     /**
      * @param teamName the teamName to set
      */
-    private void setTeamName(String teamName) {
+    public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    /**
+     * @return the points
+     */
+    public int getPoints() {
+        return points;
+    }
+
+    /**
+     * @param points the points to set
+     */
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    /**
+     * @return the gamesPlayed
+     */
+    public int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    /**
+     * @param gamesPlayed the gamesPlayed to set
+     */
+    public void setGamesPlayed(int gamesPlayed) {
+        this.gamesPlayed = gamesPlayed;
     }
 
     /**
      * @return the ownerName
      */
-    private String getOwnerName() {
+    public String getOwnerName() {
         return ownerName;
     }
 
     /**
      * @param ownerName the ownerName to set
      */
-    private void setOwnerName(String ownerName) {
+    public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
 
     /**
      * @return the coach
      */
-    private String getCoach() {
+    public String getCoach() {
         return coach;
     }
 
     /**
      * @param coach the coach to set
      */
-    private void setCoach(String coach) {
+    public void setCoach(String coach) {
         this.coach = coach;
     }
-    
 
-
-    
     
     
 }

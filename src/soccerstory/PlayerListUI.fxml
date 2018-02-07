@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.PlayerListUIController">
+   <children>
+      <TableView fx:id="starterTable" layoutX="31.0" layoutY="50.0" prefHeight="273.0" prefWidth="262.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="191.20001602172852" text="Player Name" />
+          <TableColumn fx:id="positionColumn" prefWidth="71.19999694824219" text="Position" />
+        </columns>
+      </TableView>
+      <TableView fx:id="benchTable" layoutX="426.0" layoutY="50.0" prefHeight="273.0" prefWidth="262.0">
+         <columns>
+            <TableColumn fx:id="nameBenchColumn" prefWidth="191.20001602172852" text="Player Name" />
+            <TableColumn fx:id="positionBenchColumn" prefWidth="71.19999694824219" text="Position" />
+         </columns>
+      </TableView>
+      <Button layoutX="313.0" layoutY="77.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="Move to Play" />
+      <Button layoutX="311.0" layoutY="146.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Move to Bench" />
+      <Button layoutX="331.0" layoutY="388.0" mnemonicParsing="false" onAction="#goHome" text="Go home" />
+      <Text fx:id="actionTarget" layoutX="119.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+   </children>
+</AnchorPane>

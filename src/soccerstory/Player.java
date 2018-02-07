@@ -5,6 +5,11 @@
  */
 package soccerstory;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author mockl
@@ -14,7 +19,7 @@ public class Player {
     private String name;
     private String teamPlayFor;
     private String position;
-    private int jerseyNumber;
+    private Integer jerseyNumber;
 
     public Player(String newName, String newTeam, String newPosition, int jerseyNumber)
     {
@@ -23,66 +28,62 @@ public class Player {
         this.position = newPosition;
         this.jerseyNumber = jerseyNumber;
     }
+
     /**
      * @return the name
      */
-    private String getName() {
+    public String getName() {
         return name;
     }
 
     /**
      * @param name the name to set
      */
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     /**
      * @return the teamPlayFor
      */
-    private String getTeamPlayFor() {
+    public String getTeamPlayFor() {
         return teamPlayFor;
     }
 
     /**
      * @param teamPlayFor the teamPlayFor to set
      */
-    private void setTeamPlayFor(String teamPlayFor) {
+    public void setTeamPlayFor(String teamPlayFor) {
         this.teamPlayFor = teamPlayFor;
     }
 
     /**
      * @return the position
      */
-    private String getPosition() {
+    public String getPosition() {
         return position;
     }
 
     /**
      * @param position the position to set
      */
-    private void setPosition(String position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 
     /**
      * @return the jerseyNumber
      */
-    private int getJerseyNumber() {
+    public Integer getJerseyNumber() {
         return jerseyNumber;
     }
 
     /**
      * @param jerseyNumber the jerseyNumber to set
      */
-    private void setJerseyNumber(int jerseyNumber) {
+    public void setJerseyNumber(Integer jerseyNumber) {
         this.jerseyNumber = jerseyNumber;
     }
 
 
-    
-    
-    
-    
-    
 }

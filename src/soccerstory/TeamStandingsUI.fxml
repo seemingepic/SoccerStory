@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.TeamStandingsUIController">
+   <children>
+      <TableView fx:id="teamTable" layoutX="129.0" layoutY="46.0" prefHeight="271.0" prefWidth="318.0">
+        <columns>
+          <TableColumn fx:id="teamColumn" prefWidth="201.60003662109375" text="TeamName" />
+          <TableColumn fx:id="gamesPlayedColumn" minWidth="5.5999755859375" prefWidth="44.79998779296875" text="GP" />
+            <TableColumn fx:id="pointsColumn" prefWidth="72.00006103515625" text="Points" />
+        </columns>
+      </TableView>
+      <Button layoutX="262.0" layoutY="342.0" mnemonicParsing="false" onAction="#goHome" text="Go home" />
+      <Text fx:id="actionTarget" layoutX="14.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+   </children>
+</AnchorPane>

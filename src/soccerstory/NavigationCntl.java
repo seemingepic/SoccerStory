@@ -59,4 +59,35 @@ public class NavigationCntl {
         }
     }
     
+    public void setUpPlayerScene()
+    {
+        Parent root;
+        Scene scene;
+        try{
+            root = FXMLLoader.load(getClass().getResource("PlayerListUI.fxml"));
+            scene = new Scene(root);
+            stage.setTitle("Players");
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        } 
+    }
+
+    public void setUpTeamScene()
+    {
+        Parent root;
+        Scene scene;
+        try{
+            root = FXMLLoader.load(getClass().getResource("TeamStandingsUI.fxml"));
+            scene = new Scene(root);
+            stage.setTitle("Team");
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        } 
+    }
+ 
+    
 }

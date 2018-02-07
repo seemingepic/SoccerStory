@@ -6,6 +6,9 @@
 package soccerstory;
 
 import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -13,7 +16,7 @@ import java.util.ArrayList;
  */
 public class PlayerList {
     
-    private ArrayList<Player> thePlayerList;
+    private ObservableList<Player> thePlayerList;
     
     public PlayerList()
     {
@@ -24,28 +27,36 @@ public class PlayerList {
      * create test players for testing purposes
      * @return 
      */
-    private ArrayList<Player> testPlayers()
+    public ObservableList<Player> testPlayers()
     {
-        ArrayList<Player> testPlayers = new ArrayList();
-        for (int i = 0; i < 10; i++) {
-            Player newPlayer = new Player(i + "name",  "team" + i, i + "coach", i);
+        ObservableList<Player> testPlayers = FXCollections.observableArrayList();
+        for(int i = 0; i < 10; i ++)
+        {
+            Player newPlayer = new Player( "name",   "team",  "position", 5);
             testPlayers.add(newPlayer);
         }
-        return testPlayers;
-        
+        return testPlayers;   
+    }
+    
+    public ObservableList<Player> getUserData() 
+    {
+        ObservableList<Player> theNewListOfPlayers;
+        List<Player> playerList = (List<Player>) getThePlayerList();
+        theNewListOfPlayers= FXCollections.observableList(playerList);
+        return theNewListOfPlayers;
     }
 
     /**
      * @return the thePlayerList
      */
-    private ArrayList<Player> getThePlayerList() {
+    public ObservableList<Player> getThePlayerList() {
         return thePlayerList;
     }
 
     /**
      * @param thePlayerList the thePlayerList to set
      */
-    private void setThePlayerList(ArrayList<Player> thePlayerList) {
+    public void setThePlayerList(ObservableList<Player> thePlayerList) {
         this.thePlayerList = thePlayerList;
     }
 

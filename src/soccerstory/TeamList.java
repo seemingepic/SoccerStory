@@ -6,6 +6,9 @@
 package soccerstory;
 
 import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -32,8 +35,15 @@ public class TeamList {
             Team newTeam = new Team(i + "name", i + "owner", i + "coach");
             testTeams.add(newTeam);
         }
-        return testTeams;
-        
+        return testTeams;    
+    }
+
+    public ObservableList<Team> getTeamData() 
+    {
+        ObservableList<Team> theNewListOfTeams;
+        List<Team> teamList = (List<Team>) getTheListOfTeams();
+        theNewListOfTeams= FXCollections.observableList(teamList);
+        return theNewListOfTeams;
     }
 
     /**
