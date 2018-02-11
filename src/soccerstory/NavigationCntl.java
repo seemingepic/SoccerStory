@@ -88,6 +88,21 @@ public class NavigationCntl {
             e.printStackTrace();
         } 
     }
+    
+    public void setUpMatchScene()
+    {
+        Parent root;
+        Scene scene;
+        try{
+            root = FXMLLoader.load(getClass().getResource("MatchUI.fxml"));
+            scene = new Scene(root);
+            stage.setTitle("Team");
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        } 
+    }
  
     
 }

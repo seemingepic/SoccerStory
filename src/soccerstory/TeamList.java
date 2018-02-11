@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 public class TeamList {
     
     private ArrayList<Team> theListOfTeams;
+    private String currentUserTeam;
     
     
     public TeamList()
@@ -49,7 +50,7 @@ public class TeamList {
     /**
      * @return the theListOfTeams
      */
-    private ArrayList<Team> getTheListOfTeams() {
+    public ArrayList<Team> getTheListOfTeams() {
         return theListOfTeams;
     }
 
@@ -58,6 +59,20 @@ public class TeamList {
      */
     private void setTheListOfTeams(ArrayList<Team> theListOfTeams) {
         this.theListOfTeams = theListOfTeams;
+    }
+
+    /**
+     * @return the currentUserTeam
+     */
+    public String getCurrentUserTeam() {
+        return currentUserTeam;
+    }
+
+    /**
+     * @param currentUserTeam the currentUserTeam to set
+     */
+    public void setCurrentUserTeam(String currentUserTeam) {
+        this.currentUserTeam = currentUserTeam;
     }
 
     

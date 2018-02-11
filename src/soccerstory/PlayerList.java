@@ -30,12 +30,21 @@ public class PlayerList {
     public ObservableList<Player> testPlayers()
     {
         ObservableList<Player> testPlayers = FXCollections.observableArrayList();
-        for(int i = 0; i < 10; i ++)
-        {
-            Player newPlayer = new Player( "name",   "team",  "position", 5);
-            testPlayers.add(newPlayer);
-        }
-        return testPlayers;   
+
+        Player newPlayer = new Player( "name",   "fff",  "A", 5);
+        testPlayers.add(newPlayer);
+        Player newPlayer1 = new Player ("name", "fff", "M", 6);
+        Player newPlayer2 = new Player("name", "fff", "D", 7);
+        Player newPlayer3 = new Player("name", "fff", "G", 8);
+        Player newPlayer4 = new Player("name", "1name", "A", 9);
+        testPlayers.add(newPlayer1);
+        testPlayers.add(newPlayer2);
+        testPlayers.add(newPlayer3);
+        testPlayers.add(newPlayer4);
+        
+        return testPlayers;
+        
+
     }
     
     public ObservableList<Player> getUserData() 
@@ -44,6 +53,20 @@ public class PlayerList {
         List<Player> playerList = (List<Player>) getThePlayerList();
         theNewListOfPlayers= FXCollections.observableList(playerList);
         return theNewListOfPlayers;
+    }
+    
+    public ArrayList<Player> getPlayersFromTeam(String teamName)
+    {
+        ArrayList<Player> theTeamsPlayers = new ArrayList<>();
+        for (int i = 0; i < getThePlayerList().size(); i ++)
+        {
+            if(getThePlayerList().get(i).getTeamPlayFor().equals(teamName))
+            {
+                theTeamsPlayers.add(getThePlayerList().get(i));
+                
+            }
+        }
+        return theTeamsPlayers;
     }
 
     /**
@@ -59,6 +82,7 @@ public class PlayerList {
     public void setThePlayerList(ObservableList<Player> thePlayerList) {
         this.thePlayerList = thePlayerList;
     }
+    
 
 
     

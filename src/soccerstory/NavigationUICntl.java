@@ -5,11 +5,14 @@
  */
 package soccerstory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -27,14 +30,17 @@ public class NavigationUICntl implements Initializable {
     private Button playersButton;
     @FXML
     private Text actionTarget;
+    private GameLoaderController GameLoaderController;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-               ListController.getInstance();
-    }    
+        ListController.getInstance();
+        getTeamName();
+    }
+
 
     @FXML
     private void viewPlayers(ActionEvent event) {
@@ -51,6 +57,19 @@ public class NavigationUICntl implements Initializable {
         Stage theStage = (Stage) actionTarget.getScene().getWindow();
         theStage.hide();
         NavigationCntl.getNavigationCntl(theStage).setUpTeamScene();
+    }
+    
+    private void getTeamName()
+    {
+        tester.setText(ListController.getInstance().getTheTeamList().getCurrentUserTeam());
+    }
+
+    @FXML
+    private void startMatch(ActionEvent event) {
+        actionTarget.setText("movie button pressed");
+        Stage theStage = (Stage) actionTarget.getScene().getWindow();
+        theStage.hide();
+        NavigationCntl.getNavigationCntl(theStage).setUpMatchScene();
     }
     
 }

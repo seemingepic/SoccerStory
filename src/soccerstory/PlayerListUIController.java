@@ -6,6 +6,7 @@
 package soccerstory;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,14 +26,10 @@ import javafx.stage.Stage;
  */
 public class PlayerListUIController implements Initializable {
 
-    @FXML
-    private TableView<Player> starterTable;
-    @FXML
-    private TableColumn<Player, String> nameColumn;
-    @FXML
-    private TableColumn<Player, String> positionColumn;
-    
-        ObservableList<Player> thePlayerList = FXCollections.observableArrayList();
+
+    ObservableList<Player> theTotalPlayerList = FXCollections.observableArrayList();
+    ObservableList<Player> thePlayerList = FXCollections.observableArrayList();
+    private String currentTeamName;
     @FXML
     private TableView<?> benchTable;
     @FXML
@@ -41,6 +38,22 @@ public class PlayerListUIController implements Initializable {
     private TableColumn<?, ?> positionBenchColumn;
     @FXML
     private Text actionTarget;
+    @FXML
+    private TableView<Player> attackerTable;
+    @FXML
+    private TableView<Player> midfieldTable;
+    @FXML
+    private TableView<Player> defenderTable;
+    @FXML
+    private TableView<Player> goalieTable;
+    @FXML
+    private TableColumn<Player, String> attackerNameColumn;
+    @FXML
+    private TableColumn<Player, String> attackerPositionColumn;
+    @FXML
+    private TableColumn<Player, String> defenderNameColumn;
+    @FXML
+    private TableColumn<Player, String> defenderPositionColumn;
 
     /**
      * Initializes the controller class.
@@ -48,20 +61,23 @@ public class PlayerListUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-
-        thePlayerList = ListController.getInstance().getThePlayerList().getThePlayerList();
-        setUpList();
+        theTotalPlayerList = ListController.getInstance().getThePlayerList().getThePlayerList();
+        currentTeamName = ListController.getInstance().getTheTeamList().getCurrentUserTeam();
+        getPlayers();
+        setUpAttackerList();
         // TODO
     }  
     
-    public void setUpList()
+    public void setUpAttackerList()
     {
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
-        positionColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("position"));
+        attackerNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
+        attackerPositionColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("position"));
 
         
-        starterTable.setItems(thePlayerList);
+        attackerTable.setItems(thePlayerList);
     }
+    
+
 
     @FXML
     private void goHome(ActionEvent event) {
@@ -72,4 +88,21 @@ public class PlayerListUIController implements Initializable {
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
     }
     
+    /**
+     * maybe turn this into hash stuff for better performance
+     */
+    public void getPlayers()
+    {
+        for(int i = 0; i < theTotalPlayerList.size(); i++)
+        {
+            if(theTotalPlayerList.get(i).getTeamPlayFor().equals(currentTeamName))
+            {
+                thePlayerList.add(theTotalPlayerList.get(i));
+            }
+        }
+        
+    }
+    
+
+
 }

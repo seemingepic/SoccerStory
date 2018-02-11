@@ -9,7 +9,8 @@
       <Text fx:id="tester" layoutX="327.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="navigationUI" />
       <Text layoutX="178.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your team name is:" />
       <Button fx:id="playersButton" layoutX="52.0" layoutY="265.0" mnemonicParsing="false" onAction="#viewPlayers" text="View Players" />
-      <Text fx:id="actionTarget" layoutX="244.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Button layoutX="489.0" layoutY="265.0" mnemonicParsing="false" onAction="#viewTeams" text="Button" />
+      <Text fx:id="actionTarget" layoutX="14.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Button layoutX="53.0" layoutY="301.0" mnemonicParsing="false" onAction="#viewTeams" text="View Teams" />
+      <Button layoutX="53.0" layoutY="335.0" mnemonicParsing="false" onAction="#startMatch" prefHeight="26.0" prefWidth="79.0" text="Start Match" />
    </children>
 </AnchorPane>

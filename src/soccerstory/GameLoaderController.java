@@ -44,7 +44,7 @@ public class GameLoaderController implements Initializable {
     
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        label.setText("Hello World!");
+        getLabel().setText("Hello World!");
     }
     
     @Override
@@ -64,11 +64,11 @@ public class GameLoaderController implements Initializable {
         /**
          * checks to make sure game name (team name ) is valid
          */
-        if (checker(gameInputOne.getText()))
+        if (checker(getGameInputOne().getText()))
         {
-            gameNameTxt1.setText(gameInputOne.getText());
-            gameInputOne.setVisible(false);
-            gameInputOne.setText("");
+            getGameNameTxt1().setText(getGameInputOne().getText());
+            getGameInputOne().setVisible(false);
+            getGameInputOne().setText("");
         }
         else //if not valid send them a little message telling em
         {
@@ -101,18 +101,19 @@ public class GameLoaderController implements Initializable {
     
     public void setUpNewScene()
     {
-        Stage stage = (Stage) gameNameTxt1.getScene().getWindow();
+        Stage stage = (Stage) getGameNameTxt1().getScene().getWindow();
         stage.hide();
+        createTeam();
         NavigationCntl.getNavigationCntl(stage);
         
     }
 
     @FXML
     private void loadGame1(ActionEvent event) {
-        if (gameNameTxt1.getText().length() > 0)
+        if (getGameNameTxt1().getText().length() > 0)
         {
+            this.setCurrentGameName(getGameNameTxt1().getText());
             setUpNewScene();
-            this.currentGameName = gameNameTxt1.getText();
         }
         else
         {
@@ -123,8 +124,126 @@ public class GameLoaderController implements Initializable {
 
             alert.showAndWait();
         }
-        
     }
+    
+    private void createTeam()
+    {
+        ListController.getInstance().getTheTeamList().getTheListOfTeams().add(new Team(currentGameName, "", ""));
+        ListController.getInstance().getTheTeamList().setCurrentUserTeam(currentGameName);
+    }
+
+    /**
+     * @return the label
+     */
+    public Label getLabel() {
+        return label;
+    }
+
+    /**
+     * @param label the label to set
+     */
+    public void setLabel(Label label) {
+        this.label = label;
+    }
+
+    /**
+     * @return the createGame
+     */
+    public Button getCreateGame() {
+        return createGame;
+    }
+
+    /**
+     * @param createGame the createGame to set
+     */
+    public void setCreateGame(Button createGame) {
+        this.createGame = createGame;
+    }
+
+    /**
+     * @return the loadGame
+     */
+    public Button getLoadGame() {
+        return loadGame;
+    }
+
+    /**
+     * @param loadGame the loadGame to set
+     */
+    public void setLoadGame(Button loadGame) {
+        this.loadGame = loadGame;
+    }
+
+    /**
+     * @return the gameListOne
+     */
+    public Text getGameListOne() {
+        return gameListOne;
+    }
+
+    /**
+     * @param gameListOne the gameListOne to set
+     */
+    public void setGameListOne(Text gameListOne) {
+        this.gameListOne = gameListOne;
+    }
+
+    /**
+     * @return the gameName1
+     */
+    public String getGameName1() {
+        return gameName1;
+    }
+
+    /**
+     * @param gameName1 the gameName1 to set
+     */
+    public void setGameName1(String gameName1) {
+        this.gameName1 = gameName1;
+    }
+
+    /**
+     * @return the gameNameTxt1
+     */
+    public Text getGameNameTxt1() {
+        return gameNameTxt1;
+    }
+
+    /**
+     * @param gameNameTxt1 the gameNameTxt1 to set
+     */
+    public void setGameNameTxt1(Text gameNameTxt1) {
+        this.gameNameTxt1 = gameNameTxt1;
+    }
+
+    /**
+     * @return the gameInputOne
+     */
+    public TextField getGameInputOne() {
+        return gameInputOne;
+    }
+
+    /**
+     * @param gameInputOne the gameInputOne to set
+     */
+    public void setGameInputOne(TextField gameInputOne) {
+        this.gameInputOne = gameInputOne;
+    }
+
+    /**
+     * @return the currentGameName
+     */
+    public String getCurrentGameName() {
+        return currentGameName;
+    }
+
+    /**
+     * @param currentGameName the currentGameName to set
+     */
+    public void setCurrentGameName(String currentGameName) {
+        this.currentGameName = currentGameName;
+    }
+
     
     
 }
