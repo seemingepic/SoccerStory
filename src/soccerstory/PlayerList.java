@@ -31,16 +31,27 @@ public class PlayerList {
     {
         ObservableList<Player> testPlayers = FXCollections.observableArrayList();
 
-        Player newPlayer = new Player( "name",   "fff",  "A", 5);
+        Player newPlayer = new Player( "namef",   "fff",  "A", 5);
+        Player newPlayer1 = new Player ("nameff", "fff", "M", 6);
+        Player newPlayer2 = new Player("nam3e", "fff", "D", 7);
+        Player newPlayer3 = new Player("na5me", "fff", "G", 8);
+        Player newPlayer4 = new Player("na6me", "1name", "A", 9);
+        Player newPlayer6 = new Player("defender", "1name", "D", 69);
+        Player newPlayer7 = new Player("goalie", "1name", "G", 69);
+        Player newPlayer8 = new Player("midfield", "1name", "M", 69);
+        Player newPlayer5 = new Player("not a name", "fff", "A", 11);
+        newPlayer5.setBenched(true);
         testPlayers.add(newPlayer);
-        Player newPlayer1 = new Player ("name", "fff", "M", 6);
-        Player newPlayer2 = new Player("name", "fff", "D", 7);
-        Player newPlayer3 = new Player("name", "fff", "G", 8);
-        Player newPlayer4 = new Player("name", "1name", "A", 9);
         testPlayers.add(newPlayer1);
         testPlayers.add(newPlayer2);
         testPlayers.add(newPlayer3);
         testPlayers.add(newPlayer4);
+        testPlayers.add(newPlayer5);
+        testPlayers.add(newPlayer6);
+        testPlayers.add(newPlayer7);
+        testPlayers.add(newPlayer8);
+
+        
         
         return testPlayers;
         
@@ -68,6 +79,24 @@ public class PlayerList {
         }
         return theTeamsPlayers;
     }
+    
+    public void changePlayerBench(String name)
+    {
+        for (int i = 0; i < getThePlayerList().size(); i ++)
+        {
+            if(getThePlayerList().get(i).getName().equals(name))
+            {
+                if(getThePlayerList().get(i).isBenched())
+                {
+                    getThePlayerList().get(i).setBenched(false);
+                }
+                else
+                    getThePlayerList().get(i).setBenched(true);
+            }
+        }
+        
+    }
+    
 
     /**
      * @return the thePlayerList

@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.PlayerListUIController">
    <children>
-      <TableView fx:id="attackerTable" layoutX="31.0" layoutY="50.0" prefHeight="103.0" prefWidth="262.0">
+      <TableView fx:id="attackerTable" layoutX="31.0" layoutY="50.0" onMouseClicked="#getSelectedClick" prefHeight="103.0" prefWidth="262.0">
         <columns>
           <TableColumn fx:id="attackerNameColumn" prefWidth="191.20001602172852" text="Player Name" />
           <TableColumn fx:id="attackerPositionColumn" prefWidth="71.19999694824219" text="Position" />
@@ -20,26 +20,26 @@
             <TableColumn fx:id="positionBenchColumn" prefWidth="71.19999694824219" text="Position" />
          </columns>
       </TableView>
-      <Button layoutX="313.0" layoutY="77.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="Move to Play" />
-      <Button layoutX="311.0" layoutY="146.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Move to Bench" />
+      <Button layoutX="313.0" layoutY="77.0" mnemonicParsing="false" onAction="#moveToPlay" prefHeight="26.0" prefWidth="95.0" text="Move to Play" />
+      <Button layoutX="311.0" layoutY="146.0" mnemonicParsing="false" onAction="#moveToBench" prefHeight="26.0" prefWidth="104.0" text="Move to Bench" />
       <Button layoutX="45.0" layoutY="14.0" mnemonicParsing="false" onAction="#goHome" text="Go home" />
       <Text fx:id="actionTarget" layoutX="567.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <TableView fx:id="midfieldTable" layoutX="31.0" layoutY="159.0" prefHeight="80.0" prefWidth="262.0">
+      <TableView fx:id="midfieldTable" layoutX="31.0" layoutY="159.0" onMouseClicked="#getSelectedMidfielder" prefHeight="80.0" prefWidth="262.0">
         <columns>
-          <TableColumn prefWidth="194.39996719360352" text="Player Name" />
-          <TableColumn minWidth="0.0" prefWidth="68.00004577636719" text="Position" />
+          <TableColumn fx:id="midfieldNameColumn" prefWidth="194.39996719360352" text="Player Name" />
+          <TableColumn fx:id="midfieldPositionColumn" minWidth="0.0" prefWidth="68.00004577636719" text="Position" />
         </columns>
       </TableView>
-      <TableView fx:id="defenderTable" layoutX="31.0" layoutY="245.0" prefHeight="94.0" prefWidth="262.0">
+      <TableView fx:id="defenderTable" layoutX="31.0" layoutY="245.0" onMouseClicked="#getSelectedDefender" prefHeight="94.0" prefWidth="262.0">
         <columns>
           <TableColumn fx:id="defenderNameColumn" prefWidth="196.00000381469727" text="Player Name" />
           <TableColumn fx:id="defenderPositionColumn" prefWidth="65.59996032714844" text="Position" />
         </columns>
       </TableView>
-      <TableView fx:id="goalieTable" layoutX="31.0" layoutY="347.0" prefHeight="54.0" prefWidth="262.0">
+      <TableView fx:id="goalieTable" layoutX="31.0" layoutY="352.0" onMouseClicked="#getSelectedGoalie" prefHeight="69.0" prefWidth="262.0">
         <columns>
-          <TableColumn prefWidth="192.79999160766602" text="Player Name" />
-          <TableColumn prefWidth="68.79997253417969" text="Position" />
+          <TableColumn fx:id="goalieNameColumn" prefWidth="192.79999160766602" text="Player Name" />
+          <TableColumn fx:id="goaliePositionColumn" prefWidth="68.79997253417969" text="Position" />
         </columns>
       </TableView>
    </children>

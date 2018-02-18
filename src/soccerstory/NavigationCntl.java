@@ -103,6 +103,22 @@ public class NavigationCntl {
             e.printStackTrace();
         } 
     }
+    
+    public void setUpCalendarScene()
+    {
+        Parent root;
+        Scene scene;
+        try{
+            root = FXMLLoader.load(getClass().getResource("CalendarUI.fxml"));
+            scene = new Scene(root);
+            stage.setTitle("Calendar");
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        } 
+    }
+
  
     
 }

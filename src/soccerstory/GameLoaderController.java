@@ -21,8 +21,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
+ * Class name: GameLoaderController
+ * Purpose: This is where the user can create their team name and start 
+ * the game
  *
- * @author mockl
+ * 
  */
 public class GameLoaderController implements Initializable {
     
@@ -42,10 +45,9 @@ public class GameLoaderController implements Initializable {
     
     private String currentGameName;
     
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        getLabel().setText("Hello World!");
-    }
+    private boolean homePoss = true; //Home team will always start with ball
+    private boolean awayPoss = false; //away team will not
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -58,7 +60,6 @@ public class GameLoaderController implements Initializable {
      * sets that name to be permenant
      * @param event 
      */
-    
     @FXML
     private void gameCreation(ActionEvent event) {
         /**
@@ -98,7 +99,9 @@ public class GameLoaderController implements Initializable {
             return false;
         }
     }
-    
+    /**
+     * Sets up scene to go to nav cntl
+     */
     public void setUpNewScene()
     {
         Stage stage = (Stage) getGameNameTxt1().getScene().getWindow();
@@ -108,6 +111,10 @@ public class GameLoaderController implements Initializable {
         
     }
 
+    /**
+     * If the user clicks load game 1, this will load the game
+     * @param event 
+     */
     @FXML
     private void loadGame1(ActionEvent event) {
         if (getGameNameTxt1().getText().length() > 0)
@@ -126,6 +133,9 @@ public class GameLoaderController implements Initializable {
         }
     }
     
+    /**
+     * This creates the team in the master list
+     */
     private void createTeam()
     {
         ListController.getInstance().getTheTeamList().getTheListOfTeams().add(new Team(currentGameName, "", ""));

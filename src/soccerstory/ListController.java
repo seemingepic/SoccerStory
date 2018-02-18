@@ -6,8 +6,9 @@
 package soccerstory;
 
 /**
- *
- * @author mockl
+ * This class creates and is the control point for getting
+ * access to the playerList and teamList
+ * 
  */
 public class ListController {
     

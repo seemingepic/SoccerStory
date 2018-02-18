@@ -20,6 +20,7 @@ public class Player {
     private String teamPlayFor;
     private String position;
     private int jerseyNumber;
+    private boolean benched;
     
     private int speed;
     private int ballskill;
@@ -40,6 +41,7 @@ public class Player {
         this.defense = 50;
         this.passing = 50;
         this.goalie = 50;
+        this.benched = false;
     }
 
     /**
@@ -188,6 +190,73 @@ public class Player {
     public void setGoalie(int goalie) {
         this.goalie = goalie;
     }
+
+    /**
+     * @return the benched
+     */
+    public boolean isBenched() {
+        return benched;
+    }
+
+    /**
+     * @param benched the benched to set
+     */
+    public void setBenched(boolean benched) {
+        this.benched = benched;
+    }
+ 
+    public int overall(Player player) {
+        int overall;
+        switch (player.getPosition()) {
+            case "A":
+                overall = attackerOverall(player);
+                break;
+            case "M":
+                overall = midfieldOverall(player);
+                break;
+            case "D":
+                overall = defenseOverall(player);
+                break;
+            default:
+                overall = goalieOverall(player);
+                break;
+
+        }
+        return overall;
+    }
+    
+    public int attackerOverall(Player player)
+    {
+        double overall = (player.getShooting()* .287) + (player.getSpeed() * .2045) +
+                (player.getBallskill() * .1704) + (player.getPassing() * .1336) +
+                (player.getGoalie() * .1136) + (player.getDefense() * .091);
+        return (int)overall;
+    }
+    
+    public int midfieldOverall(Player player)
+    {
+        double overall = (player.getPassing()* .367) + (player.getSpeed() * .2045) +
+                (player.getBallskill() * .1704) + (player.getDefense() * .1336) +
+                (player.getShooting() * .1136) + (player.getGoalie() * .01);
+        return (int)overall;
+    }
+    
+    public int defenseOverall(Player player) {
+        double overall = (player.getDefense() * .287) + (player.getPassing() * .2045)
+                + (player.getSpeed() * .1704) + (player.getBallskill() * .1336)
+                + (player.getGoalie() * .1136) + (player.getShooting() * .091);
+        return (int) overall;
+    }
+    
+    public int goalieOverall(Player player)
+    {
+        double overall = (player.getGoalie() * .287) + (player.getPassing() * .2045)
+                + (player.getDefense() * .1704) + (player.getBallskill() * .1336)
+                + (player.getSpeed() * .1136) + (player.getShooting() * .091);
+        return (int) overall;
+
+    }
+
 
 
 }
