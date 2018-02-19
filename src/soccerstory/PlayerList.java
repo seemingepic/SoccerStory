@@ -33,6 +33,7 @@ public class PlayerList {
 
         Player newPlayer = new Player( "namef",   "fff",  "A", 5);
         Player newPlayer1 = new Player ("nameff", "fff", "M", 6);
+        newPlayer1.setPassing(99);
         Player newPlayer2 = new Player("nam3e", "fff", "D", 7);
         Player newPlayer3 = new Player("na5me", "fff", "G", 8);
         Player newPlayer4 = new Player("na6me", "1name", "A", 9);

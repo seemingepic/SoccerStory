@@ -205,54 +205,77 @@ public class Player {
         this.benched = benched;
     }
  
-    public int overall(Player player) {
+    public int overall() {
         int overall;
-        switch (player.getPosition()) {
+        switch (getPosition()) {
             case "A":
-                overall = attackerOverall(player);
+                overall = attackerOverall();
                 break;
             case "M":
-                overall = midfieldOverall(player);
+                overall = midfieldOverall();
                 break;
             case "D":
-                overall = defenseOverall(player);
+                overall = defenseOverall();
                 break;
             default:
-                overall = goalieOverall(player);
+                overall = goalieOverall();
                 break;
 
         }
         return overall;
     }
     
-    public int attackerOverall(Player player)
+    /**
+     * Determines overall for the attacker using a weight based system
+     * that is based off point distrubution in racing
+     * @param player
+     * @return 
+     */
+    public int attackerOverall()
     {
-        double overall = (player.getShooting()* .287) + (player.getSpeed() * .2045) +
-                (player.getBallskill() * .1704) + (player.getPassing() * .1336) +
-                (player.getGoalie() * .1136) + (player.getDefense() * .091);
+        double overall = (this.getShooting()* .287) + (this.getSpeed() * .2045) +
+                (this.getBallskill() * .1704) + (this.getPassing() * .1336) +
+                (this.getGoalie() * .1136) + (this.getDefense() * .091);
         return (int)overall;
     }
     
-    public int midfieldOverall(Player player)
+        /**
+     * Determines overall for the modfield using a weight based system
+     * that is based off point distrubution in racing
+     * @param player
+     * @return 
+     */
+    public int midfieldOverall()
     {
-        double overall = (player.getPassing()* .367) + (player.getSpeed() * .2045) +
-                (player.getBallskill() * .1704) + (player.getDefense() * .1336) +
-                (player.getShooting() * .1136) + (player.getGoalie() * .01);
+        double overall = (this.getPassing()* .367) + (this.getSpeed() * .2045) +
+                (this.getBallskill() * .1704) + (this.getDefense() * .1336) +
+                (this.getShooting() * .1136) + (this.getGoalie() * .01);
         return (int)overall;
     }
-    
-    public int defenseOverall(Player player) {
-        double overall = (player.getDefense() * .287) + (player.getPassing() * .2045)
-                + (player.getSpeed() * .1704) + (player.getBallskill() * .1336)
-                + (player.getGoalie() * .1136) + (player.getShooting() * .091);
+    /**
+     * Determines overall for the defense using a weight based system
+     * that is based off point distrubution in racing
+     * @param player
+     * @return 
+     */
+    public int defenseOverall() {
+        double overall = (this.getDefense() * .287) + (this.getPassing() * .2045)
+                + (this.getSpeed() * .1704) + (this.getBallskill() * .1336)
+                + (this.getGoalie() * .1136) + (this.getShooting() * .091);
         return (int) overall;
     }
-    
-    public int goalieOverall(Player player)
+
+     /**
+     * Determines overall for the goalie using a weight based system
+     * that is based off point distrubution in racing
+     * @param player
+     * @return 
+     */
+    public int goalieOverall()
     {
-        double overall = (player.getGoalie() * .287) + (player.getPassing() * .2045)
-                + (player.getDefense() * .1704) + (player.getBallskill() * .1336)
-                + (player.getSpeed() * .1136) + (player.getShooting() * .091);
+        double overall = (this.getGoalie() * .287) + (this.getPassing() * .2045)
+                + (this.getDefense() * .1704) + (this.getBallskill() * .1336)
+                + (this.getSpeed() * .1136) + (this.getShooting() * .091);
         return (int) overall;
 
     }

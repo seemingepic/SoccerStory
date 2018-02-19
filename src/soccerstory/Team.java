@@ -95,7 +95,6 @@ public class Team {
     public void setCoach(String coach) {
         this.coach = coach;
     }
-
     
     
 }

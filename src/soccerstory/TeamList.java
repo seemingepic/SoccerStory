@@ -74,6 +74,8 @@ public class TeamList {
     public void setCurrentUserTeam(String currentUserTeam) {
         this.currentUserTeam = currentUserTeam;
     }
+    
+
 
     
 }
