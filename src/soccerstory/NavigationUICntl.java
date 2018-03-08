@@ -59,7 +59,10 @@ public class NavigationUICntl implements Initializable {
         }
         String date = "week ";
         date = date + calendarController.getCurrentWeek();
+        String team = calendarController.getStringOtherTeamName();
         weekLabel.setText(date);
+        teamLabel.setText(team);
+        
     }
 
 

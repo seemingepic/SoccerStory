@@ -4,6 +4,8 @@
  * from https://stackoverflow.com/questions/1427043/soccer-simulation-for-a-game
  * There was no code taken, but he did have a very cool thought process on how
  * a simulator should work
+ * 
+ * FIXES NEEDED: CHECK IF PLAYER IS BENCHED OR NOT!!!
  */
 package soccerstory;
 

@@ -10,5 +10,7 @@
       <Button layoutX="71.0" layoutY="312.0" mnemonicParsing="false" onAction="#goHome" text="goHome" />
       <Label fx:id="actionTarget" layoutX="30.0" layoutY="6.0" text="Label" />
       <Label fx:id="litfam" layoutX="71.0" layoutY="191.0" text="Label" />
+      <Label layoutX="261.0" layoutY="118.0" text="You will be playing: " />
+      <Label fx:id="otherTeamName" layoutX="411.0" layoutY="118.0" text="Label" />
    </children>
 </AnchorPane>

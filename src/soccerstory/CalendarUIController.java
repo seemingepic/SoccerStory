@@ -34,6 +34,10 @@ public class CalendarUIController implements Initializable {
     private Label litfam;
     
     private ArrayList<Match> matchList = new ArrayList<>();
+    @FXML
+    private Label otherTeamName;
+    
+    private String stringOtherTeamName;
 
     /**
      * Initializes the controller class.
@@ -43,6 +47,7 @@ public class CalendarUIController implements Initializable {
         updateCalendar();
         listMatches(ListController.getInstance().getTheTeamList().getTeamNames());
         printList();
+        findMatch("fff");
     }
 
     /**
@@ -90,6 +95,7 @@ public class CalendarUIController implements Initializable {
     /**
      * Creates a calander to be stored into another class 
      * Code partially from: https://stackoverflow.com/questions/26471421/round-robin-algorithm-implementation-java
+     * @param listTeam
      * @param ListTeam 
      */
     public void listMatches(List<String> listTeam) {
@@ -108,18 +114,19 @@ public class CalendarUIController implements Initializable {
             
             System.out.println("Week {" + (week + 1) + ")"); //Prints out what week the matches are being created for
 
-            int teamIdx = week % teamsSize; //Split the group in half
+            int teamIdx = week % teamsSize; //get first value of idx, add to it later
 
             System.out.println("(" + teams.get(teamIdx) + ") " + "vs" + " (" + listTeam.get(0) + ")");
-            Match newMatch = new Match(teams.get(teamIdx), listTeam.get(0), week, 1);
+            Match newMatch = new Match(teams.get(teamIdx), listTeam.get(0), week + 1, 1); //center around first time in the original list, 
             matchList.add(newMatch);
             
             //Match newMatch = new Match(teams.get(teamIdx).getTeamName());
 
             for (int idx = 1; idx < halfSize; idx++) {
-                int firstTeam = (week + idx) % teamsSize;
-                int secondTeam = (week + teamsSize - idx) % teamsSize;
-                Match newerMatch = new Match(teams.get(firstTeam), teams.get(secondTeam), week, idx + 1);
+                int firstTeam = (week + idx) % teamsSize; //get first team from first half of list
+                int secondTeam = (week + teamsSize - idx) % teamsSize; //get second team from second half of list
+                //this will switch home/away when the week is > 5 to make it more balanced
+                Match newerMatch = new Match(teams.get(firstTeam), teams.get(secondTeam), week + 1, idx + 1);
                 matchList.add(newerMatch);
                 System.out.println("(" + teams.get(firstTeam) + ")" + " vs " + "(" + teams.get(secondTeam) + ")");
             }
@@ -140,6 +147,38 @@ public class CalendarUIController implements Initializable {
             System.out.print(matchList.get(i).getWeek() + "  ");
             System.out.println(matchList.get(i).getMatchNumber());
         }
+    }
+    
+    public void findMatch(String teamName)
+    {
+        for(int i = 0; i < matchList.size(); i++)
+        {
+            if ((matchList.get(i).getWeek() == currentWeek) &&
+                    (matchList.get(i).getTeam1().equals(teamName)))
+            {
+               otherTeamName.setText(matchList.get(i).getTeam2());
+            }
+            else if ((matchList.get(i).getWeek() == currentWeek) &&
+                    matchList.get(i).getTeam2().equals(teamName))
+            {
+               otherTeamName.setText(matchList.get(i).getTeam1());
+            }
+        }
+        setStringOtherTeamName(otherTeamName.getText());
+    }
+
+    /**
+     * @return the stringOtherTeamName
+     */
+    public String getStringOtherTeamName() {
+        return stringOtherTeamName;
+    }
+
+    /**
+     * @param stringOtherTeamName the stringOtherTeamName to set
+     */
+    public void setStringOtherTeamName(String stringOtherTeamName) {
+        this.stringOtherTeamName = stringOtherTeamName;
     }
 
 }

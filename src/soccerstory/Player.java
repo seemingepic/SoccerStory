@@ -19,7 +19,6 @@ public class Player {
     private String name;
     private String teamPlayFor;
     private String position;
-    private int jerseyNumber;
     private boolean benched;
     
     private int speed;
@@ -29,12 +28,11 @@ public class Player {
     private int passing;
     private int goalie;
 
-    public Player(String newName, String newTeam, String newPosition, int jerseyNumber)
+    public Player(String newName, String newTeam, String newPosition)
     {
         this.name = newName;
         this.teamPlayFor = newTeam;
         this.position = newPosition;
-        this.jerseyNumber = jerseyNumber;
         this.speed = 50;
         this.ballskill = 50;
         this.shooting = 50;
@@ -43,6 +41,22 @@ public class Player {
         this.goalie = 50;
         this.benched = false;
     }
+    
+    public Player(String newName, String newTeam, String newPosition, boolean newIsBenched, int newSpeed,
+    int newBallskill, int newShooting, int newDefense, int newPassing, int newGoalie)
+    {
+        this.name = newName;
+        this.teamPlayFor = newTeam;
+        this.position = newPosition;
+        this.speed = newSpeed;
+        this.ballskill = newBallskill;
+        this.shooting = newShooting;
+        this.defense = newDefense;
+        this.passing = newPassing;
+        this.goalie = newGoalie;
+        this.benched = newIsBenched;
+    }
+
 
     /**
      * @return the name
@@ -86,25 +100,13 @@ public class Player {
         this.position = position;
     }
 
-    /**
-     * @return the jerseyNumber
-     */
-    public Integer getJerseyNumber() {
-        return jerseyNumber;
-    }
+
 
     /**
      * @param jerseyNumber the jerseyNumber to set
      */
     public void setJerseyNumber(Integer jerseyNumber) {
         this.setJerseyNumber((int) jerseyNumber);
-    }
-
-    /**
-     * @param jerseyNumber the jerseyNumber to set
-     */
-    public void setJerseyNumber(int jerseyNumber) {
-        this.jerseyNumber = jerseyNumber;
     }
 
     /**

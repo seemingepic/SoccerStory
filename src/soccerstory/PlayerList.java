@@ -31,17 +31,21 @@ public class PlayerList {
     {
         ObservableList<Player> testPlayers = FXCollections.observableArrayList();
 
-        Player newPlayer = new Player( "George Bush",   "fff",  "A", 5);
-        Player newPlayer5 = new Player("noName", "fff", "A", 11);
-        Player newPlayer1 = new Player ("Vinny Lee", "fff", "M", 6);
-        Player newPlayer9 = new Player ("Kevork", "fff", "M", 32);
-        Player newPlayer10 = new Player ("Chris", "fff", "M", 67);
-        Player newPlayer11 = new Player ("Josh", "fff", "M", 6);
-        Player newPlayer2 = new Player("Luke VanKeuren", "fff", "D", 7);
-        Player newPlayer12 = new Player("Sick bro", "fff", "D", 135);
-        Player newPlayer13 = new Player("bro sick", "fff", "D", 141);
-        Player newPlayer14 = new Player("Bro not sick", "fff", "D", 131);
-        Player newPlayer3 = new Player("Bill Clinton", "fff", "G", 8);
+        Player newPlayer = new Player( "George Bush",   "fff",  "A");
+        Player newPlayer5 = new Player("noName", "fff", "A");
+        Player newPlayer1 = new Player ("Vinny Lee", "fff", "M");
+        Player newPlayer9 = new Player ("Kevork", "fff", "M");
+        Player newPlayer10 = new Player ("Chris", "fff", "M");
+        Player newPlayer11 = new Player ("Josh", "fff", "M");
+        Player newPlayer2 = new Player("Luke VanKeuren", "fff", "D");
+        Player newPlayer12 = new Player("Sick bro", "fff", "D");
+        Player newPlayer13 = new Player("bro sick", "fff", "D");
+        Player newPlayer14 = new Player("Bro not sick", "fff", "D");
+        Player newPlayer3 = new Player("Bill Clinton", "fff", "G");
+        Player testPlayer = new PlayerBuilder().setName("Tester").
+                setTeamPlayFor("fff").setBenched(true).setPosition("M").getPlayer();
+        
+        //testing builder framework here ^^^^ will be used later for player shop
         
         newPlayer1.setPassing(99);
         newPlayer3.setGoalie(99);
@@ -49,17 +53,19 @@ public class PlayerList {
         newPlayer.setShooting(99);
         newPlayer2.setDefense(450);
         
-        Player newPlayer4 = new Player("Microsoft", "1name", "A", 9);
-        Player newPlayer19 = new Player("PNC", "1name", "A", 9);
-        Player newPlayer20 = new Player("SwagTASTIC", "1name", "D", 9);
-        Player newPlayer8 = new Player("LITFAM", "1name", "D", 9);
-        Player newPlayer6 = new Player("Apple", "1name", "D", 69);
-        Player newPlayer21 = new Player("Apple dad", "1name", "D", 69);
-        Player newPlayer7 = new Player("Mouse man", "1name", "G", 69);
-        Player newPlayer15 = new Player("Sick player9", "1name", "M", 69);
-        Player newPlayer16 = new Player("ded boi", "1name", "M", 69);
-        Player newPlayer17 = new Player("alive boi", "1name", "M", 69);
-        Player newPlayer18 = new Player("PPG", "1name", "M", 69);
+        testPlayers.add(testPlayer);
+        
+        Player newPlayer4 = new Player("Microsoft", "1name", "A");
+        Player newPlayer19 = new Player("PNC", "1name", "A");
+        Player newPlayer20 = new Player("SwagTASTIC", "1name", "D");
+        Player newPlayer8 = new Player("LITFAM", "1name", "D");
+        Player newPlayer6 = new Player("Apple", "1name", "D");
+        Player newPlayer21 = new Player("Apple dad", "1name", "D");
+        Player newPlayer7 = new Player("Mouse man", "1name", "G");
+        Player newPlayer15 = new Player("Sick player9", "1name", "M");
+        Player newPlayer16 = new Player("ded boi", "1name", "M");
+        Player newPlayer17 = new Player("alive boi", "1name", "M");
+        Player newPlayer18 = new Player("PPG", "1name", "M");
 
         newPlayer5.setBenched(true);
         testPlayers.add(newPlayer);
