@@ -15,7 +15,7 @@
       <Label layoutX="286.0" layoutY="113.0" text="Score" />
       <Label fx:id="homeTeamScore" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="131.0" text="0" />
       <Label fx:id="awayTeamScore" alignment="CENTER" contentDisplay="CENTER" layoutX="331.0" layoutY="131.0" text="0" />
-      <Button layoutX="255.0" layoutY="321.0" mnemonicParsing="false" onAction="#shoot" text="Shooting Test" />
+      <Button layoutX="255.0" layoutY="321.0" mnemonicParsing="false" onAction="#shoot" text="Start Game" />
       <Label fx:id="homeAttackWeight" layoutX="96.0" layoutY="171.0" text="Label" />
       <Label fx:id="homeMidfieldWeight" layoutX="96.0" layoutY="191.0" text="Label" />
       <Label fx:id="homeDefenseWeight" layoutX="96.0" layoutY="209.0" text="Label" />
@@ -25,5 +25,7 @@
       <Label fx:id="awayAttackWeight" layoutX="472.0" layoutY="171.0" text="Label" />
       <Label fx:id="awayMidfieldWeight" layoutX="472.0" layoutY="191.0" text="Label" />
       <Label fx:id="awayDefenseWeight" layoutX="472.0" layoutY="209.0" text="Label" />
+      <Button layoutX="37.0" layoutY="309.0" mnemonicParsing="false" onAction="#goHome" text="go home" />
+      <Text fx:id="actionTarget" layoutX="99.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

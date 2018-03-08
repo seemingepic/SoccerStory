@@ -80,16 +80,18 @@ public class PlayerListUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         currentTeamName = ListController.getInstance().getTheTeamList().
-                getCurrentUserTeam();
+                getCurrentUserTeam(); //Gets current team name from when you logged on
         
         theTeamPlayerList = FXCollections.observableArrayList(ListController.
-                getInstance().getThePlayerList().getPlayersFromTeam(currentTeamName));
+                getInstance().getThePlayerList().getPlayersFromTeam(currentTeamName)); //Gets all the players from team name
         
-        filterPlayers();
-        setUpLists();
+        filterPlayers(); //Puts players into proper position
+        setUpLists(); //Sets up list based on what position the players are in
         // TODO
     }  
-    
+    /**
+     * This method calls all the set up methods to simplfy code
+     */
     private void setUpLists()
     {
         setUpAttackerList();
@@ -99,6 +101,10 @@ public class PlayerListUIController implements Initializable {
         setUpBench(); 
     }
     
+    /**
+     * All the methods with setUp get all the players from the proper table,
+     * and then put them into the prober observablelist table
+     */
     public void setUpAttackerList()
     {
         attackerNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
@@ -138,14 +144,17 @@ public class PlayerListUIController implements Initializable {
         
         benchTable.setItems(benchListTable);     
     }
-    
+    /**
+     * Filter players goes through the list of players that was refrenced from the initialize screen
+     * and then puts them in the appropriate table based on their position and bench attributes
+     */
     private void filterPlayers()
     {
 
         for (int i = 0; i < theTeamPlayerList.size(); i++)
         {
             if (theTeamPlayerList.get(i).getPosition().equals("A") && !(theTeamPlayerList.get(i).isBenched()))
-                attackerListTable.add(theTeamPlayerList.get(i));
+                attackerListTable.add(theTeamPlayerList.get(i)); //If the position && player is not benched, add to appropriate table
             else if(theTeamPlayerList.get(i).getPosition().equals("M") && !(theTeamPlayerList.get(i).isBenched()))
                 midfieldListTable.add(theTeamPlayerList.get(i));
             else if(theTeamPlayerList.get(i).getPosition().equals("D") && !(theTeamPlayerList.get(i).isBenched()))
@@ -159,18 +168,23 @@ public class PlayerListUIController implements Initializable {
     }
     
 
-    
+    /**
+     * This method is called when the player clicks the button to move to starter
+     * This gets the player selected, checks their position, then moves them to
+     * that players position
+     * @param name 
+     */
     public void movePlayerToAppropriateTable(String name)
     {
        for (int i = theTeamPlayerList.size()-1; i >= 0; i--)
         {
-            if (theTeamPlayerList.get(i).getName().equals(name))
+            if (theTeamPlayerList.get(i).getName().equals(name)) //find player name in table
             {
-                if (theTeamPlayerList.get(i).isBenched())
+                if (theTeamPlayerList.get(i).isBenched()) //if the player is benched
                 {
-                    removeFromBench(name);
+                    removeFromBench(name); //remove them from the bench 
 
-                    switch (theTeamPlayerList.get(i).getPosition()) {
+                    switch (theTeamPlayerList.get(i).getPosition()) { //add them to the correct table based on position
                         case "A":
                             attackerListTable.add(theTeamPlayerList.get(i));
                             break;
@@ -185,11 +199,11 @@ public class PlayerListUIController implements Initializable {
                             break;
                     }
                 }
-                else
+                else //if they are not benched   
                 {
-                    benchListTable.add(theTeamPlayerList.get(i));
-                    clickedPlayer = null;
-                    switch (theTeamPlayerList.get(i).getPosition()) {
+                    benchListTable.add(theTeamPlayerList.get(i)); //move them to the bench
+                    clickedPlayer = null; //reset who is clicked 
+                    switch (theTeamPlayerList.get(i).getPosition()) { //put them in the right position table
                         case "A":
                             removeFromStarter(name, attackerListTable);
                             break;
@@ -215,7 +229,7 @@ public class PlayerListUIController implements Initializable {
      * @param name
      * @param table 
      */
-    public void removeFromStarter(String name, ObservableList<Player> table)
+    public void removeFromStarter(String name, ObservableList<Player> table) 
     {
         for(int i = table.size()-1; i>= 0; i--)
         {

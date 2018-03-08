@@ -32,7 +32,7 @@ public class TeamList {
     public ArrayList<Team> testTeams()
     {
         ArrayList<Team> testTeams = new ArrayList();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 9; i++) {
             Team newTeam = new Team(i + "name", i + "owner", i + "coach");
             testTeams.add(newTeam);
         }
@@ -45,6 +45,22 @@ public class TeamList {
         List<Team> teamList = (List<Team>) getTheListOfTeams();
         theNewListOfTeams= FXCollections.observableList(teamList);
         return theNewListOfTeams;
+    }
+    
+    /**
+     * Prints out list of team names 
+     * This is used for the calander feature
+     * @return the team names as an arrayList
+     */
+    public ArrayList<String> getTeamNames()
+    {
+        ArrayList<String> teamNames = new ArrayList<>();
+        for (int i = 0; i < theListOfTeams.size(); i++)
+        {
+            String newTeamName = theListOfTeams.get(i).getTeamName();
+            teamNames.add(newTeamName);
+        }
+        return teamNames;
     }
 
     /**
