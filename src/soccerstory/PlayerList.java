@@ -55,19 +55,19 @@ public class PlayerList {
         
         testPlayers.add(testPlayer);
         
-        Player newPlayer4 = new Player("Microsoft", "1name", "A");
-        Player newPlayer19 = new Player("PNC", "1name", "A");
-        Player newPlayer20 = new Player("SwagTASTIC", "1name", "D");
-        Player newPlayer8 = new Player("LITFAM", "1name", "D");
-        Player newPlayer6 = new Player("Apple", "1name", "D");
-        Player newPlayer21 = new Player("Apple dad", "1name", "D");
-        Player newPlayer7 = new Player("Mouse man", "1name", "G");
-        Player newPlayer15 = new Player("Sick player9", "1name", "M");
-        Player newPlayer16 = new Player("ded boi", "1name", "M");
-        Player newPlayer17 = new Player("alive boi", "1name", "M");
-        Player newPlayer18 = new Player("PPG", "1name", "M");
+        Player newPlayer4 = new Player("Microsoft", "2name", "A");
+        Player newPlayer19 = new Player("PNC", "2name", "A");
+        Player newPlayer20 = new Player("SwagTASTIC", "2name", "D");
+        Player newPlayer8 = new Player("LITFAM", "2name", "D");
+        Player newPlayer6 = new Player("Apple", "2name", "D");
+        Player newPlayer21 = new Player("Apple dad", "2name", "D");
+        Player newPlayer7 = new Player("Mouse man", "2name", "G");
+        Player newPlayer15 = new Player("Sick player9", "2name", "M");
+        Player newPlayer16 = new Player("ded boi", "2name", "M");
+        Player newPlayer17 = new Player("alive boi", "2name", "M");
+        Player newPlayer18 = new Player("PPG", "2name", "M");
 
-        newPlayer5.setBenched(true);
+        newPlayer5.setBenched(false);
         testPlayers.add(newPlayer);
         testPlayers.add(newPlayer1);
         testPlayers.add(newPlayer2);
@@ -112,6 +112,22 @@ public class PlayerList {
         for (int i = 0; i < getThePlayerList().size(); i ++)
         {
             if(getThePlayerList().get(i).getTeamPlayFor().equals(teamName))
+            {
+                theTeamsPlayers.add(getThePlayerList().get(i));
+                
+            }
+        }
+        return theTeamsPlayers;
+    }
+    
+    public ArrayList<Player> getStartersFromTeam(String teamName)
+    {
+        ArrayList<Player> theTeamsPlayers = new ArrayList<>();
+        
+        for (int i = 0; i < getThePlayerList().size(); i ++)
+        {
+            if(getThePlayerList().get(i).getTeamPlayFor().equals(teamName) &&
+                    !getThePlayerList().get(i).isBenched())
             {
                 theTeamsPlayers.add(getThePlayerList().get(i));
                 

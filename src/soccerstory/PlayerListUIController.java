@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -72,6 +73,8 @@ public class PlayerListUIController implements Initializable {
     private TableColumn<Player, String> goaliePositionColumn;
     
     Player clickedPlayer;
+    
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     /**
      * Initializes the controller class.
@@ -174,33 +177,47 @@ public class PlayerListUIController implements Initializable {
      * that players position
      * @param name 
      */
-    public void movePlayerToAppropriateTable(String name)
-    {
-       for (int i = theTeamPlayerList.size()-1; i >= 0; i--)
-        {
+    public void movePlayerToAppropriateTable(String name) {
+        for (int i = theTeamPlayerList.size() - 1; i >= 0; i--) {
             if (theTeamPlayerList.get(i).getName().equals(name)) //find player name in table
             {
                 if (theTeamPlayerList.get(i).isBenched()) //if the player is benched
                 {
-                    removeFromBench(name); //remove them from the bench 
-
                     switch (theTeamPlayerList.get(i).getPosition()) { //add them to the correct table based on position
                         case "A":
-                            attackerListTable.add(theTeamPlayerList.get(i));
+                            if (attackerListTable.size() < 2) { //limits size of team in order to make sure lineup works
+                                attackerListTable.add(theTeamPlayerList.get(i));
+                                removeFromBench(name); //remove them from the bench 
+                                updateMainList(name); //updates player position
+                            } else
+                                displayError(); //if players are already maxed xplain why
                             break;
                         case "M":
-                            midfieldListTable.add(theTeamPlayerList.get(i));
+                            if (midfieldListTable.size() < 4) {
+                                midfieldListTable.add(theTeamPlayerList.get(i));
+                                removeFromBench(name);
+                                updateMainList(name);
+                            } else
+                                displayError();
                             break;
                         case "D":
-                            defenderListTable.add(theTeamPlayerList.get(i));
+                            if (defenderListTable.size() < 4) {
+                                defenderListTable.add(theTeamPlayerList.get(i));
+                                removeFromBench(name);
+                                updateMainList(name);
+                            }else
+                                displayError();
                             break;
                         default:
-                            goalieListTable.add(theTeamPlayerList.get(i));
+                            if (goalieListTable.size() < 1) {
+                                goalieListTable.add(theTeamPlayerList.get(i));
+                                removeFromBench(name);
+                                updateMainList(name);
+                            }else
+                                displayError();
                             break;
                     }
-                }
-                else //if they are not benched   
-                {
+                } else { //if they are not benched
                     benchListTable.add(theTeamPlayerList.get(i)); //move them to the bench
                     clickedPlayer = null; //reset who is clicked 
                     switch (theTeamPlayerList.get(i).getPosition()) { //put them in the right position table
@@ -217,13 +234,11 @@ public class PlayerListUIController implements Initializable {
                             removeFromStarter(name, goalieListTable);
                             break;
                     }
-                    
                 }
-
-            }    
-        }  
+            }
+        }
     }
-    
+
     /**
      * Removes the player from the starter table
      * @param name
@@ -257,16 +272,26 @@ public class PlayerListUIController implements Initializable {
     }
 
     /**
-     * Sends user home
+     * Sends user home if they have a full team
      * @param event 
      */
     @FXML
     private void goHome(ActionEvent event) {
-        actionTarget.setText("log on pressed");
-        Stage stage = (Stage) actionTarget.getScene().getWindow();
-        stage.hide();
-            
-        NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
+        if (checkForFullRoster()) { //if roster is full then move them home
+            actionTarget.setText("log on pressed");
+            Stage stage = (Stage) actionTarget.getScene().getWindow();
+            stage.hide();
+
+            NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
+        } else { //if the roster is not full, tell them and do not let them leave (may need to add this before a match is initated too )
+            alert.setTitle("You cannot go home!");
+            alert.setHeaderText("Invalid Roster");
+            alert.setContentText("Your team does not have enough players! \n"
+                    + "Make sure you have 2 attackers, 4 midfielders, "
+                    + "4 defenders, and 1 goalie!");
+
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -275,9 +300,10 @@ public class PlayerListUIController implements Initializable {
      */
     @FXML
     private void moveToPlay(ActionEvent event) {
+
         String name = benchTable.getSelectionModel().getSelectedItem().getName();
         movePlayerToAppropriateTable(name);
-        updateMainList(name);
+
         setUpLists();
 
     }
@@ -321,6 +347,42 @@ public class PlayerListUIController implements Initializable {
        clickedPlayer = goalieTable.getSelectionModel().getSelectedItem();
     }
     
+    
+    private void displayError()
+    {
+            alert.setTitle("Player cannot be added");
+            alert.setHeaderText("Player was not moved to start" );
+            alert.setContentText("You already have enough players there!");
+
+            alert.showAndWait();
+    }
+    
+    /**
+     * Checks the lists to make sure they are full
+     * A full team roster is required to play
+     * @return 
+     */
+    public boolean checkForFullRoster()
+    {
+        if (!(attackerListTable.size() == 2))
+        {
+            return false;
+        }
+        else if (!(midfieldListTable.size() == 4))
+        {
+            return false;
+        }
+        else if (!(defenderListTable.size() == 4))
+        {
+            return false;
+        }
+        else if (!(goalieListTable.size() == 1))
+        {
+            return false;
+        }
+        else
+            return true;
+    }
     
 
 

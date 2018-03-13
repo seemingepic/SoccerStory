@@ -38,6 +38,8 @@ public class CalendarUIController implements Initializable {
     private Label otherTeamName;
     
     private String stringOtherTeamName;
+    
+    private Match nextMatch;
 
     /**
      * Initializes the controller class.
@@ -157,13 +159,17 @@ public class CalendarUIController implements Initializable {
                     (matchList.get(i).getTeam1().equals(teamName)))
             {
                otherTeamName.setText(matchList.get(i).getTeam2());
+                       setNextMatch(matchList.get(i));
             }
             else if ((matchList.get(i).getWeek() == currentWeek) &&
                     matchList.get(i).getTeam2().equals(teamName))
             {
                otherTeamName.setText(matchList.get(i).getTeam1());
+                       setNextMatch(matchList.get(i));
             }
         }
+        
+        
         setStringOtherTeamName(otherTeamName.getText());
     }
 
@@ -179,6 +185,20 @@ public class CalendarUIController implements Initializable {
      */
     public void setStringOtherTeamName(String stringOtherTeamName) {
         this.stringOtherTeamName = stringOtherTeamName;
+    }
+
+    /**
+     * @return the nextMatch
+     */
+    public Match getNextMatch() {
+        return nextMatch;
+    }
+
+    /**
+     * @param nextMatch the nextMatch to set
+     */
+    public void setNextMatch(Match nextMatch) {
+        this.nextMatch = nextMatch;
     }
 
 }

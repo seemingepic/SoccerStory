@@ -9,6 +9,7 @@
  */
 package soccerstory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +19,10 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -90,6 +94,10 @@ public class MatchUIController implements Initializable {
     private Label awayDefenseWeight;
     @FXML
     private Text actionTarget;
+    
+    private NavigationUICntl navUiCntl;
+    
+
 
     /**
      * Initializes the controller class.
@@ -106,7 +114,8 @@ public class MatchUIController implements Initializable {
      */
     public void initialSetup()
     {
-        displayTeamNames(); //Displays teamname on labels
+        setUpTeams(); //gets which team is home/away
+        getTeams(); //Displays teamname on labels
         getPlayers(); //gets players for each team
         setLineUp(homeTeamPlayers, "Home"); //puts home team players into proper positions
         setLineUp(awayTeamPlayers, "Away"); //puts away team players into proper positions
@@ -114,16 +123,35 @@ public class MatchUIController implements Initializable {
         displayStats();  //Displays initial scores
         kickOff(); //Determines ininital possession of the game
     }
-
-    /**
-     * Gets the team namess from the ListController and displays them to
-     * the labels on the page
-     */
-    public void displayTeamNames() {
-        homeTeam = ListController.getInstance().getTheTeamList().getCurrentUserTeam();
+    
+    public void getTeams()
+    {
         homeTeamLabel.setText(homeTeam); //Sets home team
-        awayTeam = ListController.getInstance().getTheTeamList().getTheListOfTeams().get(1).getTeamName();
         awayTeamLabel.setText(awayTeam); //sets away team name
+    }
+    
+    private void setUpTeams()
+    {
+        try{
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("NavigationUI.fxml"));
+        Parent root = (Parent) loader.load();
+        navUiCntl =loader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+      
+        Match match = navUiCntl.getNextMatch();
+        
+        if(navUiCntl.getHome())
+        {
+            homeTeam = ListController.getInstance().getTheTeamList().getCurrentUserTeam();
+            awayTeam = navUiCntl.getOtherTeam();
+        }
+        else
+        {
+            awayTeam = ListController.getInstance().getTheTeamList().getCurrentUserTeam();
+            homeTeam = navUiCntl.getOtherTeam();
+        }
     }
     
     /**
@@ -236,7 +264,7 @@ public class MatchUIController implements Initializable {
             }
                         
             
-        } else //4 percent chance away team gets it
+        } else //2 percent chance away team gets it
         {
             if (homePoss) {
                 awayPoss = true;
@@ -430,8 +458,8 @@ public class MatchUIController implements Initializable {
      * Gets the players from the listcontroller and sets them as a reference
      */
     private void getPlayers() {
-        homeTeamPlayers = ListController.getInstance().getThePlayerList().getPlayersFromTeam(homeTeam);
-        awayTeamPlayers = ListController.getInstance().getThePlayerList().getPlayersFromTeam(awayTeam);
+        homeTeamPlayers = ListController.getInstance().getThePlayerList().getStartersFromTeam(homeTeam);
+        awayTeamPlayers = ListController.getInstance().getThePlayerList().getStartersFromTeam(awayTeam);
     }
 
     /**
@@ -547,6 +575,7 @@ public class MatchUIController implements Initializable {
     {
         System.out.println(player.overall());
     }
+    
 
     @FXML
     private void shoot(ActionEvent event) {
@@ -561,4 +590,5 @@ public class MatchUIController implements Initializable {
             
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
     }
+    
 }
