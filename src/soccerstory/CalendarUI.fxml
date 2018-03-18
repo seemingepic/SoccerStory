@@ -6,11 +6,28 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.CalendarUIController">
    <children>
-      <Label fx:id="weekLabel" layoutX="264.0" layoutY="94.0" text="It is currently week" />
-      <Button layoutX="71.0" layoutY="312.0" mnemonicParsing="false" onAction="#goHome" text="goHome" />
-      <Label fx:id="actionTarget" layoutX="30.0" layoutY="6.0" text="Label" />
-      <Label fx:id="litfam" layoutX="71.0" layoutY="191.0" text="Label" />
-      <Label layoutX="261.0" layoutY="118.0" text="You will be playing: " />
-      <Label fx:id="otherTeamName" layoutX="411.0" layoutY="118.0" text="Label" />
+      <Label fx:id="currentWeekLabel" layoutX="250.0" layoutY="14.0" text="It is currently week" />
+      <Button layoutX="286.0" layoutY="333.0" mnemonicParsing="false" onAction="#goHome" text="goHome" />
+      <Label fx:id="actionTarget" layoutX="520.0" layoutY="368.0" text="Label" />
+      <Label fx:id="litfam" layoutX="558.0" layoutY="368.0" text="Label" />
+      <Label layoutX="22.0" layoutY="76.0" text="Week 1:" />
+      <Label layoutX="22.0" layoutY="108.0" text="Week 2:" />
+      <Label layoutX="64.0" layoutY="31.0" text="Year Schedule:" />
+      <Label fx:id="weekOneResult" layoutX="89.0" layoutY="76.0" text="Label" />
+      <Label fx:id="weekTwoResult" layoutX="89.0" layoutY="108.0" text="Label" />
+      <Label layoutX="22.0" layoutY="140.0" text="Week 3:" />
+      <Label fx:id="weekThreeResult" layoutX="89.0" layoutY="140.0" text="Label" />
+      <Label layoutX="22.0" layoutY="172.0" text="Week 4:" />
+      <Label fx:id="weekFourResult" layoutX="89.0" layoutY="172.0" text="Label" />
+      <Label layoutX="22.0" layoutY="204.0" text="Week 5:" />
+      <Label fx:id="weekFiveResult" layoutX="89.0" layoutY="204.0" text="Label" />
+      <Label layoutX="22.0" layoutY="233.0" text="Week 6:" />
+      <Label layoutX="22.0" layoutY="263.0" text="Week 7:" />
+      <Label fx:id="weekSixResult" layoutX="89.0" layoutY="233.0" text="Label" />
+      <Label fx:id="weekSevenResult" layoutX="89.0" layoutY="263.0" text="Label" />
+      <Label layoutX="22.0" layoutY="295.0" text="Week 8:" />
+      <Label fx:id="weekEightResult" layoutX="89.0" layoutY="295.0" text="Label" />
+      <Label layoutX="22.0" layoutY="327.0" text="Week 9:" />
+      <Label fx:id="weekNineResult" layoutX="89.0" layoutY="327.0" text="Label" />
    </children>
 </AnchorPane>

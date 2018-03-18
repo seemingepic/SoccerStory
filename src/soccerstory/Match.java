@@ -15,12 +15,16 @@ public class Match {
     private String team2;
     private int week;
     private int matchNumber;
+    private int team1Score;
+    private int team2Score;
     
     public Match(String newTeam1, String newTeam2, int newWeek, int newMatch){
         this.team1 = newTeam1;
         this.team2 = newTeam2;
         this.week = newWeek;
         this.matchNumber = newMatch;
+        this.team1Score = 0;
+        this.team2Score = 0;
     }
 
     /**
@@ -77,6 +81,34 @@ public class Match {
      */
     public void setMatchNumber(int matchNumber) {
         this.matchNumber = matchNumber;
+    }
+
+    /**
+     * @return the team1Score
+     */
+    public int getTeam1Score() {
+        return team1Score;
+    }
+
+    /**
+     * @param team1Score the team1Score to set
+     */
+    public void setTeam1Score(int team1Score) {
+        this.team1Score = team1Score;
+    }
+
+    /**
+     * @return the team2Score
+     */
+    public int getTeam2Score() {
+        return team2Score;
+    }
+
+    /**
+     * @param team2Score the team2Score to set
+     */
+    public void setTeam2Score(int team2Score) {
+        this.team2Score = team2Score;
     }
     
     

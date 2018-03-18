@@ -23,6 +23,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -80,6 +81,8 @@ public class MatchUIController implements Initializable {
     int awayTeamMidfield;
     int awayTeamGoalie;
     
+    int homeScore, awayScore;
+    
     @FXML
     private Label homeAttackWeight;
     @FXML
@@ -96,6 +99,8 @@ public class MatchUIController implements Initializable {
     private Text actionTarget;
     
     private NavigationUICntl navUiCntl;
+    @FXML
+    private Button startGameButton;
     
 
 
@@ -185,7 +190,7 @@ public class MatchUIController implements Initializable {
      * After score is updated, tell who scored
      */
     public void updateHomeScore() {
-        int homeScore = Integer.parseInt(homeTeamScore.getText());
+        homeScore = Integer.parseInt(homeTeamScore.getText());
         homeScore++;
         String updatedScore = Integer.toString(homeScore);
         homeTeamScore.setText(updatedScore);
@@ -197,7 +202,7 @@ public class MatchUIController implements Initializable {
      * gets the original scored, updates it and reposts it
      */
     public void updateAwayScore() {
-        int awayScore = Integer.parseInt(awayTeamScore.getText());
+        awayScore = Integer.parseInt(awayTeamScore.getText());
         awayScore++;
         String updatedScore = Integer.toString(awayScore);
         awayTeamScore.setText(updatedScore);
@@ -210,6 +215,7 @@ public class MatchUIController implements Initializable {
      */
     public void playGame() {
         fieldPosition();
+
     }
     
     /**
@@ -570,25 +576,53 @@ public class MatchUIController implements Initializable {
         awayTeamDefense = 1000 - homeTeamDefense;
         awayTeamGoalie = 1000 - homeTeamGoalie;
     }
-
-    public void overallTest(Player player)
+    
+    /**
+     * Compares the two scores of the teams, updates points + games played
+     * in the team list based on the outcome
+     */
+    private void updatePoints()
     {
-        System.out.println(player.overall());
+        if (homeScore > awayScore) //if home wins, give them 3 points, away 0
+        {
+            ListController.getInstance().getTheTeamList().updateTeamPoints(awayTeam, 0);
+            ListController.getInstance().getTheTeamList().updateTeamPoints(homeTeam, 3);
+        }
+        else if (awayScore > homeScore) //if away wins, give 3 points, home 0
+        {
+            ListController.getInstance().getTheTeamList().updateTeamPoints(homeTeam, 0);
+            ListController.getInstance().getTheTeamList().updateTeamPoints(awayTeam, 3); 
+        }
+        else if (awayScore == homeScore) //if points equal, give each team 1 point
+        {
+            ListController.getInstance().getTheTeamList().updateTeamPoints(awayTeam, 1);
+            ListController.getInstance().getTheTeamList().updateTeamPoints(homeTeam, 1);
+        }
     }
     
-
-    @FXML
-    private void shoot(ActionEvent event) {
-        playGame();
-    }
-
+    /**
+     * Sends the user back home to the nav screen
+     * @param event 
+     */
     @FXML
     private void goHome(ActionEvent event) {
-                actionTarget.setText("log on pressed");
+        actionTarget.setText("log on pressed");
         Stage stage = (Stage) actionTarget.getScene().getWindow();
         stage.hide();
             
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
+    }
+
+    /**
+     * What happens when the user clicks the start game button
+     * Game simulation starts 
+     * @param event 
+     */
+    @FXML
+    private void startGame(ActionEvent event) {
+        playGame(); //run simulation
+        updatePoints(); //determine winner give points based on winner
+        startGameButton.setVisible(false);
     }
     
 }

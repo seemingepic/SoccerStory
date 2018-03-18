@@ -91,6 +91,19 @@ public class TeamList {
         this.currentUserTeam = currentUserTeam;
     }
     
+    public void updateTeamPoints(String teamname, int points)
+    {
+        
+        for (int i = 0; i < theListOfTeams.size(); i++)
+        {
+            if (theListOfTeams.get(i).getTeamName().equals(teamname))
+            {
+                theListOfTeams.get(i).setPoints(theListOfTeams.get(i).getPoints() + points);
+                theListOfTeams.get(i).setGamesPlayed(theListOfTeams.get(i).getGamesPlayed() + 1);
+            }
+        }        
+    }
+    
 
 
     
