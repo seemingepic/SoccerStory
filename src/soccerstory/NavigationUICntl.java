@@ -1,8 +1,4 @@
- /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 import java.io.IOException;
@@ -20,7 +16,9 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *
+ * This is the "main screen" this passes control to each of the controllers, 
+ * holds some of the vital information to be passes to other controllers like
+ * current match, current week, 
  * @author mockl
  */
 public class NavigationUICntl implements Initializable {
@@ -54,6 +52,9 @@ public class NavigationUICntl implements Initializable {
         updateDate();
     }
     
+    /**
+     * Grabs the current match from calendar and set it to the labesl on the page
+     */
     private void updateDate()
     {
         try{
@@ -72,6 +73,9 @@ public class NavigationUICntl implements Initializable {
         
     }
     
+    /**
+     * Extracts data from match to determine home or away
+     */
     private void getMatchInfo()
     {
         if (getNextMatch().getTeam1().equals(ListController.getInstance().getTheTeamList().getCurrentUserTeam())) {

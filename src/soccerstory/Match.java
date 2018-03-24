@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 /**
- *
+ * This object is created in the CalendarUIController 
+ * This object stores the score of the game, the teams that are playing, the match number of the week
+ * and the week of the game that will be played
  * @author mockl
  */
 public class Match {

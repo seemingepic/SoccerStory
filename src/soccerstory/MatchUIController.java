@@ -6,6 +6,10 @@
  * a simulator should work
  * 
  * FIXES NEEDED: CHECK IF PLAYER IS BENCHED OR NOT!!!
+ * Fixed: ^^^
+ * 
+ * Updates that should be added:
+ * Fix the double shooting message/ not really a bug bust visibility issue
  */
 package soccerstory;
 
@@ -28,11 +32,6 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author mockl
- */
 public class MatchUIController implements Initializable {
 
     @FXML
@@ -128,13 +127,19 @@ public class MatchUIController implements Initializable {
         displayStats();  //Displays initial scores
         kickOff(); //Determines ininital possession of the game
     }
-    
+    /**
+     * Sets up labels for team names
+     */
     public void getTeams()
     {
         homeTeamLabel.setText(homeTeam); //Sets home team
         awayTeamLabel.setText(awayTeam); //sets away team name
     }
     
+    /**
+     * Grabs the current match from navigationUI and pulls the
+     * data from the match that is returned
+     */
     private void setUpTeams()
     {
         try{
@@ -299,45 +304,98 @@ public class MatchUIController implements Initializable {
         switch (ballLocation) { //Where is the ball? 
             case 0: //home goal
                 if (homePoss) {
-                    currentPoss = homeDefense.get(randomNonAttacker);
+                    changePossessionSucPass(homeDefense);//currentPoss = homeDefense.get(randomNonAttacker);
                 } else { //change player based on where the ball is
-                    currentPoss = awayAttack.get(randomAttacker);
+                    changePossessionSucPass(awayAttack);//currentPoss = awayAttack.get(randomAttacker);
                 }
                 break;
             case 1: //defense position
                 if (homePoss) {
-                    currentPoss = homeDefense.get(randomNonAttacker);
+                    changePossessionSucPass(homeDefense);//currentPoss = homeDefense.get(randomNonAttacker);
                 } else {
-                    currentPoss = awayAttack.get(randomAttacker);
+                    changePossessionSucPass(awayAttack);// currentPoss = awayAttack.get(randomAttacker);
                 }
                 break;
             case 2: //midfield checker
                 if (homePoss) {
-                    currentPoss = homeMidfield.get(randomNonAttacker);
+                    changePossessionSucPass(homeMidfield);//currentPoss = homeMidfield.get(randomNonAttacker);
                 } else {
-                    currentPoss = awayMidfield.get(randomNonAttacker);
+                    changePossessionSucPass(awayMidfield);//currentPoss = awayMidfield.get(randomNonAttacker);
                 }
                 break;
             case 3: //shot position
                 if (homePoss) {
-                    currentPoss = homeAttack.get(randomAttacker);
+                    changePossessionSucPass(homeAttack);//currentPoss = homeAttack.get(randomAttacker);
                 } else {
-                    currentPoss = awayDefense.get(randomNonAttacker);
+                    changePossessionSucPass(awayDefense);//currentPoss = awayDefense.get(randomNonAttacker);
                 }
                 break;
             default: //away goal
                 if (homePoss) {
-                    currentPoss = homeAttack.get(randomAttacker);
+                    changePossessionSucPass(homeAttack);//currentPoss = homeAttack.get(randomAttacker);
                 } else {
-                    currentPoss = awayDefense.get(randomNonAttacker);
+                    changePossessionSucPass(awayDefense);//currentPoss = awayDefense.get(randomNonAttacker);
                 }
                 break;
         }
-
     }
+ 
+    /**
+     * This algorithm determines the success rate of who will get the ball after
+     * a successful ball is passed.
+     * 
+     * Based on the player's overall, there is a weight assigned, then a random number 0-1,
+     * this will then determine the % chance a player has of getting the ball
+     * 
+     * @param newPlayersInvolved 
+     */
+    private void changePossessionSucPass(ArrayList<Player> newPlayersInvolved) {
+        ArrayList<Player> playersInvolved = newPlayersInvolved; 
+        int numPlayersInvolved = playersInvolved.size();
+        ArrayList<Double> playerSkills; //list of %chance of player getting ball
+        playerSkills = new ArrayList<Double>(); 
+        int totalOverall = 0; //used for the bottom number in the fraction to determine % chance
+        double randomNum = Math.random(); //random number 0-1
+
+        for (int i = 0; i < newPlayersInvolved.size(); i++) {
+            totalOverall += newPlayersInvolved.get(i).overall(); //get sum of overall
+        }
+
+        for (int i = 0; i < numPlayersInvolved; i++) {
+            playerSkills.add((double) (newPlayersInvolved.get(i).overall()) / totalOverall); //set up array with weight of each player
+        }
+        //This will then determine who will get the ball based on probability 
+        
+        if (numPlayersInvolved == 2) {
+            if (randomNum > 0 && randomNum < playerSkills.get(0)) {
+                currentPoss = newPlayersInvolved.get(0);
+            } else if (randomNum > playerSkills.get(0) && randomNum < (playerSkills.get(0) + playerSkills.get(1))) {
+                currentPoss = newPlayersInvolved.get(0);
+            }
+        } else {
+            if (randomNum > 0 && randomNum < playerSkills.get(0)) 
+            {
+                currentPoss = newPlayersInvolved.get(0);//player 1 gets ball
+            } 
+            else if (randomNum > playerSkills.get(0) && randomNum < (playerSkills.get(0) + playerSkills.get(1))) 
+            {
+                currentPoss = newPlayersInvolved.get(1);//player 2 gets ball
+            } 
+            else if (randomNum > (playerSkills.get(0) + playerSkills.get(1))
+                    && randomNum < (playerSkills.get(0) + playerSkills.get(1) + playerSkills.get(2))) 
+            {
+                currentPoss = newPlayersInvolved.get(2);//player 3 gets ball
+            }
+            else
+            {
+               currentPoss = newPlayersInvolved.get(3); //player 4 gets ball
+            }
+    }
+    }
+    
 
         /**
-     * This is the algorithm to determine how the playing of the midfield will go
+     * This is the algorithm to determine how the playing of the game will go
      * 1. Determine random number 1-1000
      * 2. Determine who has poss
      * 3. Based on who has poss, determine success based on position weights
@@ -351,7 +409,7 @@ public class MatchUIController implements Initializable {
         if (homePoss) {
             if (result < homeTeamScore) { //If maintain possession
                 determinePasserScore("H"); //determine how successfull
-
+                
             } else {
                 homePoss = false; //switch poss
                 awayPoss = true;
@@ -389,7 +447,7 @@ public class MatchUIController implements Initializable {
                 ballLocation = 4;
             }
         } else if (passerResult >= 2 && passerResult < 75) { //If passer score is normal, move field position
-            System.out.println(currentPoss.getName() + " Successful pass forward!");
+            System.out.println(currentPoss.getName() + " Goes forward with the ball!");
             if (possessor.equals("H")) {
                 ballLocation++;
             } else {

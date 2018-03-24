@@ -119,7 +119,12 @@ public class PlayerList {
         }
         return theTeamsPlayers;
     }
-    
+    /**
+     * This method is designed to only get the starters from the
+     * appropriate team to be put into the simulation
+     * @param teamName
+     * @return 
+     */
     public ArrayList<Player> getStartersFromTeam(String teamName)
     {
         ArrayList<Player> theTeamsPlayers = new ArrayList<>();
@@ -128,7 +133,8 @@ public class PlayerList {
         {
             if(getThePlayerList().get(i).getTeamPlayFor().equals(teamName) &&
                     !getThePlayerList().get(i).isBenched())
-            {
+            { // if the player is from the team and not benched
+                //return an arraylist with the players
                 theTeamsPlayers.add(getThePlayerList().get(i));
                 
             }
