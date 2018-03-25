@@ -10,6 +10,8 @@
  * 
  * Updates that should be added:
  * Fix the double shooting message/ not really a bug bust visibility issue
+ * Update score to the calander/match
+ * Have stats?
  */
 package soccerstory;
 
@@ -358,11 +360,11 @@ public class MatchUIController implements Initializable {
         double randomNum = Math.random(); //random number 0-1
 
         for (int i = 0; i < newPlayersInvolved.size(); i++) {
-            totalOverall += newPlayersInvolved.get(i).overall(); //get sum of overall
+            totalOverall += newPlayersInvolved.get(i).getOverall(); //get sum of overall
         }
 
         for (int i = 0; i < numPlayersInvolved; i++) {
-            playerSkills.add((double) (newPlayersInvolved.get(i).overall()) / totalOverall); //set up array with weight of each player
+            playerSkills.add((double) (newPlayersInvolved.get(i).getOverall()) / totalOverall); //set up array with weight of each player
         }
         //This will then determine who will get the ball based on probability 
         
@@ -584,26 +586,26 @@ public class MatchUIController implements Initializable {
         for (int i = 0; i < homeTeam.size(); i++) { //Go through home team and calculate total overall for each position
             switch (homeTeam.get(i).getPosition()) {
                 case "A":
-                    homeAttackerPoints += homeTeam.get(i).overall();
+                    homeAttackerPoints += homeTeam.get(i).getOverall();
                     break;
                 case "M":
-                    homeMidfieldPoints += homeTeam.get(i).overall();
+                    homeMidfieldPoints += homeTeam.get(i).getOverall();
                     break;
                 case "D":
-                    homeDefenderPoints += homeTeam.get(i).overall();
+                    homeDefenderPoints += homeTeam.get(i).getOverall();
                     break;
             }
         }
         for (int i = 0; i < awayTeam.size(); i++) { //Go through away team and calculate total overall for each position
             switch (awayTeam.get(i).getPosition()) {
                 case "A":
-                    awayAttackerPoints += awayTeam.get(i).overall();
+                    awayAttackerPoints += awayTeam.get(i).getOverall();
                     break;
                 case "M":
-                    awayMidfieldPoints += awayTeam.get(i).overall();
+                    awayMidfieldPoints += awayTeam.get(i).getOverall();
                     break;
                 case "D":
-                    awayDefenderPoints += awayTeam.get(i).overall();
+                    awayDefenderPoints += awayTeam.get(i).getOverall();
                     break;
             }
         }
@@ -627,7 +629,7 @@ public class MatchUIController implements Initializable {
         homeTeamAttack = (int)(((homeAttackPoints) / (homeAttackPoints + awayAttackPoints)) * 1000);
         homeTeamMidfield = (int)(((homeMidfieldPoints) / (homeMidfieldPoints + awayMidfieldPoints))* 1000);
         homeTeamDefense = (int)(((homeDefensePoints) / (homeDefensePoints + awayDefensePoints)) * 1000);
-        homeTeamGoalie = (int) ((this.homeGoalie.overall() / (this.homeGoalie.overall() + this.awayGoalie.overall())) * 1000);
+        homeTeamGoalie = (int) ((this.homeGoalie.getOverall() / (this.homeGoalie.getOverall() + this.awayGoalie.getOverall())) * 1000);
         //The code above calculates the realtive skill of the home team, and the code below gets the relative score for the away team
         awayTeamAttack = 1000 - homeTeamAttack;
         awayTeamMidfield = 1000 - homeTeamMidfield;

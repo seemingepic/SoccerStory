@@ -72,6 +72,14 @@ public class PlayerListUIController implements Initializable {
     Player clickedPlayer;
     
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    @FXML
+    private TableColumn<Player, Integer> attackerOverallColumn;
+    @FXML
+    private TableColumn<Player, Integer> midfieldOverallColumn;
+    @FXML
+    private TableColumn<Player, Integer> defenderOverallColumn;
+    @FXML
+    private TableColumn<Player, Integer> goalieOverallColumn;
 
     /**
      * Initializes the controller class.
@@ -109,6 +117,7 @@ public class PlayerListUIController implements Initializable {
     {
         attackerNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
         attackerPositionColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("position"));
+        attackerOverallColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("overall"));
         
         attackerTable.setItems(attackerListTable);
     }
@@ -117,6 +126,7 @@ public class PlayerListUIController implements Initializable {
     {
         midfieldNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
         midfieldPositionColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("position"));
+        midfieldOverallColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("overall"));
         
         midfieldTable.setItems(midfieldListTable);
     }
@@ -125,6 +135,7 @@ public class PlayerListUIController implements Initializable {
     {
         defenderNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
         defenderPositionColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("position"));
+        defenderOverallColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("overall"));
         
         defenderTable.setItems(defenderListTable);
     }
@@ -133,6 +144,7 @@ public class PlayerListUIController implements Initializable {
     {
         goalieNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
         goaliePositionColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("position"));
+        goalieOverallColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("overall"));
         
         goalieTable.setItems(goalieListTable);
     }

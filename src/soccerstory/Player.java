@@ -27,6 +27,11 @@ public class Player {
     private int defense;
     private int passing;
     private int goalie;
+    
+    public Player()
+    {
+        
+    }
 
     public Player(String newName, String newTeam, String newPosition)
     {
@@ -207,7 +212,7 @@ public class Player {
         this.benched = benched;
     }
  
-    public int overall() {
+    public int getOverall() {
         int overall;
         switch (getPosition()) {
             case "A":

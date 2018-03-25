@@ -32,10 +32,25 @@ public class TeamList {
     public ArrayList<Team> testTeams()
     {
         ArrayList<Team> testTeams = new ArrayList();
-        for (int i = 0; i < 9; i++) {
-            Team newTeam = new Team(i + "name", i + "owner", i + "coach");
-            testTeams.add(newTeam);
-        }
+        Team newTeam = new Team("Drunk Whales", "Bob", "Tom");
+        Team newTeam2 = new Team("Horny Badgers", "Bob", "Tom");
+        Team newTeam3 = new Team("German Shepherds", "Bob", "Tom");
+        Team newTeam4 = new Team("NiteFort BR", "Bob", "Tom");
+        Team newTeam5 = new Team("Pointless Pigeons", "Bob", "Tom");
+        Team newTeam6 = new Team("The GPHers", "Bob", "Tom");
+        Team newTeam7 = new Team("Jealous Deers", "Bob", "Tom");
+        Team newTeam8 = new Team("Swag Gangstaz", "Bob", "Tom");
+        Team newTeam9 = new Team("American Spanners", "Bob", "Tom");
+
+        testTeams.add(newTeam);
+        testTeams.add(newTeam2);
+        testTeams.add(newTeam3);
+        testTeams.add(newTeam4);
+        testTeams.add(newTeam5);
+        testTeams.add(newTeam6);
+        testTeams.add(newTeam7);
+        testTeams.add(newTeam8);
+        testTeams.add(newTeam9);
         return testTeams;    
     }
 

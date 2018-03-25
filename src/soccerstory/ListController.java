@@ -21,8 +21,8 @@ public class ListController {
      */
     private ListController()
     {
-        thePlayerList = new PlayerList();
         theTeamList = new TeamList();
+        //thePlayerList = new PlayerList();
     }
     
     /**
@@ -66,6 +66,11 @@ public class ListController {
      */
     public void setTheTeamList(TeamList theTeamList) {
         this.theTeamList = theTeamList;
+    }
+    
+    public void createPlayerList()
+    {
+        thePlayerList = new PlayerList();
     }
 
 }

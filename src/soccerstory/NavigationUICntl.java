@@ -47,9 +47,10 @@ public class NavigationUICntl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ListController.getInstance();
+        ListController.getInstance().createPlayerList();
         getTeamName();
         updateDate();
+        
     }
     
     /**

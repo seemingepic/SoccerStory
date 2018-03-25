@@ -5,6 +5,9 @@
  */
 package soccerstory;
 
+import com.github.javafaker.Faker;
+import java.util.Random;
+
 /**
  *
  * @author mockl
@@ -94,6 +97,17 @@ public class Team {
      */
     public void setCoach(String coach) {
         this.coach = coach;
+    }
+    
+
+    private int randomStat()
+    {
+        int max = 90;
+        int min = 20;
+        
+        Random r = new Random();
+        int randomNum = r.nextInt((max-min) + 1) + min;
+        return randomNum;
     }
     
     
