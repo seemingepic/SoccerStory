@@ -15,16 +15,17 @@
             <TableColumn fx:id="attackerOverallColumn" prefWidth="75.0" text="Overall" />
         </columns>
       </TableView>
-      <TableView fx:id="benchTable" layoutX="426.0" layoutY="50.0" prefHeight="273.0" prefWidth="262.0">
+      <TableView fx:id="benchTable" layoutX="426.0" layoutY="50.0" onMouseClicked="#getSelectedBench" prefHeight="274.0" prefWidth="335.0">
          <columns>
             <TableColumn fx:id="nameBenchColumn" prefWidth="191.20001602172852" text="Player Name" />
             <TableColumn fx:id="positionBenchColumn" prefWidth="71.19999694824219" text="Position" />
+            <TableColumn fx:id="benchOverallColumn" prefWidth="75.0" text="Overall" />
          </columns>
       </TableView>
       <Button layoutX="489.0" layoutY="417.0" mnemonicParsing="false" onAction="#moveToPlay" prefHeight="26.0" prefWidth="151.0" text="Move to Play" />
       <Button layoutX="485.0" layoutY="470.0" mnemonicParsing="false" onAction="#moveToBench" prefHeight="26.0" prefWidth="151.0" text="Move to Bench" />
       <Button layoutX="719.0" layoutY="550.0" mnemonicParsing="false" onAction="#goHome" text="Go home" />
-      <Text fx:id="actionTarget" layoutX="567.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="actionTarget" layoutX="567.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <TableView fx:id="midfieldTable" layoutX="31.0" layoutY="159.0" onMouseClicked="#getSelectedMidfielder" prefHeight="151.0" prefWidth="335.0">
         <columns>
           <TableColumn fx:id="midfieldNameColumn" prefWidth="194.39996719360352" text="Player Name" />
@@ -46,5 +47,6 @@
             <TableColumn fx:id="goalieOverallColumn" prefWidth="75.0" text="Overall" />
         </columns>
       </TableView>
+      <Button layoutX="535.0" layoutY="525.0" mnemonicParsing="false" onAction="#viewStats" text="View all stats" />
    </children>
 </AnchorPane>

@@ -100,7 +100,10 @@ public class PlayerList {
         return testPlayers;
     }
 
-    
+/**
+ * Turn data into observablelist
+ * @return 
+ */
     public ObservableList<Player> getUserData() 
     {
         ObservableList<Player> theNewListOfPlayers;
@@ -109,6 +112,11 @@ public class PlayerList {
         return theNewListOfPlayers;
     }
     
+    /**
+     * Gets the specific players from each team 
+     * @param teamName
+     * @return 
+     */
     public ArrayList<Player> getPlayersFromTeam(String teamName)
     {
         ArrayList<Player> theTeamsPlayers = new ArrayList<>();
@@ -179,8 +187,8 @@ public class PlayerList {
     
     private int randomStat()
     {
-        int max = 99;
-        int min = 27;
+        int max = 90;
+        int min = 30;
         
         Random r = new Random();
         int randomNum = r.nextInt((max-min) + 1) + min;

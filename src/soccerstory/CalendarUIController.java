@@ -55,6 +55,8 @@ public class CalendarUIController implements Initializable {
     private Label weekNineResult;
     @FXML
     private Label currentWeekLabel;
+    
+    private int matchIndex;
 
 
 
@@ -64,12 +66,11 @@ public class CalendarUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         updateCalendar();
-        listMatches(ListController.getInstance().getTheTeamList().getTeamNames());
+        matchList = ListController.getInstance().getTheMatchList().getTheMatchList();
+        currentWeek = ListController.getInstance().getTheMatchList().getCurrentWeek();
         //printList();
-        findMatch("fff");
+        findMatch(ListController.getInstance().getTheTeamList().getCurrentUserTeam());
         layOutCalendar();
-        setUpScoreLabels(1, weekOneResult);
-
     }
 
     /**
@@ -97,6 +98,7 @@ public class CalendarUIController implements Initializable {
         setUpScheduleLabels(7, weekSevenResult);
         setUpScheduleLabels(8, weekEightResult);
         setUpScheduleLabels(9, weekNineResult);
+        setUpScoreLabels(1, weekOneResult);
     }
 
     /**
@@ -131,44 +133,7 @@ public class CalendarUIController implements Initializable {
         ArrayList<String> teams = new ArrayList<String>();
     }
 
-    /**
-     * Creates a calander to be stored into another class 
-     * Code partially from: https://stackoverflow.com/questions/26471421/round-robin-algorithm-implementation-java
-     * @param listTeam
-     * @param ListTeam 
-     */
-    public void listMatches(List<String> listTeam) {
 
-        int numWeeks = listTeam.size() - 1;
-        int halfSize = listTeam.size() / 2;
-
-        List<String> teams = new ArrayList<String>();
-
-        teams.addAll(listTeam); // Add teams to List and remove the first team
-        teams.remove(0); //remove first index to base calander off of
-
-        int teamsSize = teams.size(); //how many teams?
-
-        for (int week = 0; week < numWeeks; week++) { //same as int i but change it to weeks as this is based off weeks
-            
-            System.out.println("Week {" + (week + 1) + ")"); //Prints out what week the matches are being created for
-
-            int teamIdx = week % teamsSize; //get first value of idx, add to it later
-
-            Match newMatch = new Match(teams.get(teamIdx), listTeam.get(0), week + 1, 1); //center around first time in the original list, 
-            matchList.add(newMatch);
-            
-            //Match newMatch = new Match(teams.get(teamIdx).getTeamName());
-
-            for (int idx = 1; idx < halfSize; idx++) {
-                int firstTeam = (week + idx) % teamsSize; //get first team from first half of list
-                int secondTeam = (week + teamsSize - idx) % teamsSize; //get second team from second half of list
-                //this will switch home/away when the week is > 5 to make it more balanced
-                Match newerMatch = new Match(teams.get(firstTeam), teams.get(secondTeam), week + 1, idx + 1);
-                matchList.add(newerMatch);
-            }
-        }
-    }
     
     
     /**
@@ -177,12 +142,12 @@ public class CalendarUIController implements Initializable {
      */
     public void printList()
     {
-        for (int i = 0; i < matchList.size(); i++)
+        for (int i = 0; i < getMatchList().size(); i++)
         {
-            System.out.print(matchList.get(i).getTeam1() + "VS");
-            System.out.print(matchList.get(i).getTeam2() + "  ");
-            System.out.print(matchList.get(i).getWeek() + "  ");
-            System.out.println(matchList.get(i).getMatchNumber());
+            System.out.print(getMatchList().get(i).getTeam1() + "VS");
+            System.out.print(getMatchList().get(i).getTeam2() + "  ");
+            System.out.print(getMatchList().get(i).getWeek() + "  ");
+            System.out.println(getMatchList().get(i).getMatchNumber());
         }
     }
   
@@ -195,20 +160,23 @@ public class CalendarUIController implements Initializable {
     {
         
         String teamNamer = "Null";
-        for(int i = 0; i < matchList.size(); i++)
+        for(int i = 0; i < getMatchList().size(); i++)
         {
-            if ((matchList.get(i).getWeek() == currentWeek) && //if the match is this week and has the team name 
-                    (matchList.get(i).getTeam1().equals(teamName)))
+            if ((getMatchList().get(i).getWeek() == currentWeek) && //if the match is this week and has the team name 
+                    (getMatchList().get(i).getTeam1().equals(teamName)))
             {
-               teamNamer = (matchList.get(i).getTeam2());
-                       setNextMatch(matchList.get(i));
+               teamNamer = (getMatchList().get(i).getTeam2());
+                       setNextMatch(getMatchList().get(i));
+                setMatchIndex(i);
             }
-            else if ((matchList.get(i).getWeek() == currentWeek) &&
-                    matchList.get(i).getTeam2().equals(teamName))
+            else if ((getMatchList().get(i).getWeek() == currentWeek) &&
+                    getMatchList().get(i).getTeam2().equals(teamName))
             {
-               teamNamer = (matchList.get(i).getTeam1());
-                       setNextMatch(matchList.get(i));
+               teamNamer = (getMatchList().get(i).getTeam1());
+                       setNextMatch(getMatchList().get(i));
+                setMatchIndex(i);
             }
+
         }
         setStringOtherTeamName(teamNamer); //set other team they are playing
     }
@@ -222,18 +190,18 @@ public class CalendarUIController implements Initializable {
     private void setUpScheduleLabels(int week, Label weekLabel)
     {
         String match = "null";
-        for (int i = 0; i < matchList.size(); i++)
+        for (int i = 0; i < getMatchList().size(); i++)
         {
-            if ((matchList.get(i).getTeam1().equals(ListController.getInstance().
-                    getTheTeamList().getCurrentUserTeam())) && matchList.get(i).getWeek() == week)
+            if ((getMatchList().get(i).getTeam1().equals(ListController.getInstance().
+                    getTheTeamList().getCurrentUserTeam())) && getMatchList().get(i).getWeek() == week)
             {
-                match = "@ home " + " vs " + matchList.get(i).getTeam2(); 
+                match = "@ home " + " vs " + getMatchList().get(i).getTeam2(); 
       
             }        
-            else if ((matchList.get(i).getTeam2().equals(ListController.getInstance().
-                    getTheTeamList().getCurrentUserTeam())) && matchList.get(i).getWeek() == week)
+            else if ((getMatchList().get(i).getTeam2().equals(ListController.getInstance().
+                    getTheTeamList().getCurrentUserTeam())) && getMatchList().get(i).getWeek() == week)
             {
-                match = "@ " + matchList.get(i).getTeam1();  
+                match = "@ " + getMatchList().get(i).getTeam1();  
             }
                             
             weekLabel.setText(match); 
@@ -249,26 +217,26 @@ public class CalendarUIController implements Initializable {
     {
         String match = "null";
         
-        for (int i = 0; i < matchList.size(); i++)
+        for (int i = 0; i < getMatchList().size(); i++)
         {
-            if ((matchList.get(i).getTeam1().equals(ListController.getInstance().
-                    getTheTeamList().getCurrentUserTeam())) && matchList.get(i).getWeek() == week)
+            if ((getMatchList().get(i).getTeam1().equals(ListController.getInstance().
+                    getTheTeamList().getCurrentUserTeam())) && getMatchList().get(i).getWeek() == week)
             {
                 //need to add W/L/D tag
-                match = scoreLabel.getText() + "  " +  matchList.get(i).getTeam1Score() + " - " + matchList.get(i).getTeam2Score();
+                match = scoreLabel.getText() + "  " +  getMatchList().get(i).getTeam1Score() + " - " + getMatchList().get(i).getTeam2Score();
                             scoreLabel.setText(match); 
       
             }        
-            else if ((matchList.get(i).getTeam2().equals(ListController.getInstance().
-                    getTheTeamList().getCurrentUserTeam())) && matchList.get(i).getWeek() == week)
+            else if ((getMatchList().get(i).getTeam2().equals(ListController.getInstance().
+                    getTheTeamList().getCurrentUserTeam())) && getMatchList().get(i).getWeek() == week)
             {
-                match = scoreLabel.getText() + "  " + matchList.get(i).getTeam1Score() + " - " + matchList.get(i).getTeam2Score();
+                match = scoreLabel.getText() + "  " + getMatchList().get(i).getTeam1Score() + " - " + getMatchList().get(i).getTeam2Score();
                             scoreLabel.setText(match); 
-            }
-                            
-
+            }                  
         } 
     }
+    
+    
 
     /**
      * @return the stringOtherTeamName
@@ -296,6 +264,34 @@ public class CalendarUIController implements Initializable {
      */
     public void setNextMatch(Match nextMatch) {
         this.nextMatch = nextMatch;
+    }
+
+    /**
+     * @return the matchIndex
+     */
+    public int getMatchIndex() {
+        return matchIndex;
+    }
+
+    /**
+     * @param matchIndex the matchIndex to set
+     */
+    public void setMatchIndex(int matchIndex) {
+        this.matchIndex = matchIndex;
+    }
+
+    /**
+     * @return the matchList
+     */
+    public ArrayList<Match> getMatchList() {
+        return matchList;
+    }
+
+    /**
+     * @param matchList the matchList to set
+     */
+    public void setMatchList(ArrayList<Match> matchList) {
+        this.matchList = matchList;
     }
 
 }

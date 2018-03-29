@@ -29,9 +29,12 @@ public class NavigationCntl {
     
     //sets up constructor 
     private NavigationCntl(Stage theExistingStage){
+        ListController.getInstance().createPlayerList();
+        ListController.getInstance().createMatchList();
         stage = theExistingStage;
         this.setUpNavigationScene();
         stage.show();
+   
     }
     
     //gets the navigation controller
@@ -117,6 +120,22 @@ public class NavigationCntl {
         }catch(Exception e){
             e.printStackTrace();
         } 
+    }
+    
+    public void setUpShopScene()
+    {
+        Parent root;
+        Scene scene;
+        try{
+            root = FXMLLoader.load(getClass().getResource("PlayerShopUI.fxml"));
+            scene = new Scene(root);
+            stage.setTitle("Shop");
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        } 
+        
     }
 
  

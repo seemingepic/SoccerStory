@@ -84,6 +84,8 @@ public class MatchUIController implements Initializable {
     
     int homeScore, awayScore;
     
+    private Match match;
+    
     @FXML
     private Label homeAttackWeight;
     @FXML
@@ -100,6 +102,7 @@ public class MatchUIController implements Initializable {
     private Text actionTarget;
     
     private NavigationUICntl navUiCntl;
+    private CalendarUIController calUiCntl;
     @FXML
     private Button startGameButton;
     
@@ -128,6 +131,7 @@ public class MatchUIController implements Initializable {
         determineWeight(homeTeamPlayers, awayTeamPlayers); //Determines how successful each team will be
         displayStats();  //Displays initial scores
         kickOff(); //Determines ininital possession of the game
+
     }
     /**
      * Sets up labels for team names
@@ -152,7 +156,7 @@ public class MatchUIController implements Initializable {
             e.printStackTrace();
         }
       
-        Match match = navUiCntl.getNextMatch();
+        match = navUiCntl.getNextMatch();
         
         if(navUiCntl.getHome())
         {
@@ -250,6 +254,7 @@ public class MatchUIController implements Initializable {
                     break;
             }
         }
+
     }
 
     /**
@@ -424,7 +429,9 @@ public class MatchUIController implements Initializable {
                 awayPoss = false;
             }
         }
+        System.out.println(currentPoss.getName() + " Tries to move the ball and loses it");
         changePossessionPlayer();
+        System.out.println(currentPoss.getName() + " Now has the ball");
     }
     
     
@@ -492,7 +499,7 @@ public class MatchUIController implements Initializable {
         int differentScores = shooterResult - goalieResult; //subtract "skill" found by random
 
         if (differentScores <= 20) { //If the difference in scores is around this, its a save
-            System.out.println(currentPoss.getName() + "Shoots & Goalie saves + passes it!");
+            System.out.println(currentPoss.getName() + " Shoots!!! " + goalie.getName() + " Saves it!");
             if (possessor.equals("H")) {
                 ballLocation = 3;
                 awayPoss = true;
@@ -504,6 +511,7 @@ public class MatchUIController implements Initializable {
                 awayPoss = false;
                 changePossessionPlayer();
             }
+            System.out.println(goalie.getName() + " Passes to " + currentPoss.getName());
         } else { //If its a good shot, get a goal
             System.out.println(currentPoss.getName() + " SCORRRRREEEEEEEs");
             if (possessor.equals("H")) {
@@ -658,7 +666,15 @@ public class MatchUIController implements Initializable {
             ListController.getInstance().getTheTeamList().updateTeamPoints(awayTeam, 1);
             ListController.getInstance().getTheTeamList().updateTeamPoints(homeTeam, 1);
         }
+
+                        setPlayerTeamResult();
     }
+    
+    private void setPlayerTeamResult()
+    {
+        ListController.getInstance().getTheMatchList().updateScores(homeTeam, homeScore, awayScore);
+    }
+    
     
     /**
      * Sends the user back home to the nav screen

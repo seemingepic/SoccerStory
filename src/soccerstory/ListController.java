@@ -14,6 +14,7 @@ public class ListController {
     
     private PlayerList thePlayerList;
     private TeamList theTeamList;
+    private MatchList theMatchList;
     private static ListController instance = null;
     
     /**
@@ -71,6 +72,25 @@ public class ListController {
     public void createPlayerList()
     {
         thePlayerList = new PlayerList();
+    }
+    
+    public void createMatchList()
+    {
+        theMatchList = new MatchList();
+    }
+
+    /**
+     * @return the theMatchList
+     */
+    public MatchList getTheMatchList() {
+        return theMatchList;
+    }
+
+    /**
+     * @param theMatchList the theMatchList to set
+     */
+    public void setTheMatchList(MatchList theMatchList) {
+        this.theMatchList = theMatchList;
     }
 
 }

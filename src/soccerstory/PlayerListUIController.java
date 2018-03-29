@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -80,6 +81,8 @@ public class PlayerListUIController implements Initializable {
     private TableColumn<Player, Integer> defenderOverallColumn;
     @FXML
     private TableColumn<Player, Integer> goalieOverallColumn;
+    @FXML
+    private TableColumn<Player, Integer> benchOverallColumn;
 
     /**
      * Initializes the controller class.
@@ -153,6 +156,7 @@ public class PlayerListUIController implements Initializable {
     {
         nameBenchColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
         positionBenchColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("position"));
+        benchOverallColumn.setCellValueFactory(new PropertyValueFactory<Player,Integer>("overall"));
         
         benchTable.setItems(benchListTable);     
     }
@@ -302,6 +306,22 @@ public class PlayerListUIController implements Initializable {
             alert.showAndWait();
         }
     }
+    
+    private void viewPlayerInfo()
+    {
+            alert.setTitle("Player Stats");
+            alert.setHeaderText("1-99");
+            alert.setContentText("Overall:          " + clickedPlayer.getOverall() + "\n"
+                    + "BallSkill:         " + clickedPlayer.getBallskill() + "\n"
+                    + "Defense:        " + clickedPlayer.getDefense() + "\n"
+                    + "Goal Skill:      " + clickedPlayer.getGoalie() + "\n"
+                    + "Passing:         " + clickedPlayer.getPassing() + "\n"
+                    + "Shooting:       " + clickedPlayer.getShooting() + "\n"
+                    + "Speed:           " + clickedPlayer.getSpeed() + "\n");
+
+            alert.showAndWait();
+        System.out.println(clickedPlayer.getDefense());
+    }
 
     /**
      * Sends selected player to the play area
@@ -357,6 +377,7 @@ public class PlayerListUIController implements Initializable {
     }
     
     
+    
     private void displayError()
     {
             alert.setTitle("Player cannot be added");
@@ -391,6 +412,16 @@ public class PlayerListUIController implements Initializable {
         }
         else
             return true;
+    }
+
+    @FXML
+    private void viewStats(ActionEvent event) {
+        viewPlayerInfo();
+    }
+
+    @FXML
+    private void getSelectedBench(MouseEvent event) {
+       clickedPlayer = goalieTable.getSelectionModel().getSelectedItem();
     }
     
 

@@ -41,13 +41,15 @@ public class NavigationUICntl implements Initializable {
     private Boolean home;
     @FXML
     private Label homeOrAway;
+    @FXML
+    private Button matchButton;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ListController.getInstance().createPlayerList();
+
         getTeamName();
         updateDate();
         
@@ -65,15 +67,27 @@ public class NavigationUICntl implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String date = "week ";
-        date = date + getCalendarController().getCurrentWeek();  
-        weekLabel.setText(date);
-        setNextMatch(getCalendarController().getNextMatch());
-        getMatchInfo();
-        teamLabel.setText(otherTeam);
-        
+        if (getCalendarController().getCurrentWeek() < 10)
+        {
+            String date = "week ";
+            date = date + getCalendarController().getCurrentWeek();  
+            weekLabel.setText(date);
+            setNextMatch(getCalendarController().getNextMatch());
+            getMatchInfo();
+            teamLabel.setText(otherTeam);
+        }
+        else
+        {
+            String date = "SEASON OVER";
+
+            weekLabel.setText(date);
+            setNextMatch(getCalendarController().getNextMatch());
+            teamLabel.setText("NONE");   
+            matchButton.setVisible(false);
+        }
     }
     
+
     /**
      * Extracts data from match to determine home or away
      */
@@ -127,6 +141,7 @@ public class NavigationUICntl implements Initializable {
         theStage.hide();
         NavigationCntl.getNavigationCntl(theStage).setUpCalendarScene();
     }
+    
     
 
     /**
@@ -267,6 +282,14 @@ public class NavigationUICntl implements Initializable {
      */
     public void setHome(Boolean home) {
         this.home = home;
+    }
+
+    @FXML
+    private void viewShop(ActionEvent event) {
+        getActionTarget().setText("team button pressed");
+        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
+        theStage.hide();
+        NavigationCntl.getNavigationCntl(theStage).setUpShopScene();
     }
     
 }
