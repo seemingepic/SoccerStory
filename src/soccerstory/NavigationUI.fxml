@@ -21,5 +21,6 @@
       <Label layoutX="178.0" layoutY="118.0" prefHeight="18.0" prefWidth="110.0" text="You will be:" />
       <Label fx:id="homeOrAway" layoutX="346.0" layoutY="119.0" text="Label" />
       <Button layoutX="242.0" layoutY="301.0" mnemonicParsing="false" onAction="#viewShop" prefHeight="26.0" prefWidth="90.0" text="View Shop" />
+      <Button fx:id="newSeasonButton" layoutX="243.0" layoutY="336.0" mnemonicParsing="false" onAction="#newSeason" prefHeight="26.0" prefWidth="102.0" text="New Season" visible="false" />
    </children>
 </AnchorPane>

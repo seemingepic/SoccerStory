@@ -43,7 +43,7 @@ public class PlayerShopUIController implements Initializable {
         developNewPlayer(1);
     }
     
-    private void developNewPlayer(int i)
+    public void developNewPlayer(int i)
     {
         Faker faker = new Faker();
 
@@ -89,12 +89,32 @@ public class PlayerShopUIController implements Initializable {
 
             randomNum = r.nextInt((max-min) + 1) + min;
         }
-        else //average = 91
+        else if (i == 3)//average = 91
         {
             int max = 99;
             int min = 83;
            
             randomNum = r.nextInt((max-min) + 1) + min;
+        }
+        else if (i == 4) //Sure bet in the draft
+        {
+            int max = 75;
+            int min = 74; //average = 66 between skills
+
+            randomNum = r.nextInt((max - min) + 1) + min;
+
+        } else if (i == 5) //Has potential 
+        {
+            int max = 90;
+            int min = 65; //average = 80 between skills
+
+            randomNum = r.nextInt((max - min) + 1) + min;
+        } else //Super risk player
+        {
+            int max = 99;
+            int min = 58;
+
+            randomNum = r.nextInt((max - min) + 1) + min;
         }
         return randomNum;
     }  
@@ -122,6 +142,8 @@ public class PlayerShopUIController implements Initializable {
          String position = positionArray[randomNum];
          return position;
     }
+
+
 
     @FXML
     private void buyGoodPlayer(ActionEvent event) {

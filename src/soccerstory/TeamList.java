@@ -106,6 +106,12 @@ public class TeamList {
         this.currentUserTeam = currentUserTeam;
     }
     
+    /**
+     * Function: This method is called in the MatchUIController to add points to
+     * the teams based on how they won
+     * @param teamname --team of points being added 
+     * @param points  -- points added to each team
+     */
     public void updateTeamPoints(String teamname, int points)
     {
         
@@ -113,10 +119,23 @@ public class TeamList {
         {
             if (theListOfTeams.get(i).getTeamName().equals(teamname))
             {
-                theListOfTeams.get(i).setPoints(theListOfTeams.get(i).getPoints() + points);
+                theListOfTeams.get(i).setPoints(theListOfTeams.get(i).getPoints() + points); //add points, add 1 GP
                 theListOfTeams.get(i).setGamesPlayed(theListOfTeams.get(i).getGamesPlayed() + 1);
             }
         }        
+    }
+    
+    /**
+     * Function: To reset the points of each team and reset games played back to 0
+     * This is to be used after a season has been played to reset
+     */
+    public void resetPoints()
+    {
+        for (int i = 0; i < theListOfTeams.size(); i++)
+        {
+            theListOfTeams.get(i).setPoints(0); //reset points and games to 0
+            theListOfTeams.get(i).setGamesPlayed(0);
+        }
     }
     
 

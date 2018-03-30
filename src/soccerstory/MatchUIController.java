@@ -377,7 +377,7 @@ public class MatchUIController implements Initializable {
             if (randomNum > 0 && randomNum < playerSkills.get(0)) {
                 currentPoss = newPlayersInvolved.get(0);
             } else if (randomNum > playerSkills.get(0) && randomNum < (playerSkills.get(0) + playerSkills.get(1))) {
-                currentPoss = newPlayersInvolved.get(0);
+                currentPoss = newPlayersInvolved.get(1);
             }
         } else {
             if (randomNum > 0 && randomNum < playerSkills.get(0)) 
@@ -416,7 +416,7 @@ public class MatchUIController implements Initializable {
         if (homePoss) {
             if (result < homeTeamScore) { //If maintain possession
                 determinePasserScore("H"); //determine how successfull
-                
+                currentPoss.getStats().setPasses(currentPoss.getStats().getPasses() + 1);
             } else {
                 homePoss = false; //switch poss
                 awayPoss = true;
@@ -424,6 +424,7 @@ public class MatchUIController implements Initializable {
         } else if (awayPoss) { //repeat same as top with opposite team
             if (result > awayTeamScore) {
                 determinePasserScore("A");
+                currentPoss.getStats().setPasses(currentPoss.getStats().getPasses() + 1);
             } else { //If away team fails, switch possition and current poss player
                 homePoss = true; //swithc poss
                 awayPoss = false;
@@ -502,11 +503,13 @@ public class MatchUIController implements Initializable {
             System.out.println(currentPoss.getName() + " Shoots!!! " + goalie.getName() + " Saves it!");
             if (possessor.equals("H")) {
                 ballLocation = 3;
+                homeGoalie.getStats().setShotsAgainst(homeGoalie.getStats().getShotsAgainst() + 1);
                 awayPoss = true;
                 homePoss = false;
                 changePossessionPlayer();
             } else { //switch possessions
                 ballLocation = 1;
+                awayGoalie.getStats().setShotsAgainst(awayGoalie.getStats().getShotsAgainst() + 1);
                 homePoss = true;
                 awayPoss = false;
                 changePossessionPlayer();
@@ -518,11 +521,15 @@ public class MatchUIController implements Initializable {
                 updateHomeScore();
                 homePoss = false;
                 awayPoss = true;
+                homeGoalie.getStats().setGoalsAllowed(homeGoalie.getStats().getGoalsAllowed() + 1); 
+                currentPoss.getStats().setGoals(currentPoss.getStats().getGoals() + 1);
                 kickOff(); //re-kick off ball
             } else {
                 updateAwayScore();
                 homePoss = true;
                 awayPoss = false;
+                awayGoalie.getStats().setGoalsAllowed(awayGoalie.getStats().getGoalsAllowed() + 1);
+                currentPoss.getStats().setGoals(currentPoss.getStats().getGoals() + 1);
                 kickOff(); //re-kick off ball
             }
         }   

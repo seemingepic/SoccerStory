@@ -28,6 +28,9 @@ public class Player {
     private int passing;
     private int goalie;
     
+    private int goals;
+    private Stats stats;
+    
     public Player()
     {
         
@@ -60,6 +63,7 @@ public class Player {
         this.passing = newPassing;
         this.goalie = newGoalie;
         this.benched = newIsBenched;
+        this.stats = new Stats();
     }
 
 
@@ -286,6 +290,20 @@ public class Player {
                 + (this.getSpeed() * .1136) + (this.getShooting() * .091);
         return (int) overall;
 
+    }
+
+    /**
+     * @return the stats
+     */
+    public Stats getStats() {
+        return stats;
+    }
+
+    /**
+     * @param stats the stats to set
+     */
+    public void setStats(Stats stats) {
+        this.stats = stats;
     }
 
 

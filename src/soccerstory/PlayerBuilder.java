@@ -22,6 +22,8 @@ public class PlayerBuilder {
     private int defense;
     private int passing;
     private int goalie;
+    
+    private Stats stats;
 
     /**
      * @param name the name to set
@@ -103,6 +105,7 @@ public class PlayerBuilder {
         this.goalie = goalie;
         return this;
     }
+    
     
     public Player getPlayer()
     {

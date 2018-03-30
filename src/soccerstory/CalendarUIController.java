@@ -99,6 +99,14 @@ public class CalendarUIController implements Initializable {
         setUpScheduleLabels(8, weekEightResult);
         setUpScheduleLabels(9, weekNineResult);
         setUpScoreLabels(1, weekOneResult);
+        setUpScoreLabels(2, weekTwoResult);
+        setUpScoreLabels(3, weekThreeResult);
+        setUpScoreLabels(4, weekFourResult);
+        setUpScoreLabels(5, weekFiveResult);
+        setUpScoreLabels(6, weekSixResult);
+        setUpScoreLabels(7, weekSevenResult);
+        setUpScoreLabels(8, weekEightResult);
+        setUpScoreLabels(9, weekNineResult);
     }
 
     /**

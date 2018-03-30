@@ -5,8 +5,15 @@
  */
 package soccerstory;
 
+import com.github.javafaker.Faker;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 
 /**
  *
@@ -84,7 +91,7 @@ public class MatchList {
         }  
         currentWeek++;
     }
-    
+ 
     /**
      * @return the theMatchList
      */
@@ -105,5 +112,6 @@ public class MatchList {
     public int getCurrentWeek() {
         return currentWeek;
     }
+    
     
 }

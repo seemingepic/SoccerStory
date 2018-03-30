@@ -318,6 +318,19 @@ public class PlayerListUIController implements Initializable {
                     + "Passing:         " + clickedPlayer.getPassing() + "\n"
                     + "Shooting:       " + clickedPlayer.getShooting() + "\n"
                     + "Speed:           " + clickedPlayer.getSpeed() + "\n");
+                    if (clickedPlayer.getPosition().equals("A"))
+                    {
+                     alert.setContentText(alert.getContentText() + "Goals             " + clickedPlayer.getStats().getGoals());
+                    }
+                    else if (clickedPlayer.getPosition().equals("G"))
+                    {
+                        alert.setContentText(alert.getContentText() + "Shots against:          " + clickedPlayer.getStats().getShotsAgainst());
+                        alert.setContentText(alert.getContentText() + "Goals against:          " + clickedPlayer.getStats().getGoalsAllowed());
+                    }
+                    else if (clickedPlayer.getPosition().equals("M"))
+                    {
+                        alert.setContentText(alert.getContentText() + "Successful Passes:          " + clickedPlayer.getStats().getPasses());  
+                    }
 
             alert.showAndWait();
         System.out.println(clickedPlayer.getDefense());
@@ -376,6 +389,11 @@ public class PlayerListUIController implements Initializable {
        clickedPlayer = goalieTable.getSelectionModel().getSelectedItem();
     }
     
+    @FXML
+    private void getSelectedBench(MouseEvent event) {
+       clickedPlayer = benchTable.getSelectionModel().getSelectedItem();
+    }
+    
     
     
     private void displayError()
@@ -419,10 +437,6 @@ public class PlayerListUIController implements Initializable {
         viewPlayerInfo();
     }
 
-    @FXML
-    private void getSelectedBench(MouseEvent event) {
-       clickedPlayer = goalieTable.getSelectionModel().getSelectedItem();
-    }
     
 
 
