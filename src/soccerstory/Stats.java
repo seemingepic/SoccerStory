@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 /**
+ * This class is designed to store stats for the player
+ * Instead of putting all the ints into the player class, I broke it up to make it easier
  *
- * @author mockl
+ * 
  */
 public class Stats {
     

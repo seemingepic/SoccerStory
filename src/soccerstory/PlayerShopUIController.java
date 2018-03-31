@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 import com.github.javafaker.Faker;
@@ -17,7 +13,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
+ *  Purpose: This controls the PlayerSHopUI.fxml
+ * A user can buy different players here
+ * This class generates those players for the team
+ * 
  *
  * @author mockl
  */
@@ -43,13 +42,17 @@ public class PlayerShopUIController implements Initializable {
         developNewPlayer(1);
     }
     
+    /**
+     * Based on the type of player to generate, this does it
+     * @param i  - the type of player which determines the stats used
+     */
     public void developNewPlayer(int i)
     {
         Faker faker = new Faker();
 
         Player testPlayer = new Player();
         
-        testPlayer = new PlayerBuilder().
+        testPlayer = new PlayerBuilder(). //create the player and set each stat
                 setBallskill(randomStat(i)).
                 setDefense(randomStat(i)).
                  setSpeed(randomStat(i))
@@ -67,8 +70,8 @@ public class PlayerShopUIController implements Initializable {
     
    /**
     * This generates the random stat chance depending on who the player purchases
-    * @param i
-    * @return 
+    * @param i - the type of player
+    * @return - random stat generated
     */
     private int randomStat(int i)
     {
@@ -128,10 +131,15 @@ public class PlayerShopUIController implements Initializable {
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
     }
     
+    /**
+     * This generates a random position for the player based on the 
+     * line up from the team (e.g 2/11 chance to get an attacker)
+     * @return 
+     */
     private String pickRandomPosition()
     {
         String[] positionArray = 
-        {"A", "A", "M", "M", "M", "M", "D", "D", "D", "D", "G"};
+        {"A", "A", "M", "M", "M", "M", "D", "D", "D", "D", "G"}; //list of positions based on the field
         
          int max = 10;
          int min = 0; //average = 66 between skills

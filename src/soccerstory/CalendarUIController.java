@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class This class is designed to keep tracked of the weeks for
- * the game. This class creates a schedule which has each team playing each other once.
- * Each team has 5 home games and 5 away games. 
+ * the game. This class manages the results and allows the user to see how they did in each game
+ * 
  * 
  * This also keeps track of the current week and results of each game.
  *
@@ -136,13 +136,6 @@ public class CalendarUIController implements Initializable {
 
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
     }
-
-    private void updateMatches() {
-        ArrayList<String> teams = new ArrayList<String>();
-    }
-
-
-    
     
     /**
      * Prints out list of matches for testing purposes...

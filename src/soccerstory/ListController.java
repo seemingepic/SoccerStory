@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 /**
  * This class creates and is the control point for getting
- * access to the playerList and teamList
+ * access to the playerList and teamList and matchList
  * 
  */
 public class ListController {

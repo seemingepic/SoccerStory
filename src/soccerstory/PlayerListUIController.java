@@ -1,6 +1,8 @@
 /* Class: PlayerListUIController
  * This class allows the player to manage the line up for their team.
- *
+ * The team is broken down into midfield, attack, defense, and goalie by the computer
+    Each position has a different table, each table is managed seperately
+    The player must have a full lineup before leaving
  *
  *
  */

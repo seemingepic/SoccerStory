@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 import java.util.ArrayList;
@@ -11,6 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
+ * Class: TeamList
+ * Purpose: This stores the list of teams into a list
+ * This is then used for getting specific teams, getting players from that team
+ * 
  *
  * @author mockl
  */

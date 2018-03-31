@@ -20,7 +20,8 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *
+ *  This class is used to control the TeamSTandingsUI.fxml and show how each team is doing in the league
+ *  
  * @author mockl
  */
 public class TeamStandingsUIController implements Initializable {
@@ -43,11 +44,14 @@ public class TeamStandingsUIController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        theTeamList = ListController.getInstance().getTheTeamList().getTeamData();
+        theTeamList = ListController.getInstance().getTheTeamList().getTeamData(); //grabs the teamlist
         setUpList();
         // TODO
     }
     
+    /**
+     * Sets up list of teams to be displayed in the team table
+     */
     public void setUpList()
     {
         teamColumn.setCellValueFactory(new PropertyValueFactory<Team,String>("teamName"));

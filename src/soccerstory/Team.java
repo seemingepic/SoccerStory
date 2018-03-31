@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 import com.github.javafaker.Faker;
 import java.util.Random;
 
 /**
+ * This class stores all the details for the team
+ * Each team will have a team name, points, gamesplayed, an ownername and a coach
  *
  * @author mockl
  */
@@ -20,6 +18,13 @@ public class Team {
     private String ownerName;
     private String coach;
 
+    /**
+     * Constructor for the team 
+     * @param newTeamName - name of the team 
+     * @param newOwnerName - owner of the team
+     * @param newCoach  - coach of the team
+     * Owner/coach do not really do much right now
+     */
     public Team(String newTeamName, String newOwnerName, String newCoach)
     {
         this.teamName = newTeamName;

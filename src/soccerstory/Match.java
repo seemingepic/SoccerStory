@@ -1,4 +1,3 @@
-
 package soccerstory;
 
 /**
@@ -16,6 +15,13 @@ public class Match {
     private int team1Score;
     private int team2Score;
     
+    /**
+     * A match object stores the following 
+     * @param newTeam1 - team 1 (hometeam)
+     * @param newTeam2 - team 2 (awayteam)
+     * @param newWeek - week number
+     * @param newMatch  - match number for the week
+     */
     public Match(String newTeam1, String newTeam2, int newWeek, int newMatch){
         this.team1 = newTeam1;
         this.team2 = newTeam2;

@@ -76,7 +76,7 @@ public class NavigationUICntl implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (getCalendarController().getCurrentWeek() < 10) {
+        if (getCalendarController().getCurrentWeek() < 10) { 
             String date = "week ";
             date = date + getCalendarController().getCurrentWeek();
             weekLabel.setText(date);
@@ -179,6 +179,8 @@ public class NavigationUICntl implements Initializable {
         Stage theStage = (Stage) getActionTarget().getScene().getWindow();
         theStage.hide();
         NavigationCntl.getNavigationCntl(theStage).setUpMatchScene();
+        Simulation simulator = new Simulation();
+        simulator.simulateOtherMatches();
     }
 
     @FXML

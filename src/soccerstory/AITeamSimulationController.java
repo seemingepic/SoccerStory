@@ -1,52 +1,27 @@
-/**
- * This class is the engine behind how matches are simulated
- * I based off part of the mechanics from "not really jake" 
- * from https://stackoverflow.com/questions/1427043/soccer-simulation-for-a-game
- * There was no code taken, but he did have a very cool thought process on how
- * a simulator should work
- * 
- * FIXES NEEDED: CHECK IF PLAYER IS BENCHED OR NOT!!!
- * Fixed: ^^^
- * 
- * Updates that should be added:
- * Fix the double shooting message/ not really a bug bust visibility issue
- * Update score to the calander/match
- * Have stats?
+/*
+Class: AITeamSimulationController
+Purpose: This is almost a copy of my MatchUIController, but due to my bad planning I had to remake it for use for AI
+This class simulates and stores the stats of all the AITeams
  */
 package soccerstory;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-public class MatchUIController implements Initializable {
-
-    @FXML
-    private Label homeTeamLabel;
-    @FXML
-    private Label awayTeamLabel;
-
-    private String homeTeam;
-    private String awayTeam;
-    @FXML
-    private Label homeTeamScore;
-    @FXML
-    private Label awayTeamScore;
+/**
+ *
+ * @author mockl
+ */
+public class AITeamSimulationController {
 
     private ArrayList<Player> homeTeamPlayers;
     private ArrayList<Player> awayTeamPlayers;
@@ -86,115 +61,33 @@ public class MatchUIController implements Initializable {
     
     private Match match;
     
-    @FXML
-    private Label homeAttackWeight;
-    @FXML
-    private Label homeMidfieldWeight;
-    @FXML
-    private Label homeDefenseWeight;
-    @FXML
-    private Label awayAttackWeight;
-    @FXML
-    private Label awayMidfieldWeight;
-    @FXML
-    private Label awayDefenseWeight;
-    @FXML
-    private Text actionTarget;
     
     private NavigationUICntl navUiCntl;
     private CalendarUIController calUiCntl;
-    @FXML
-    private Button startGameButton;
     
-
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        initialSetup();
-
-    }
+    private String homeTeam;
+    private String awayTeam;
     
-    /**
-     * This will call the methods for original setup to make code cleaner
-     * It will only be ran once on startup
-     */
-    public void initialSetup()
-    {
-        setUpTeams(); //gets which team is home/away
-        getTeams(); //Displays teamname on labels
-        getPlayers(); //gets players for each team
-        setLineUp(homeTeamPlayers, "Home"); //puts home team players into proper positions
-        setLineUp(awayTeamPlayers, "Away"); //puts away team players into proper positions
-        determineWeight(homeTeamPlayers, awayTeamPlayers); //Determines how successful each team will be
-        displayStats();  //Displays initial scores
-        kickOff(); //Determines ininital possession of the game
-
-
-    }
-    /**
-     * Sets up labels for team names
-     */
-    public void getTeams()
-    {
-        homeTeamLabel.setText(homeTeam); //Sets home team
-        awayTeamLabel.setText(awayTeam); //sets away team name
-    }
+    
     
     /**
      * Grabs the current match from navigationUI and pulls the
      * data from the match that is returned
      */
-    private void setUpTeams()
+    public void startGame(String newHomeTeam, String newAwayTeam)
     {
-        try{
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("NavigationUI.fxml"));
-        Parent root = (Parent) loader.load();
-        navUiCntl =loader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-      
-        match = navUiCntl.getNextMatch();
-        
-        if(navUiCntl.getHome())
-        {
-            homeTeam = ListController.getInstance().getTheTeamList().getCurrentUserTeam();
-            awayTeam = navUiCntl.getOtherTeam();
-        }
-        else
-        {
-            awayTeam = ListController.getInstance().getTheTeamList().getCurrentUserTeam();
-            homeTeam = navUiCntl.getOtherTeam();
-        }
-    }
-    
-    /**
-     * This grabs the stats for each team, and then displays them on the page
-     * By stats I mean the weighted score determined by the method 
-     * determineWeight()
-     */
-    public void displayStats()
-    {
-        String homeAttackWeightString = Integer.toString(homeTeamAttack);
-        homeAttackWeight.setText(homeAttackWeightString);
-        
-        String homeMidfieldWeightString = Integer.toString(homeTeamMidfield);
-        homeMidfieldWeight.setText(homeMidfieldWeightString);
-        
-        String homeDefenseWeightString = Integer.toString(homeTeamDefense);
-        homeDefenseWeight.setText(homeDefenseWeightString);
-        
-        String awayAttackWeightString = Integer.toString(awayTeamAttack);
-        awayAttackWeight.setText(awayAttackWeightString);
-        
-        String awayMidfieldWeightString = Integer.toString(awayTeamMidfield);
-        awayMidfieldWeight.setText(awayMidfieldWeightString);
-        
-        String awayDefenseWeightString = Integer.toString(awayTeamDefense);
-        awayDefenseWeight.setText(awayDefenseWeightString);
+        homeTeamPlayers = ListController.getInstance().getThePlayerList().getPlayersFromTeam(newHomeTeam);
+        awayTeamPlayers = ListController.getInstance().getThePlayerList().getPlayersFromTeam(newAwayTeam);
+        homeTeam = newHomeTeam;
+        awayTeam = newAwayTeam;
+        getPlayers(); //gets players for each team
+        setLineUp(homeTeamPlayers, "Home"); //puts home team players into proper positions
+        setLineUp(awayTeamPlayers, "Away"); //puts away team players into proper positions
+        determineWeight(homeTeamPlayers, awayTeamPlayers); //Determines how successful each team will be
+        kickOff(); //Determines ininital possession of the game
+        playGame();
+        updatePoints();
+
     }
 
     /**
@@ -202,11 +95,7 @@ public class MatchUIController implements Initializable {
      * After score is updated, tell who scored
      */
     public void updateHomeScore() {
-        homeScore = Integer.parseInt(homeTeamScore.getText());
         homeScore++;
-        String updatedScore = Integer.toString(homeScore);
-        homeTeamScore.setText(updatedScore);
-        System.out.println("Home Team Scored!");
     }
 
     /**
@@ -214,11 +103,7 @@ public class MatchUIController implements Initializable {
      * gets the original scored, updates it and reposts it
      */
     public void updateAwayScore() {
-        awayScore = Integer.parseInt(awayTeamScore.getText());
         awayScore++;
-        String updatedScore = Integer.toString(awayScore);
-        awayTeamScore.setText(updatedScore);
-        System.out.println("away Team Scored!");
     }
 
     /**
@@ -227,7 +112,6 @@ public class MatchUIController implements Initializable {
      */
     public void playGame() {
         fieldPosition();
-
     }
     
     /**
@@ -255,7 +139,6 @@ public class MatchUIController implements Initializable {
                     break;
             }
         }
-
 
     }
 
@@ -295,7 +178,6 @@ public class MatchUIController implements Initializable {
             }
         }
         
-        System.out.println("Game started!! Current ball position: " + ballLocations.get(ballLocation));
     }
     
     /**
@@ -676,42 +558,13 @@ public class MatchUIController implements Initializable {
             ListController.getInstance().getTheTeamList().updateTeamPoints(homeTeam, 1);
         }
 
-        setPlayerTeamResult();
+                        setPlayerTeamResult();
     }
     
-    /**
-     * This stores the result of the game, then increases the week to the next one
-     */
     private void setPlayerTeamResult()
     {
         ListController.getInstance().getTheMatchList().updateScores(homeTeam, homeScore, awayScore);
-        ListController.getInstance().getTheMatchList().setCurrentWeek(ListController.getInstance().getTheMatchList().getCurrentWeek() + 1);
     }
     
-    
-    /**
-     * Sends the user back home to the nav screen
-     * @param event 
-     */
-    @FXML
-    private void goHome(ActionEvent event) {
-        actionTarget.setText("log on pressed");
-        Stage stage = (Stage) actionTarget.getScene().getWindow();
-        stage.hide();
-            
-        NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
-    }
-
-    /**
-     * What happens when the user clicks the start game button
-     * Game simulation starts 
-     * @param event 
-     */
-    @FXML
-    private void startGame(ActionEvent event) {
-        playGame(); //run simulation
-        updatePoints(); //determine winner give points based on winner
-        startGameButton.setVisible(false);
-    }
     
 }

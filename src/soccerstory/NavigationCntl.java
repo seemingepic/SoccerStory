@@ -17,7 +17,8 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *
+ *  This is the controller that is used to pass controllers to each other from
+ * .fxml to .fxml
  * @author mockl
  */
 public class NavigationCntl {
@@ -48,6 +49,10 @@ public class NavigationCntl {
         }
     }
 
+    /**
+     * This method is used to initially start the main screen,
+     * This gets the controller calls it and creates it
+     */
     public void setUpNavigationScene(){
         Parent root;
         Scene scene;
@@ -62,6 +67,10 @@ public class NavigationCntl {
         }
     }
     
+        /**
+     * This method is used to create the player management screen
+     * This gets the controller calls it and creates it
+     */
     public void setUpPlayerScene()
     {
         Parent root;
@@ -77,6 +86,10 @@ public class NavigationCntl {
         } 
     }
 
+        /**
+     * This method is used to create the teamlist scene
+     * This gets the controller calls it and creates it
+     */
     public void setUpTeamScene()
     {
         Parent root;
@@ -92,6 +105,9 @@ public class NavigationCntl {
         } 
     }
     
+    /**
+     * This is used to create the MatchUI screen where the player can simulate their games
+     */
     public void setUpMatchScene()
     {
         Parent root;
@@ -107,6 +123,10 @@ public class NavigationCntl {
         } 
     }
     
+    /**
+     * This is used to set up the CalendarUI screen where the player
+     * can see how they have done in previous matches
+     */
     public void setUpCalendarScene()
     {
         Parent root;
@@ -122,6 +142,9 @@ public class NavigationCntl {
         } 
     }
     
+    /**
+     * This is where a user can buy players from the computer
+     */
     public void setUpShopScene()
     {
         Parent root;

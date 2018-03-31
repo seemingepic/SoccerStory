@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package soccerstory;
 
 import com.github.javafaker.Faker;
@@ -16,25 +11,28 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 
 /**
+ * Class: MatchList
+ * Purpose: This class is designed to create a list of matches for the season.
+ * Each team will play each other one time 
+ * Each result will be stored in a match
  *
  * @author mockl
  */
 public class MatchList {
     
-    private ArrayList<Match> theMatchList;
-    private int currentWeek = 1;
+    private ArrayList<Match> theMatchList; // list of matches
+    private int currentWeek = 1; //curent week 
     
     public MatchList()
     {
-        theMatchList = listMatches(ListController.getInstance().getTheTeamList().getTeamNames());
+        theMatchList = listMatches(ListController.getInstance().getTheTeamList().getTeamNames()); //creates the matches
     }
     
     
         /**
      * Creates a calander to be stored into another class 
      * Code partially from: https://stackoverflow.com/questions/26471421/round-robin-algorithm-implementation-java
-     * @param listTeam
-     * @param ListTeam 
+     * @param listTeam - list of team names to be stored
      */
     public ArrayList<Match> listMatches(List<String> listTeam) {
 
@@ -71,25 +69,32 @@ public class MatchList {
         return newMatches;
     }
     
+    /**
+     * This class updates the scores of the match object based on the result
+     * of the simulation 
+     * @param newHomeTeam - home team name
+     * @param newHomeScore = home team score
+     * @param newAwayScore  - away team score
+     * Only needs home team name to find match in list
+     */
     public void updateScores(String newHomeTeam, int newHomeScore, int newAwayScore)
     {
-        for (int i = 0; i < theMatchList.size(); i++)
+        for (int i = 0; i < theMatchList.size(); i++) //searches through match list for the home team with current week
         {
             if ((theMatchList.get(i).getTeam1().equals(newHomeTeam)) 
                     && theMatchList.get(i).getWeek() == getCurrentWeek())
             {
                 //need to add W/L/D tag
-                theMatchList.get(i).setTeam1Score(newHomeScore);
+                theMatchList.get(i).setTeam1Score(newHomeScore); //set scores based on home/away 
                 theMatchList.get(i).setTeam2Score(newAwayScore);
       
             }        
-            else if ((theMatchList.get(i).getTeam2().equals(newHomeTeam)) && theMatchList.get(i).getWeek() == getCurrentWeek())
+            else if ((theMatchList.get(i).getTeam2().equals(newHomeTeam)) && theMatchList.get(i).getWeek() == getCurrentWeek()) //if the match does not have team name in team1, check for team 2
             {
                 theMatchList.get(i).setTeam1Score(newHomeScore);
                 theMatchList.get(i).setTeam2Score(newAwayScore);
             }                  
         }  
-        currentWeek++;
     }
  
     /**
@@ -111,6 +116,13 @@ public class MatchList {
      */
     public int getCurrentWeek() {
         return currentWeek;
+    }
+
+    /**
+     * @param currentWeek the currentWeek to set
+     */
+    public void setCurrentWeek(int currentWeek) {
+        this.currentWeek = currentWeek;
     }
     
     
