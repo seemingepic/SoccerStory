@@ -6,9 +6,11 @@
 package soccerstory;
 
 import com.github.javafaker.Faker;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,7 +19,7 @@ import javafx.collections.ObservableList;
  
  * @author mockl
  */
-public class PlayerList {
+public class PlayerList implements Serializable{
     
     private ObservableList<Player> thePlayerList;
     
@@ -176,6 +178,20 @@ public class PlayerList {
      */
     public ObservableList<Player> getThePlayerList() {
         return thePlayerList;
+    }
+    
+    public ArrayList<Player> getTheArrayPlayerList()
+    {
+        List<Player> theNewPlayerList = getThePlayerList().stream().collect(Collectors.toList());
+        ArrayList<Player> theArrayPlayerList = new ArrayList<Player>(theNewPlayerList);
+        return theArrayPlayerList;  
+    }
+    
+    public void setThePlayerListFromArray(ArrayList<Player> thePlayerList)
+    {
+        ObservableList<Player> theNewPlayerList = FXCollections.observableArrayList(thePlayerList);
+        this.thePlayerList = theNewPlayerList;
+ 
     }
 
     /**

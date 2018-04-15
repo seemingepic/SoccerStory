@@ -85,7 +85,6 @@ public class AITeamSimulationController {
         setLineUp(awayTeamPlayers, "Away"); //puts away team players into proper positions
         determineWeight(homeTeamPlayers, awayTeamPlayers); //Determines how successful each team will be
         kickOff(); //Determines ininital possession of the game
-        playGame();
         updatePoints();
 
     }
@@ -139,7 +138,7 @@ public class AITeamSimulationController {
                     break;
             }
         }
-
+        System.out.println("Game Over");
     }
 
     /**
@@ -314,9 +313,9 @@ public class AITeamSimulationController {
                 awayPoss = false;
             }
         }
-        System.out.println(currentPoss.getName() + " Tries to move the ball and loses it");
+
         changePossessionPlayer();
-        System.out.println(currentPoss.getName() + " Now has the ball");
+
     }
     
     
@@ -334,28 +333,28 @@ public class AITeamSimulationController {
         int passerResult = r.nextInt(passerScore - 1) + 1;
 
         if (passerResult == 1) { //If passer score is low, go all the way back
-            System.out.println(currentPoss.getName() + " HAS A TERRIBLE FAILURE");
+
             if (possessor.equals("H")) {
                 ballLocation = 1;
             } else {
                 ballLocation = 4;
             }
         } else if (passerResult >= 2 && passerResult < 75) { //If passer score is normal, move field position
-            System.out.println(currentPoss.getName() + " Goes forward with the ball!");
+
             if (possessor.equals("H")) {
                 ballLocation++;
             } else {
                 ballLocation--;
             }
         } else if (passerResult >= 75 && passerResult <= 97) { //If passer score is really high, have a chance to move to shot position
-            System.out.println(currentPoss.getName() + " Has a long pass! In Shot Position!");
+
             if (possessor.equals("H")) {
                 ballLocation = 4;
             } else {
                 ballLocation = 1;
             }
         } else { //If perfect role, get a goal 
-            System.out.println(currentPoss.getName() + " LONG SHOT SCORED");
+
             if (possessor.equals("H")) {
                 updateHomeScore();
             }
@@ -384,7 +383,7 @@ public class AITeamSimulationController {
         int differentScores = shooterResult - goalieResult; //subtract "skill" found by random
 
         if (differentScores <= 20) { //If the difference in scores is around this, its a save
-            System.out.println(currentPoss.getName() + " Shoots!!! " + goalie.getName() + " Saves it!");
+
             if (possessor.equals("H")) {
                 ballLocation = 3;
                 homeGoalie.getStats().setShotsAgainst(homeGoalie.getStats().getShotsAgainst() + 1);
@@ -398,9 +397,7 @@ public class AITeamSimulationController {
                 awayPoss = false;
                 changePossessionPlayer();
             }
-            System.out.println(goalie.getName() + " Passes to " + currentPoss.getName());
         } else { //If its a good shot, get a goal
-            System.out.println(currentPoss.getName() + " SCORRRRREEEEEEEs");
             if (possessor.equals("H")) {
                 updateHomeScore();
                 homePoss = false;

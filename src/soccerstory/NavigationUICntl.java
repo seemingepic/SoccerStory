@@ -52,16 +52,16 @@ public class NavigationUICntl implements Initializable {
     private static Boolean hasDrafted = false;
     @FXML
     private Button newSeasonButton;
+    
+    PersistentDataCntl thePersistentDataCntl;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         getTeamName();
         updateDate();
-
     }
 
     /**
@@ -76,6 +76,7 @@ public class NavigationUICntl implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
         if (getCalendarController().getCurrentWeek() < 10) { 
             String date = "week ";
             date = date + getCalendarController().getCurrentWeek();

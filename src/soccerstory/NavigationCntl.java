@@ -5,8 +5,12 @@
  */
 package soccerstory;
 
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,16 +30,31 @@ public class NavigationCntl {
     
     private Stage stage;
     private static NavigationCntl theNavigationCntl;
+
     
     
     //sets up constructor 
-    private NavigationCntl(Stage theExistingStage){
-        ListController.getInstance().createPlayerList();
-        ListController.getInstance().createMatchList();
+    private NavigationCntl(Stage theExistingStage) {
+        if (new File("teamList.ser").exists()) { //if there is a file, get the list of users from there
+            ArrayList<Player> theListOfPlayers = (ArrayList<Player>) PersistentDataCntl.deserialize("playerList.ser");
+            ListController.getInstance().createPlayerList();
+            ListController.getInstance().getThePlayerList().setThePlayerListFromArray(theListOfPlayers);
+        } else {
+            ListController.getInstance().createPlayerList();
+        }
+
+        if (new File("matchList.ser").exists()) { //if there is a file, get the list of users from there
+            ArrayList<Match> theListOfMatches = (ArrayList<Match>) PersistentDataCntl.deserialize("matchList.ser");
+            ListController.getInstance().createMatchList();
+            ListController.getInstance().getTheMatchList().setTheMatchList(theListOfMatches);
+        } else {
+            ListController.getInstance().createMatchList();
+        }
+
         stage = theExistingStage;
         this.setUpNavigationScene();
         stage.show();
-   
+
     }
     
     //gets the navigation controller

@@ -1,6 +1,7 @@
 package soccerstory;
 
 import com.github.javafaker.Faker;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import javafx.scene.control.ButtonType;
  *
  * @author mockl
  */
-public class MatchList {
+public class MatchList implements Serializable{
     
     private ArrayList<Match> theMatchList; // list of matches
     private int currentWeek = 1; //curent week 

@@ -2,6 +2,7 @@
 package soccerstory;
 
 import com.github.javafaker.Faker;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -10,13 +11,14 @@ import java.util.Random;
  *
  * @author mockl
  */
-public class Team {
+public class Team implements Serializable{
     
     private String teamName;
     private int points;
     private int gamesPlayed;
     private String ownerName;
     private String coach;
+    private Boolean playerTeam;
 
     /**
      * Constructor for the team 
@@ -32,6 +34,7 @@ public class Team {
         this.coach = newCoach;
         this.points = 0;
         this.gamesPlayed = 0;
+        this.playerTeam = false;
     }
 
     /**
@@ -113,6 +116,20 @@ public class Team {
         Random r = new Random();
         int randomNum = r.nextInt((max-min) + 1) + min;
         return randomNum;
+    }
+
+    /**
+     * @return the playerTeam
+     */
+    public Boolean getPlayerTeam() {
+        return playerTeam;
+    }
+
+    /**
+     * @param playerTeam the playerTeam to set
+     */
+    public void setPlayerTeam(Boolean playerTeam) {
+        this.playerTeam = playerTeam;
     }
     
     

@@ -1,13 +1,15 @@
 
 package soccerstory;
 
+import java.io.Serializable;
+
 /**
  * This class is designed to store stats for the player
  * Instead of putting all the ints into the player class, I broke it up to make it easier
  *
  * 
  */
-public class Stats {
+public class Stats implements Serializable {
     
     private int goals;
     private int shots;

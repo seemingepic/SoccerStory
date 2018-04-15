@@ -65,11 +65,17 @@ public class ListController {
         this.theTeamList = theTeamList;
     }
     
+    /**
+     * Create player list 
+     */
     public void createPlayerList()
     {
         thePlayerList = new PlayerList();
     }
     
+    /**
+     * Create the list of matches
+     */
     public void createMatchList()
     {
         theMatchList = new MatchList();

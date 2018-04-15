@@ -5,7 +5,9 @@
  */
 package soccerstory;
 
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -45,13 +47,16 @@ public class GameLoaderController implements Initializable {
     
     private String currentGameName;
     
-    private boolean homePoss = true; //Home team will always start with ball
-    private boolean awayPoss = false; //away team will not
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if (loadTeamData())
+        {
+            getGameInputOne().setVisible(false);
+            createGame.setVisible(false);
+            getGameNameTxt1().setText(ListController.getInstance().getTheTeamList().getUserTeam().getTeamName());
+        }
     }    
 
     /**
@@ -70,6 +75,7 @@ public class GameLoaderController implements Initializable {
             getGameNameTxt1().setText(getGameInputOne().getText());
             getGameInputOne().setVisible(false);
             getGameInputOne().setText("");
+            createGame.setVisible(false);
         }
         else //if not valid send them a little message telling em
         {
@@ -134,12 +140,29 @@ public class GameLoaderController implements Initializable {
     }
     
     /**
+     * This checks if there is already team data on file, if there is then load it
+     */
+    private boolean loadTeamData()
+    {
+        if (new File("teamList.ser").exists()){ //if there is a file, get the list of users from there
+        ArrayList<Team> theListOfTeams = (ArrayList<Team>) PersistentDataCntl.deserialize("teamList.ser");
+        ListController.getInstance().getTheTeamList().setTheListOfTeams(theListOfTeams);
+        return true;
+        }
+        return false;
+
+    }
+    
+    /**
      * This creates the team in the master list
      */
     private void createTeam()
     {
-        ListController.getInstance().getTheTeamList().getTheListOfTeams().add(new Team(currentGameName, "", ""));
+        Team newTeam = new Team(currentGameName, "", "");
+        newTeam.setPlayerTeam(Boolean.TRUE);
+        ListController.getInstance().getTheTeamList().getTheListOfTeams().add(newTeam);
         ListController.getInstance().getTheTeamList().setCurrentUserTeam(currentGameName);
+        createGame.setVisible(false);
     }
 
     /**

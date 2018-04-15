@@ -1,12 +1,14 @@
 package soccerstory;
 
+import java.io.Serializable;
+
 /**
  * This object is created in the CalendarUIController 
  * This object stores the score of the game, the teams that are playing, the match number of the week
  * and the week of the game that will be played
  * @author mockl
  */
-public class Match {
+public class Match implements Serializable{
     
     private String team1;
     private String team2;

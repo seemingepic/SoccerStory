@@ -1,6 +1,7 @@
 
 package soccerstory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -14,7 +15,7 @@ import javafx.collections.ObservableList;
  *
  * @author mockl
  */
-public class TeamList {
+public class TeamList implements Serializable {
     
     private ArrayList<Team> theListOfTeams;
     private String currentUserTeam;
@@ -88,7 +89,7 @@ public class TeamList {
     /**
      * @param theListOfTeams the theListOfTeams to set
      */
-    private void setTheListOfTeams(ArrayList<Team> theListOfTeams) {
+    public void setTheListOfTeams(ArrayList<Team> theListOfTeams) {
         this.theListOfTeams = theListOfTeams;
     }
 
@@ -138,6 +139,27 @@ public class TeamList {
         }
     }
     
+    /**
+     * Function: To search through the list of teams, and return the team
+     * with the variable playerTeam, that is true
+     * 
+     * This is used to determine if the team is human or computer
+     * 
+     * @return the user team name theListOfTEams.get(i)
+     */ 
+    public Team getUserTeam()
+    {
+
+        for (int i = 0; i < theListOfTeams.size(); i++)
+        {
+            if (theListOfTeams.get(i).getPlayerTeam())
+            {
+                return theListOfTeams.get(i);
+            }
+        }
+        
+        return null;
+    }
 
 
     

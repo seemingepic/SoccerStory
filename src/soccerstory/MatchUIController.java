@@ -106,6 +106,8 @@ public class MatchUIController implements Initializable {
     @FXML
     private Button startGameButton;
     
+    PersistentDataCntl thePersistentDataCntl;
+    
 
 
     /**
@@ -697,6 +699,7 @@ public class MatchUIController implements Initializable {
     private void goHome(ActionEvent event) {
         actionTarget.setText("log on pressed");
         Stage stage = (Stage) actionTarget.getScene().getWindow();
+        saveData();
         stage.hide();
             
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
@@ -712,6 +715,23 @@ public class MatchUIController implements Initializable {
         playGame(); //run simulation
         updatePoints(); //determine winner give points based on winner
         startGameButton.setVisible(false);
+    }
+    
+    
+    /**
+     * This saves data 
+     */
+    private void saveData()
+    {
+
+        PersistentDataCntl.getInstance().serialize(ListController.getInstance().
+                getTheMatchList().getTheMatchList(), "matchList.ser"); //save the matchList
+       
+        PersistentDataCntl.getInstance().serialize(ListController.getInstance().
+                getThePlayerList().getTheArrayPlayerList(), "playerList.ser"); //save the playerList
+        
+        PersistentDataCntl.getInstance().serialize(ListController.getInstance(). //save the TeamList
+                getTheTeamList().getTheListOfTeams(), "teamList.ser");
     }
     
 }
