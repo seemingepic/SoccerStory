@@ -12,11 +12,14 @@
 <AnchorPane id="AnchorPane" prefHeight="416.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.GameLoaderController">
     <children>
         <Button fx:id="createGame" layoutX="340.0" layoutY="361.0" onAction="#gameCreation" prefHeight="32.0" prefWidth="130.0" text="Create Game!" />
-      <Button fx:id="loadGame" layoutX="537.0" layoutY="361.0" mnemonicParsing="false" onAction="#loadGame1" prefHeight="32.0" prefWidth="123.0" text="Load Game" />
-      <Text layoutX="471.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Team Creation" />
-      <Text fx:id="gameListOne" layoutX="386.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Team:" />
-      <Text fx:id="gameNameTxt1" layoutX="423.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="148.79999381303787" />
-      <TextField fx:id="gameInputOne" layoutX="515.0" layoutY="94.0" prefHeight="26.0" prefWidth="130.0" />
+      <Button fx:id="loadGame" layoutX="546.0" layoutY="361.0" mnemonicParsing="false" onAction="#loadGame1" prefHeight="32.0" prefWidth="123.0" text="Load Game" />
+      <Text layoutX="448.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Team Creation" wrappingWidth="150.0000011175872">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text fx:id="gameListOne" layoutX="386.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Team:" />
+      <Text fx:id="gameNameTxt1" layoutX="523.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.600073158741" />
+      <TextField fx:id="gameInputOne" layoutX="526.0" layoutY="190.0" prefHeight="26.0" prefWidth="130.0" />
       <Pane prefHeight="416.0" prefWidth="334.0" style="-fx-background-color: #18aa1d;">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="92.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
@@ -30,6 +33,7 @@
                </font>
             </Text>
             <Text layoutX="130.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mangament Simulator" wrappingWidth="167.58305025100708" />
+            <Text layoutX="14.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lucas VanKeuren" />
          </children>
       </Pane>
     </children>

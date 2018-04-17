@@ -422,6 +422,7 @@ public class MatchUIController implements Initializable {
                 determinePasserScore("H"); //determine how successfull
                 currentPoss.getStats().setPasses(currentPoss.getStats().getPasses() + 1);
             } else {
+                System.out.println(currentPoss.getName() + " Tries to move the ball and loses it");
                 homePoss = false; //switch poss
                 awayPoss = true;
             }
@@ -430,11 +431,12 @@ public class MatchUIController implements Initializable {
                 determinePasserScore("A");
                 currentPoss.getStats().setPasses(currentPoss.getStats().getPasses() + 1);
             } else { //If away team fails, switch possition and current poss player
+                System.out.println(currentPoss.getName() + " Tries to move the ball and loses it");
                 homePoss = true; //swithc poss
                 awayPoss = false;
             }
         }
-        System.out.println(currentPoss.getName() + " Tries to move the ball and loses it");
+        
         changePossessionPlayer();
         System.out.println(currentPoss.getName() + " Now has the ball");
     }
@@ -520,7 +522,7 @@ public class MatchUIController implements Initializable {
             }
             System.out.println(goalie.getName() + " Passes to " + currentPoss.getName());
         } else { //If its a good shot, get a goal
-            System.out.println(currentPoss.getName() + " SCORRRRREEEEEEEs");
+            System.out.println(currentPoss.getName() + "SHOOTS AND SCORRRRREEEEEEEs");
             if (possessor.equals("H")) {
                 updateHomeScore();
                 homePoss = false;

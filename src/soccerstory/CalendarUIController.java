@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -26,8 +27,6 @@ public class CalendarUIController implements Initializable {
     private int currentWeek = 1;
     @FXML
     private Label actionTarget;
-    @FXML
-    private Label litfam;
     
     private ArrayList<Match> matchList = new ArrayList<>();
 
@@ -54,9 +53,11 @@ public class CalendarUIController implements Initializable {
     @FXML
     private Label weekNineResult;
     @FXML
-    private Label currentWeekLabel;
+    private Text currentWeekLabel;
     
     private int matchIndex;
+    @FXML
+    private Text actionTarget1;
 
 
 
@@ -78,9 +79,8 @@ public class CalendarUIController implements Initializable {
      * week
      */
     private void updateCalendar() {
-        String currentWeekLabelText = currentWeekLabel.getText();
-        currentWeekLabelText = currentWeekLabelText + Integer.toString(currentWeek);
-        currentWeekLabel.setText(currentWeekLabelText);
+        String currentWeekText = Integer.toString(currentWeek);
+        currentWeekLabel.setText("It is currently week " + currentWeekText);
     }
     
     /**

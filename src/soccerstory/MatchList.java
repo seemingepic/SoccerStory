@@ -97,6 +97,21 @@ public class MatchList implements Serializable{
             }                  
         }  
     }
+    
+    /**
+     * Function: Used because persistent data does not load week number
+     * This gets the current week for the game
+     */
+    public void getUpdatedWeekNumber()
+    {
+        for (int i = 0; i < theMatchList.size(); i++) //searches through match list for the home team with current week
+        {
+            if (theMatchList.get(i).getTeam1Score() > 0 || theMatchList.get(i).getTeam2Score() > 0) //if the game has been played
+            {
+                this.currentWeek = theMatchList.get(i).getWeek() + 1; //store the week + 1
+            }
+        }  
+    }
  
     /**
      * @return the theMatchList

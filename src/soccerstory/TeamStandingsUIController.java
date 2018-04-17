@@ -38,6 +38,10 @@ public class TeamStandingsUIController implements Initializable {
      ObservableList<Team> theTeamList = FXCollections.observableArrayList();
     @FXML
     private Text actionTarget;
+    @FXML
+    private Text actionTarget1;
+    @FXML
+    private Text currentPlace;
 
     /**
      * Initializes the controller class.
@@ -46,6 +50,7 @@ public class TeamStandingsUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         theTeamList = ListController.getInstance().getTheTeamList().getTeamData(); //grabs the teamlist
         setUpList();
+        displayPlace();
         // TODO
     }
     
@@ -61,6 +66,20 @@ public class TeamStandingsUIController implements Initializable {
 
         
         teamTable.setItems(theTeamList);
+    }
+    
+    /**
+     * This function gets what place the team is in, then displays it in a text box
+     */
+    private void displayPlace() {
+        String userTeam = ListController.getInstance().getTheTeamList().getCurrentUserTeam(); //get user team
+        for (int i = 0; i < theTeamList.size(); i++) { //go thhrough list of teams
+            if (theTeamList.get(i).getTeamName().equals(userTeam)) { //if current team = user team
+                int teamPos = i; //save place
+                String displayPlace = Integer.toString(i); //set place int to string 
+                currentPlace.setText("Your team is currently in " + displayPlace + " place"); //display place
+            }
+        }
     }
 
     @FXML

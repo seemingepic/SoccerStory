@@ -19,6 +19,7 @@ public class Team implements Serializable{
     private String ownerName;
     private String coach;
     private Boolean playerTeam;
+    private int capSpace;
 
     /**
      * Constructor for the team 
@@ -35,6 +36,7 @@ public class Team implements Serializable{
         this.points = 0;
         this.gamesPlayed = 0;
         this.playerTeam = false;
+        this.capSpace = 100;
     }
 
     /**
@@ -130,6 +132,20 @@ public class Team implements Serializable{
      */
     public void setPlayerTeam(Boolean playerTeam) {
         this.playerTeam = playerTeam;
+    }
+
+    /**
+     * @return the capSpace
+     */
+    public int getCapSpace() {
+        return capSpace;
+    }
+
+    /**
+     * @param capSpace the capSpace to set
+     */
+    public void setCapSpace(int capSpace) {
+        this.capSpace = capSpace;
     }
     
     

@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -24,22 +25,47 @@ public class PlayerShopUIController implements Initializable {
 
     @FXML
     private Text actionTarget;
+    @FXML
+    private Text moneyAmount;
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        displayMoney();
     }    
+    
+    /**
+     * This displays how much money the team currently has
+     */
+    private void displayMoney()
+    {
+        int teamMoney = ListController.getInstance().getTheTeamList().getUserTeam().getCapSpace(); //get money
+        String displayMoney = Integer.toString(teamMoney); //set money to string
+        moneyAmount.setText("You currently have " + displayMoney + " coins"); //display money
+    }
 
     /**
      * When the player presses a button this is the player that is created
+     * If team has funds,
+     * Subtract 100 coins from account
      * @param event 
      */
     @FXML
     private void buyAveragePlayer(ActionEvent event) {
-        developNewPlayer(1);
+        int currentMoney = ListController.getInstance().getTheTeamList().getUserTeam().getCapSpace(); //get current money
+        if (currentMoney < 100) { //if cannot buy player, tell them why
+            alert.setTitle("Cannot buy player");
+            alert.setHeaderText("Low Funds");
+            alert.setContentText("You do not have enough money to buy a player!");
+            alert.showAndWait();
+        } else {
+            ListController.getInstance().getTheTeamList().getUserTeam().setCapSpace(currentMoney - 100); //change money
+            developNewPlayer(1); // create player
+            displayMoney(); //update money
+        }
     }
     
     /**
@@ -66,6 +92,7 @@ public class PlayerShopUIController implements Initializable {
                         lastName()).getPlayer();
         
         ListController.getInstance().getThePlayerList().getThePlayerList().add(testPlayer);
+        displayPlayerInfo(testPlayer); //displays player info
     }
     
    /**
@@ -87,8 +114,8 @@ public class PlayerShopUIController implements Initializable {
         }
         else if (i == 2)
         {
-            int max = 90;
-            int min = 71; //average = 80 between skills
+            int max = 88;
+            int min = 70; //average = 80 between skills
 
             randomNum = r.nextInt((max-min) + 1) + min;
         }
@@ -152,15 +179,67 @@ public class PlayerShopUIController implements Initializable {
     }
 
 
+    /**
+     * Function: To display an alert with the player information 
+     * 
+     * @param testPlayer - player that was created
+     * Creates alert
+     */
+    private void displayPlayerInfo(Player testPlayer)
+    {
+        alert.setTitle("You bought a player!");
+        alert.setHeaderText(testPlayer.getName() + " Has Joined!");
+        alert.setContentText("Overall:          " + testPlayer.getOverall() + "\n"
+                    + "BallSkill:         " + testPlayer.getBallskill() + "\n"
+                    + "Defense:        " + testPlayer.getDefense() + "\n"
+                    + "Goal Skill:      " + testPlayer.getGoalie() + "\n"
+                    + "Passing:         " + testPlayer.getPassing() + "\n"
+                    + "Shooting:       " + testPlayer.getShooting() + "\n"
+                    + "Speed:           " + testPlayer.getSpeed() + "\n");
 
-    @FXML
-    private void buyGoodPlayer(ActionEvent event) {
-        developNewPlayer(2);
+        alert.showAndWait();
     }
 
+        /**
+     * When the player presses a button this is the player that is created
+     * If team has funds,
+     * Subtract 500 coins from account
+     * @param event 
+     */
+    @FXML
+    private void buyGoodPlayer(ActionEvent event) {
+        int currentMoney = ListController.getInstance().getTheTeamList().getUserTeam().getCapSpace(); //get current money
+        if (currentMoney < 100) { //if cannot buy player, tell them why
+            alert.setTitle("Cannot buy player");
+            alert.setHeaderText("Low Funds");
+            alert.setContentText("You do not have enough money to buy a player!");
+            alert.showAndWait();
+        } else {
+            ListController.getInstance().getTheTeamList().getUserTeam().setCapSpace(currentMoney - 500); //change money
+            developNewPlayer(2); // create player
+            displayMoney(); //update money
+        }
+    }
+
+    /**
+     * When the player presses a button this is the player that is created
+     * If team has funds,
+     * Subtract 1000 coins from account
+     * @param event 
+     */
     @FXML
     private void buyBestPlayer(ActionEvent event) {
-        developNewPlayer(3);
+        int currentMoney = ListController.getInstance().getTheTeamList().getUserTeam().getCapSpace(); //get current money
+        if (currentMoney < 100) { //if cannot buy player, tell them why
+            alert.setTitle("Cannot buy player");
+            alert.setHeaderText("Low Funds");
+            alert.setContentText("You do not have enough money to buy a player!");
+            alert.showAndWait();
+        } else {
+            ListController.getInstance().getTheTeamList().getUserTeam().setCapSpace(currentMoney - 1000); //change money
+            developNewPlayer(3); // create player
+            displayMoney(); //update money
+        }
     }
     
 }

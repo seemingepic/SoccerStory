@@ -51,10 +51,12 @@ public class GameLoaderController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        loadGame.setVisible(false);
         if (loadTeamData())
         {
             getGameInputOne().setVisible(false);
             createGame.setVisible(false);
+            loadGame.setVisible(true);
             getGameNameTxt1().setText(ListController.getInstance().getTheTeamList().getUserTeam().getTeamName());
         }
     }    
@@ -73,9 +75,13 @@ public class GameLoaderController implements Initializable {
         if (checker(getGameInputOne().getText()))
         {
             getGameNameTxt1().setText(getGameInputOne().getText());
+            this.setCurrentGameName(getGameNameTxt1().getText());
+            createTeam();
             getGameInputOne().setVisible(false);
             getGameInputOne().setText("");
             createGame.setVisible(false);
+            loadGame.setVisible(true);
+
         }
         else //if not valid send them a little message telling em
         {
@@ -112,7 +118,6 @@ public class GameLoaderController implements Initializable {
     {
         Stage stage = (Stage) getGameNameTxt1().getScene().getWindow();
         stage.hide();
-        createTeam();
         NavigationCntl.getNavigationCntl(stage);
         
     }
@@ -125,7 +130,6 @@ public class GameLoaderController implements Initializable {
     private void loadGame1(ActionEvent event) {
         if (getGameNameTxt1().getText().length() > 0)
         {
-            this.setCurrentGameName(getGameNameTxt1().getText());
             setUpNewScene();
         }
         else
@@ -147,6 +151,8 @@ public class GameLoaderController implements Initializable {
         if (new File("teamList.ser").exists()){ //if there is a file, get the list of users from there
         ArrayList<Team> theListOfTeams = (ArrayList<Team>) PersistentDataCntl.deserialize("teamList.ser");
         ListController.getInstance().getTheTeamList().setTheListOfTeams(theListOfTeams);
+        String currentTeamName = ListController.getInstance().getTheTeamList().getUserTeam().getTeamName();
+        ListController.getInstance().getTheTeamList().setCurrentUserTeam(currentTeamName);
         return true;
         }
         return false;

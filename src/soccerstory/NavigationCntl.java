@@ -33,12 +33,16 @@ public class NavigationCntl {
 
     
     
-    //sets up constructor 
+    /*
+    Constructor for nav cntl
+    This uses the teamList data to create the other two lists
+    
+    */
     private NavigationCntl(Stage theExistingStage) {
         if (new File("teamList.ser").exists()) { //if there is a file, get the list of users from there
             ArrayList<Player> theListOfPlayers = (ArrayList<Player>) PersistentDataCntl.deserialize("playerList.ser");
-            ListController.getInstance().createPlayerList();
-            ListController.getInstance().getThePlayerList().setThePlayerListFromArray(theListOfPlayers);
+            ListController.getInstance().createPlayerList(); //create the list 
+            ListController.getInstance().getThePlayerList().setThePlayerListFromArray(theListOfPlayers); //set new list equal to old list
         } else {
             ListController.getInstance().createPlayerList();
         }
@@ -47,6 +51,7 @@ public class NavigationCntl {
             ArrayList<Match> theListOfMatches = (ArrayList<Match>) PersistentDataCntl.deserialize("matchList.ser");
             ListController.getInstance().createMatchList();
             ListController.getInstance().getTheMatchList().setTheMatchList(theListOfMatches);
+            ListController.getInstance().getTheMatchList().getUpdatedWeekNumber(); //this is used to update the current week from the list
         } else {
             ListController.getInstance().createMatchList();
         }
@@ -178,6 +183,24 @@ public class NavigationCntl {
             e.printStackTrace();
         } 
         
+    }
+    
+    /**
+     * Closes current window and brings user to help screen
+     */
+    public void setUpHelpScene()
+    {
+        Parent root;
+        Scene scene;
+        try{
+            root = FXMLLoader.load(getClass().getResource("HelpUI.fxml"));
+            scene = new Scene(root);
+            stage.setTitle("Players");
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        } 
     }
 
  

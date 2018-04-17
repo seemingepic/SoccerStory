@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -29,7 +30,6 @@ public class NavigationUICntl implements Initializable {
 
     @FXML
     private Text tester;
-    @FXML
     private Button playersButton;
     @FXML
     private Text actionTarget;
@@ -45,7 +45,6 @@ public class NavigationUICntl implements Initializable {
     private Boolean home;
     @FXML
     private Label homeOrAway;
-    @FXML
     private Button matchButton;
     private PlayerShopUIController playerController;
     
@@ -153,44 +152,12 @@ public class NavigationUICntl implements Initializable {
         }
     }
 
-    @FXML
-    private void viewPlayers(ActionEvent event) {
-
-        getActionTarget().setText("player button pressed");
-        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
-        theStage.hide();
-        NavigationCntl.getNavigationCntl(theStage).setUpPlayerScene();
-    }
-
-    @FXML
-    private void viewTeams(ActionEvent event) {
-        getActionTarget().setText("team button pressed");
-        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
-        theStage.hide();
-        NavigationCntl.getNavigationCntl(theStage).setUpTeamScene();
-    }
 
     private void getTeamName() {
         getTester().setText(ListController.getInstance().getTheTeamList().getCurrentUserTeam());
     }
 
-    @FXML
-    private void startMatch(ActionEvent event) {
-        getActionTarget().setText("match button pressed");
-        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
-        theStage.hide();
-        NavigationCntl.getNavigationCntl(theStage).setUpMatchScene();
-        Simulation simulator = new Simulation();
-        simulator.simulateOtherMatches();
-    }
 
-    @FXML
-    private void viewCalendar(ActionEvent event) {
-        getActionTarget().setText("movie button pressed");
-        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
-        theStage.hide();
-        NavigationCntl.getNavigationCntl(theStage).setUpCalendarScene();
-    }
 
     /**
      * @return the tester
@@ -332,13 +299,6 @@ public class NavigationUICntl implements Initializable {
         this.home = home;
     }
 
-    @FXML
-    private void viewShop(ActionEvent event) {
-        getActionTarget().setText("team button pressed");
-        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
-        theStage.hide();
-        NavigationCntl.getNavigationCntl(theStage).setUpShopScene();
-    }
 
     @FXML
     private void newSeason(ActionEvent event) {
@@ -348,6 +308,92 @@ public class NavigationUICntl implements Initializable {
         matchButton.setVisible(true);
         newSeasonButton.setVisible(false);
         ListController.getInstance().getTheTeamList().resetPoints();
+    }
+
+    /**
+     * Function: To view the PlayerListUI
+     * This closes the current window, and calls the controller and 
+     * .fxml file of the window that is supposed to be open
+     * @param event mouse click
+     */
+    @FXML
+    private void viewPlayers(MouseEvent event) {
+        getActionTarget().setText("player button pressed");
+        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
+        theStage.hide();
+        NavigationCntl.getNavigationCntl(theStage).setUpPlayerScene();
+    }
+    
+    /**
+     * Function: To view the MatchUI
+     * This closes the current window, and calls the controller and 
+     * .fxml file of the window that is supposed to be open
+     * @param event mouse click
+     */
+
+    @FXML
+    private void startMatch(MouseEvent event) {
+        getActionTarget().setText("match button pressed");
+        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
+        theStage.hide();
+        NavigationCntl.getNavigationCntl(theStage).setUpMatchScene();
+        Simulation simulator = new Simulation();
+        simulator.simulateOtherMatches();
+    }
+    /**
+     * Function: To view the PlayerShopUI
+     * This closes the current window, and calls the controller and 
+     * .fxml file of the window that is supposed to be open
+     * @param event mouse click
+     */
+    @FXML
+    private void viewShop(MouseEvent event) {
+        getActionTarget().setText("team button pressed");
+        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
+        theStage.hide();
+        NavigationCntl.getNavigationCntl(theStage).setUpShopScene();
+    }
+    
+        /**
+     * Function: To view the TeamsUI
+     * This closes the current window, and calls the controller and 
+     * .fxml file of the window that is supposed to be open
+     * @param event mouse click
+     */
+    @FXML
+    private void viewTeams(MouseEvent event) {
+        getActionTarget().setText("team button pressed");
+        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
+        theStage.hide();
+        NavigationCntl.getNavigationCntl(theStage).setUpTeamScene();
+    }
+
+        /**
+     * Function: To view the CalendarUI
+     * This closes the current window, and calls the controller and 
+     * .fxml file of the window that is supposed to be open
+     * @param event mouse click
+     */
+    @FXML
+    private void viewCalendar(MouseEvent event) {
+        getActionTarget().setText("movie button pressed");
+        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
+        theStage.hide();
+        NavigationCntl.getNavigationCntl(theStage).setUpCalendarScene();
+    }
+
+        /**
+     * Function: To view the HelptUI
+     * This closes the current window, and calls the controller and 
+     * .fxml file of the window that is supposed to be open
+     * @param event mouse click
+     */
+    @FXML
+    private void viewHelp(MouseEvent event) {
+        getActionTarget().setText("home button pressed");
+        Stage theStage = (Stage) getActionTarget().getScene().getWindow();
+        theStage.hide();
+        NavigationCntl.getNavigationCntl(theStage).setUpHelpScene();
     }
 
 }

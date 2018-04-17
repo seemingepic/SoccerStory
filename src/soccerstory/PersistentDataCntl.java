@@ -20,7 +20,6 @@ public class PersistentDataCntl {
     
     private static PersistentDataCntl thePersistentDataCntl;
     
-    private String listOfUsersFileName = "UserList.ser";
     
     private PersistentDataCntl(){
         
