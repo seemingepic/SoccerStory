@@ -3,50 +3,69 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="671.0" prefWidth="851.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.PlayerListUIController">
+<AnchorPane id="AnchorPane" prefHeight="817.0" prefWidth="947.0" style="-fx-background-color: #B4FA84;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.PlayerListUIController">
    <children>
-      <TableView fx:id="attackerTable" layoutX="31.0" layoutY="14.0" onMouseClicked="#getSelectedClick" prefHeight="134.0" prefWidth="335.0">
+      <TableView fx:id="attackerTable" layoutX="39.0" layoutY="268.0" onMouseClicked="#getSelectedClick" prefHeight="106.0" prefWidth="335.0">
         <columns>
           <TableColumn fx:id="attackerNameColumn" prefWidth="191.20001602172852" text="Player Name" />
           <TableColumn fx:id="attackerPositionColumn" prefWidth="71.19999694824219" text="Position" />
             <TableColumn fx:id="attackerOverallColumn" prefWidth="75.0" text="Overall" />
         </columns>
       </TableView>
-      <TableView fx:id="benchTable" layoutX="426.0" layoutY="50.0" onMouseClicked="#getSelectedBench" prefHeight="274.0" prefWidth="335.0">
+      <TableView fx:id="benchTable" layoutX="597.0" layoutY="268.0" onMouseClicked="#getSelectedBench" prefHeight="534.0" prefWidth="335.0">
          <columns>
             <TableColumn fx:id="nameBenchColumn" prefWidth="191.20001602172852" text="Player Name" />
             <TableColumn fx:id="positionBenchColumn" prefWidth="71.19999694824219" text="Position" />
             <TableColumn fx:id="benchOverallColumn" prefWidth="75.0" text="Overall" />
          </columns>
       </TableView>
-      <Button layoutX="489.0" layoutY="417.0" mnemonicParsing="false" onAction="#moveToPlay" prefHeight="26.0" prefWidth="151.0" text="Move to Play" />
-      <Button layoutX="485.0" layoutY="470.0" mnemonicParsing="false" onAction="#moveToBench" prefHeight="26.0" prefWidth="151.0" text="Move to Bench" />
-      <Button layoutX="719.0" layoutY="550.0" mnemonicParsing="false" onAction="#goHome" text="Go home" />
+      <Button layoutX="409.0" layoutY="403.0" mnemonicParsing="false" onAction="#moveToPlay" prefHeight="26.0" prefWidth="151.0" text="Move to Play" />
+      <Button layoutX="409.0" layoutY="463.0" mnemonicParsing="false" onAction="#moveToBench" prefHeight="26.0" prefWidth="151.0" text="Move to Bench" />
       <Text fx:id="actionTarget" layoutX="567.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <TableView fx:id="midfieldTable" layoutX="31.0" layoutY="159.0" onMouseClicked="#getSelectedMidfielder" prefHeight="151.0" prefWidth="335.0">
+      <TableView fx:id="midfieldTable" layoutX="39.0" layoutY="383.0" onMouseClicked="#getSelectedMidfielder" prefHeight="160.0" prefWidth="335.0">
         <columns>
           <TableColumn fx:id="midfieldNameColumn" prefWidth="194.39996719360352" text="Player Name" />
           <TableColumn fx:id="midfieldPositionColumn" minWidth="0.0" prefWidth="68.00004577636719" text="Position" />
             <TableColumn fx:id="midfieldOverallColumn" prefWidth="75.0" text="Overall" />
         </columns>
       </TableView>
-      <TableView fx:id="defenderTable" layoutX="31.0" layoutY="324.0" onMouseClicked="#getSelectedDefender" prefHeight="160.0" prefWidth="335.0">
+      <TableView fx:id="defenderTable" layoutX="39.0" layoutY="551.0" onMouseClicked="#getSelectedDefender" prefHeight="160.0" prefWidth="335.0">
         <columns>
           <TableColumn fx:id="defenderNameColumn" prefWidth="196.00000381469727" text="Player Name" />
           <TableColumn fx:id="defenderPositionColumn" prefWidth="65.59996032714844" text="Position" />
             <TableColumn fx:id="defenderOverallColumn" prefWidth="75.0" text="Overall" />
         </columns>
       </TableView>
-      <TableView fx:id="goalieTable" layoutX="31.0" layoutY="495.0" onMouseClicked="#getSelectedGoalie" prefHeight="134.0" prefWidth="335.0">
+      <TableView fx:id="goalieTable" layoutX="39.0" layoutY="720.0" onMouseClicked="#getSelectedGoalie" prefHeight="82.0" prefWidth="335.0">
         <columns>
           <TableColumn fx:id="goalieNameColumn" prefWidth="192.79999160766602" text="Player Name" />
           <TableColumn fx:id="goaliePositionColumn" prefWidth="68.79997253417969" text="Position" />
             <TableColumn fx:id="goalieOverallColumn" prefWidth="75.0" text="Overall" />
         </columns>
       </TableView>
-      <Button layoutX="535.0" layoutY="525.0" mnemonicParsing="false" onAction="#viewStats" text="View all stats" />
+      <Button layoutX="410.0" layoutY="525.0" mnemonicParsing="false" onAction="#viewStats" prefHeight="26.0" prefWidth="151.0" text="View all stats" />
+      <AnchorPane prefHeight="250.0" prefWidth="947.0" style="-fx-background-color: #18aa1d;">
+         <children>
+            <Text fx:id="actionTarget1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fill="WHITE" layoutX="180.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="5.0" text="Player Management" wrappingWidth="506.59999084472656">
+               <font>
+                  <Font name="Verdana" size="40.0" />
+               </font>
+            </Text>
+            <Button layoutX="854.0" layoutY="14.0" mnemonicParsing="false" onAction="#goHome" text="Go home" />
+            <ImageView fitHeight="117.0" fitWidth="90.0" layoutX="607.0" layoutY="130.0" onMouseClicked="#viewPlayers" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/icons8-customer-50.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="852.0" layoutY="48.0" mnemonicParsing="false" onAction="#viewHelp" prefHeight="26.0" prefWidth="66.0" text="Help" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

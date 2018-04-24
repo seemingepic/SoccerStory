@@ -31,6 +31,7 @@
                </font>
             </Text>
             <Button layoutX="794.0" layoutY="16.0" mnemonicParsing="false" onAction="#goHome" text="Go home" />
+            <Button layoutX="793.0" layoutY="57.0" mnemonicParsing="false" onAction="#viewHelp" prefHeight="26.0" prefWidth="66.0" text="Help" />
          </children>
       </AnchorPane>
    </children>

@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -45,14 +46,19 @@ public class NavigationUICntl implements Initializable {
     private Boolean home;
     @FXML
     private Label homeOrAway;
-    private Button matchButton;
     private PlayerShopUIController playerController;
     
     private static Boolean hasDrafted = false;
     @FXML
-    private Button newSeasonButton;
+    private ImageView newSeasonButton;
     
     PersistentDataCntl thePersistentDataCntl;
+    @FXML
+    private ImageView matchButton;
+    @FXML
+    private Text newSeasonText;
+    @FXML
+    private Text playText;
 
     /**
      * Initializes the controller class.
@@ -89,13 +95,17 @@ public class NavigationUICntl implements Initializable {
             setNextMatch(getCalendarController().getNextMatch());
             teamLabel.setText("NONE");
             matchButton.setVisible(false);
+            playText.setVisible(false);
+            
             
             if (hasDrafted == false)
             {
                 draftDay();
                 hasDrafted = true;
             }
+            
             newSeasonButton.setVisible(true);
+            newSeasonText.setVisible(true);
             
         }
     }
@@ -300,7 +310,6 @@ public class NavigationUICntl implements Initializable {
     }
 
 
-    @FXML
     private void newSeason(ActionEvent event) {
         ListController.getInstance().getTheMatchList().getTheMatchList().clear();
         ListController.getInstance().createMatchList();
@@ -337,8 +346,7 @@ public class NavigationUICntl implements Initializable {
         Stage theStage = (Stage) getActionTarget().getScene().getWindow();
         theStage.hide();
         NavigationCntl.getNavigationCntl(theStage).setUpMatchScene();
-        Simulation simulator = new Simulation();
-        simulator.simulateOtherMatches();
+
     }
     /**
      * Function: To view the PlayerShopUI
@@ -394,6 +402,18 @@ public class NavigationUICntl implements Initializable {
         Stage theStage = (Stage) getActionTarget().getScene().getWindow();
         theStage.hide();
         NavigationCntl.getNavigationCntl(theStage).setUpHelpScene();
+    }
+
+    @FXML
+    private void newSeason(MouseEvent event) {
+        ListController.getInstance().getTheMatchList().getTheMatchList().clear();
+        ListController.getInstance().createMatchList();
+        updateDate();
+        matchButton.setVisible(true);
+        playText.setVisible(true);
+        newSeasonButton.setVisible(false);
+        newSeasonText.setVisible(false);
+        ListController.getInstance().getTheTeamList().resetPoints();
     }
 
 }

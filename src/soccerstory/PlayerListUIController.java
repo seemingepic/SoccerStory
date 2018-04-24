@@ -85,6 +85,8 @@ public class PlayerListUIController implements Initializable {
     private TableColumn<Player, Integer> goalieOverallColumn;
     @FXML
     private TableColumn<Player, Integer> benchOverallColumn;
+    @FXML
+    private Text actionTarget1;
 
     /**
      * Initializes the controller class.
@@ -437,6 +439,24 @@ public class PlayerListUIController implements Initializable {
     @FXML
     private void viewStats(ActionEvent event) {
         viewPlayerInfo();
+    }
+
+    @FXML
+    private void viewHelp(ActionEvent event) {
+        alert.setTitle("Help Information");
+        alert.setContentText("Hello! Welcome to Player List! \n"
+                + "First, you must select a player! \n"
+                + "There are then three buttons you can select \n"
+                + "The Move To Play moves a selected bench player on the bench to play  \n"
+                + "The Move to Bench moves a selected starter to the bench \n"
+                + "the View All Stats shows you the important stats for that player \n"
+                + "To go back to the home press go home in the upper right \n"
+                + "You must have 11 players. 2 Attackers 4 Mid 4 Def 1 Goalie \n");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void viewPlayers(MouseEvent event) {
     }
 
     

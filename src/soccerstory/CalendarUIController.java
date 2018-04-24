@@ -11,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.net.URL;
+import javafx.scene.control.Alert;
+
 
 /**
  * FXML Controller class This class is designed to keep tracked of the weeks for
@@ -58,6 +61,8 @@ public class CalendarUIController implements Initializable {
     private int matchIndex;
     @FXML
     private Text actionTarget1;
+    
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
 
 
@@ -293,6 +298,19 @@ public class CalendarUIController implements Initializable {
      */
     public void setMatchList(ArrayList<Match> matchList) {
         this.matchList = matchList;
+    }
+
+    @FXML
+    private void viewHelp(ActionEvent event) {
+            alert.setTitle("Help!");
+            alert.setHeaderText("This is the Calendar section");
+            alert.setContentText("Welcome to the Calendar! \n"
+                    + "You can see who you will play against in each week \n "
+            + "You can also see the results after the match has taken place \n"
+            + "Results are always your score then their score");
+
+            alert.showAndWait();
+
     }
 
 }

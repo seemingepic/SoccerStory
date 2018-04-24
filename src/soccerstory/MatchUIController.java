@@ -228,6 +228,8 @@ public class MatchUIController implements Initializable {
      * This will begin the "game loop"
      */
     public void playGame() {
+        Simulation simulator = new Simulation();
+        simulator.simulateOtherMatches();
         fieldPosition();
 
     }

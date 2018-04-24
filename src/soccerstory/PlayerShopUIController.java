@@ -28,6 +28,8 @@ public class PlayerShopUIController implements Initializable {
     @FXML
     private Text moneyAmount;
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    @FXML
+    private Text actionTarget1;
 
     /**
      * Initializes the controller class.
@@ -240,6 +242,19 @@ public class PlayerShopUIController implements Initializable {
             developNewPlayer(3); // create player
             displayMoney(); //update money
         }
+    }
+
+    @FXML
+    private void viewHelp(ActionEvent event) {
+            alert.setTitle("Help!");
+            alert.setHeaderText("This is the Shop Section");
+            alert.setContentText("Welcome to the Shop! \n"
+                    + "This is where you can buy players to improve your team\n "
+            + "You can use your coins which are listed above, to buy a player \n"
+            + "Each option gives you a new player \n "
+            + "The more expensive the option, the better chances of a good player \n ");
+
+            alert.showAndWait();
     }
     
 }

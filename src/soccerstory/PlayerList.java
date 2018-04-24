@@ -103,7 +103,8 @@ public class PlayerList implements Serializable{
     }
 
 /**
- * Turn data into observablelist
+ * Turn data into observablelist so it can be used in 
+ * an observableTable
  * @return 
  */
     public ObservableList<Player> getUserData() 

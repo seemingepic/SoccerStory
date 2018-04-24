@@ -6,12 +6,16 @@
 package soccerstory;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,20 +39,23 @@ public class TeamStandingsUIController implements Initializable {
     @FXML
     private TableColumn<Team, String> pointsColumn;
     
-     ObservableList<Team> theTeamList = FXCollections.observableArrayList();
+     ObservableList<Team> theObservableTeamList = FXCollections.observableArrayList();
+     ArrayList<Team> theTeamList;
     @FXML
     private Text actionTarget;
     @FXML
     private Text actionTarget1;
     @FXML
     private Text currentPlace;
+     Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        theTeamList = ListController.getInstance().getTheTeamList().getTeamData(); //grabs the teamlist
+        theObservableTeamList = ListController.getInstance().getTheTeamList().getTeamData(); //grabs the teamlist
+        theTeamList = ListController.getInstance().getTheTeamList().getTheListOfTeams();
         setUpList();
         displayPlace();
         // TODO
@@ -65,7 +72,7 @@ public class TeamStandingsUIController implements Initializable {
 
 
         
-        teamTable.setItems(theTeamList);
+        teamTable.setItems(theObservableTeamList);
     }
     
     /**
@@ -73,13 +80,26 @@ public class TeamStandingsUIController implements Initializable {
      */
     private void displayPlace() {
         String userTeam = ListController.getInstance().getTheTeamList().getCurrentUserTeam(); //get user team
+        String ending = "th"; // ending like 1st, 2nd, 3rd
+        Collections.sort(theTeamList, new CustomComparator() ); //sort teams in descending order
+        int teamPos = 0;
         for (int i = 0; i < theTeamList.size(); i++) { //go thhrough list of teams
             if (theTeamList.get(i).getTeamName().equals(userTeam)) { //if current team = user team
-                int teamPos = i; //save place
-                String displayPlace = Integer.toString(i); //set place int to string 
-                currentPlace.setText("Your team is currently in " + displayPlace + " place"); //display place
+                teamPos = i+1; //save place
+
             }
         }
+        String displayPlace = Integer.toString(teamPos); //set place int to string
+        if (teamPos == 1) {
+            ending = "st";
+        } else if (teamPos == 2) {
+            ending = "nd";
+        } else if (teamPos == 3) {
+            ending = "rd";
+        } else {
+            ending = "th";
+        }
+        currentPlace.setText("Your team is currently in " + displayPlace + ending + " place"); //display place
     }
 
     @FXML
@@ -89,6 +109,19 @@ public class TeamStandingsUIController implements Initializable {
         stage.hide();
             
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
+    }
+
+    @FXML
+    private void viewHelp(ActionEvent event) {
+            alert.setTitle("Help!");
+            alert.setHeaderText("This is the team section");
+            alert.setContentText("Welcome to the Standings!! \n"
+                    + "You can see every team in the season here! \n "
+            + "Every win = 3 points, Draw = 1 point, Loss = 0 points \n"
+            + "Teams are positined based on toal points \n" 
+            + "Your ranking is listed in white in the middle of the screen ");
+
+            alert.showAndWait();
     }
         
     
