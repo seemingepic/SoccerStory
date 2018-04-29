@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package soccerstory;
 
 import java.io.IOException;
@@ -12,15 +7,16 @@ import javafx.scene.Parent;
 
 
 
-/**
- *
- * @author mockl
- */
+    /**
+     * This class is designed to simulate all the matches that are not ran by the user
+     * IT gets all the matches and the user matches, and simulates all the matches that 
+     * are going on this week, and are not the same as the user match 
+     */
 public class Simulation {
     
-    private ArrayList<Match> matchList;
-    private NavigationUICntl navController;
-    private int userMatchNumber;
+    private ArrayList<Match> matchList; //list of matches
+    private NavigationUICntl navController; 
+    private int userMatchNumber; //what match of the week the user is in
     
     public Simulation()
     {

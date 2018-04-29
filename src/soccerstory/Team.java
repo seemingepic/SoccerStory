@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Team implements Serializable{
     
-    private String teamName;
+    private String teamName; 
     private int points;
     private int gamesPlayed;
     private String ownerName;
@@ -109,16 +109,6 @@ public class Team implements Serializable{
         this.coach = coach;
     }
     
-
-    private int randomStat()
-    {
-        int max = 90;
-        int min = 20;
-        
-        Random r = new Random();
-        int randomNum = r.nextInt((max-min) + 1) + min;
-        return randomNum;
-    }
 
     /**
      * @return the playerTeam

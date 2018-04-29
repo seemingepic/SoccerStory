@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package soccerstory;
 
 import com.github.javafaker.Faker;
@@ -16,7 +11,8 @@ import javafx.collections.ObservableList;
 
 
 /**
- 
+ * This is where all of the players are stored into
+ * This class is used to send the list of players to other classes
  * @author mockl
  */
 public class PlayerList implements Serializable{
@@ -32,7 +28,7 @@ public class PlayerList implements Serializable{
     /**
      * Generates random players for each team
      * 
-     * @return 
+     * @return - List of players
      */
     private ObservableList<Player> setUpPlayers()
     {
@@ -53,8 +49,8 @@ public class PlayerList implements Serializable{
                         .setPosition("M")
                         .setTeamPlayFor(theTeamList.get(i).getTeamName()).
                         setName(faker.name().firstName() + " " + faker.name().
-                                lastName()).getPlayer();
-                testPlayers.add(testPlayer);
+                                lastName()).getPlayer(); //Uses faker library to create random name which is the identifier for the player 
+                testPlayers.add(testPlayer); 
             }
 
             for (int d = 0; d < 4; d++) //generate defenders
@@ -83,7 +79,7 @@ public class PlayerList implements Serializable{
                         .setPosition("A")
                         .setTeamPlayFor(theTeamList.get(i).getTeamName()).
                         setName(faker.name().firstName() + " " + faker.name().
-                                lastName()).getPlayer();
+                                lastName()).getPlayer(); 
                 testPlayers.add(testPlayer);
             }
 
@@ -117,8 +113,8 @@ public class PlayerList implements Serializable{
     
     /**
      * Gets the specific players from each team 
-     * @param teamName
-     * @return 
+     * @param teamName -- What team the players are from
+     * @return  - List of players from that team 
      */
     public ArrayList<Player> getPlayersFromTeam(String teamName)
     {
@@ -136,8 +132,8 @@ public class PlayerList implements Serializable{
     /**
      * This method is designed to only get the starters from the
      * appropriate team to be put into the simulation
-     * @param teamName
-     * @return 
+     * @param teamName --Team where the players are from 
+     * @return -- Get only the starters from that team 
      */
     public ArrayList<Player> getStartersFromTeam(String teamName)
     {
@@ -156,17 +152,21 @@ public class PlayerList implements Serializable{
         return theTeamsPlayers;
     }
     
+    /**
+     * Changes player to either starter or benched
+     * @param name - name of player 
+     */
     public void changePlayerBench(String name)
     {
         for (int i = 0; i < getThePlayerList().size(); i ++)
         {
             if(getThePlayerList().get(i).getName().equals(name))
             {
-                if(getThePlayerList().get(i).isBenched())
+                if(getThePlayerList().get(i).isBenched()) //if benched unbench
                 {
                     getThePlayerList().get(i).setBenched(false);
                 }
-                else
+                else //bench player 
                     getThePlayerList().get(i).setBenched(true);
             }
         }
@@ -181,6 +181,10 @@ public class PlayerList implements Serializable{
         return thePlayerList;
     }
     
+    /**
+     * Purpose is to turn the observable list of players to an arraylist so it can be used in other classes 
+     * @return -- ArrayList of players 
+     */
     public ArrayList<Player> getTheArrayPlayerList()
     {
         List<Player> theNewPlayerList = getThePlayerList().stream().collect(Collectors.toList());
@@ -188,6 +192,10 @@ public class PlayerList implements Serializable{
         return theArrayPlayerList;  
     }
     
+    /**
+     * Saves the list based on an arraylist that is given 
+     * @param thePlayerList -- ArrayList<Player> 
+     */
     public void setThePlayerListFromArray(ArrayList<Player> thePlayerList)
     {
         ObservableList<Player> theNewPlayerList = FXCollections.observableArrayList(thePlayerList);
@@ -202,6 +210,10 @@ public class PlayerList implements Serializable{
         this.thePlayerList = thePlayerList;
     }
     
+    /**
+     * This generates a random stat to be used in creating the players 
+     * @return  -- random integer from 30-90
+     */
     private int randomStat()
     {
         int max = 90;

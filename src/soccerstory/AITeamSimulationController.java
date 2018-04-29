@@ -1,21 +1,34 @@
 /*
 Class: AITeamSimulationController
 Purpose: This is almost a copy of my MatchUIController, but due to my bad planning I had to remake it for use for AI
-This class simulates and stores the stats of all the AITeams
+ * How this class works:
+ * 1. Import each teams lineup by asking the matchList who is supposed to be playing
+ * 2. Set each team to home/away
+ * 3. Calculate the strength of each team by using a probability algorithm
+ *    This works by comparing the overall stats (calculated from the player class) from each team, then setting
+ *    them on a scale from 1-1000. For example, a team with 80 attack compared to 50 attack will claim 62.5% of the attack points
+ * 4. Set up screen
+ * 5. When the player starts the match, the simulation will start
+ * 6. The home team will start with the ball at midfield
+ * 7. The fieldPosition method will then check where the ball is, then call the correct simulation method
+ * 8. For example, if the ball is midfield, the points of the two teams are compared. A die is rolled 1-1000
+ *    and then compared to the strength of the team. This is compared to the weights controlled earlier.
+ *    This way the team with the higher score will have a higher probability to win the play.
+ * 9. After the simulation decides who won the possession, it will then go to a player checker
+ * 10. The player checker then uses the players overall to see how successfull the play will be
+ * 11. The ball will either move up or switch posessions and move back
+ * 12. The simulation will continue until all 90 minutes of the game will be played
+ * 
+ * 13. Stats from each posession will be stored, and the score will be sent to the matchList to be 
+ * shown on the calendar
  */
 package soccerstory;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.text.Text;
 
 /**
  *
@@ -23,14 +36,14 @@ import javafx.scene.text.Text;
  */
 public class AITeamSimulationController {
 
-    private ArrayList<Player> homeTeamPlayers;
+    private ArrayList<Player> homeTeamPlayers; //List of players for each team
     private ArrayList<Player> awayTeamPlayers;
 
-    private boolean homePoss = true;
+    private boolean homePoss = true; //Used to determine possession
     private boolean awayPoss = false;
-    private Player currentPoss;
+    private Player currentPoss; //Player who has ball 
 
-    private ArrayList<Player> awayMidfield = new ArrayList<>();
+    private ArrayList<Player> awayMidfield = new ArrayList<>(); //List for each position of playes 
     private ArrayList<Player> awayDefense = new ArrayList<>();
     private Player awayGoalie;
     private ArrayList<Player> awayAttack = new ArrayList<>();
@@ -40,11 +53,11 @@ public class AITeamSimulationController {
     private Player homeGoalie;
     private ArrayList<Player> homeAttack = new ArrayList<>();
     
-    private List<String> ballLocations = 
+    private List<String> ballLocations = //where the ball is, a stands for away, h stand for home , the "field" of the game
             Arrays.asList("hGoal", "hDef", "Mid", "aDef", "aGoal");
-    private int ballLocation;
+    private int ballLocation; //where the ball is in the array
     
-    int homeTeamOverall;
+    int homeTeamOverall; //Stats for the teams generated from the class
     int awayTeamOverall;
     
     int homeTeamAttack;
@@ -57,15 +70,15 @@ public class AITeamSimulationController {
     int awayTeamMidfield;
     int awayTeamGoalie;
     
-    int homeScore, awayScore;
+    int homeScore, awayScore; //Score of the gmae 
     
-    private Match match;
+    private Match match; //The match gotten from the match list 
     
     
     private NavigationUICntl navUiCntl;
     private CalendarUIController calUiCntl;
     
-    private String homeTeam;
+    private String homeTeam; //name of teams 
     private String awayTeam;
     
     
@@ -85,7 +98,7 @@ public class AITeamSimulationController {
         setLineUp(awayTeamPlayers, "Away"); //puts away team players into proper positions
         determineWeight(homeTeamPlayers, awayTeamPlayers); //Determines how successful each team will be
         kickOff(); //Determines ininital possession of the game
-        updatePoints();
+        fieldPosition();
 
     }
 
@@ -138,7 +151,8 @@ public class AITeamSimulationController {
                     break;
             }
         }
-        System.out.println("Game Over");
+        //System.out.println("Game Over");
+        updatePoints();
     }
 
     /**

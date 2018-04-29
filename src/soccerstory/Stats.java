@@ -11,11 +11,11 @@ import java.io.Serializable;
  */
 public class Stats implements Serializable {
     
-    private int goals;
-    private int shots;
-    private int passes;
-    private int shotsAgainst;
-    private int goalsAllowed;
+    private int goals; //How many goals a player scored 
+    private int shots; //how many shots they shoot
+    private int passes; // how many succesfull passes the have
+    private int shotsAgainst; //for goalie, list of shots against 
+    private int goalsAllowed; //for goalie list of goals against
     
     public Stats()
     {

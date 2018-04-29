@@ -5,24 +5,50 @@
  * There was no code taken, but he did have a very cool thought process on how
  * a simulator should work
  * 
- * FIXES NEEDED: CHECK IF PLAYER IS BENCHED OR NOT!!!
- * Fixed: ^^^
+ * How this class works:
+ * 1. Import each teams lineup by asking the matchList who is supposed to be playing
+ * 2. Set each team to home/away
+ * 3. Calculate the strength of each team by using a probability algorithm
+ *    This works by comparing the overall stats (calculated from the player class) from each team, then setting
+ *    them on a scale from 1-1000. For example, a team with 80 attack compared to 50 attack will claim 62.5% of the attack points
+ * 4. Set up screen
+ * 5. When the player starts the match, the simulation will start
+ * 6. The home team will start with the ball at midfield
+ * 7. The fieldPosition method will then check where the ball is, then call the correct simulation method
+ * 8. For example, if the ball is midfield, the points of the two teams are compared. A die is rolled 1-1000
+ *    and then compared to the strength of the team. This is compared to the weights controlled earlier.
+ *    This way the team with the higher score will have a higher probability to win the play.
+ * 9. After the simulation decides who won the possession, it will then go to a player checker
+ * 10. The player checker then uses the players overall to see how successfull the play will be
+ * 11. The ball will either move up or switch posessions and move back
+ * 12. The simulation will continue until all 90 minutes of the game will be played
  * 
- * Updates that should be added:
- * Fix the double shooting message/ not really a bug bust visibility issue
- * Update score to the calander/match
- * Have stats?
+ * 13. Stats from each posession will be stored, and the score will be sent to the matchList to be 
+ * shown on the calendar
+ * 14. The player is awarded 25 gold for playing
+ *      
  */
 package soccerstory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,31 +57,34 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import static javafx.util.Duration.seconds;
+import javax.swing.SwingUtilities;
 
 public class MatchUIController implements Initializable {
 
     @FXML
-    private Label homeTeamLabel;
+    private Label homeTeamLabel; //used to display team names 
     @FXML
     private Label awayTeamLabel;
 
-    private String homeTeam;
+    private String homeTeam; //Name of each team
     private String awayTeam;
     @FXML
-    private Label homeTeamScore;
+    private Label homeTeamScore; //Score of each team
     @FXML
     private Label awayTeamScore;
 
-    private ArrayList<Player> homeTeamPlayers;
+    private ArrayList<Player> homeTeamPlayers; //List of players from each team
     private ArrayList<Player> awayTeamPlayers;
 
-    private boolean homePoss = true;
+    private boolean homePoss = true; //Sets possession so home team starts with ball
     private boolean awayPoss = false;
-    private Player currentPoss;
+    private Player currentPoss; //Whoever has current possession of the ball
 
-    private ArrayList<Player> awayMidfield = new ArrayList<>();
+    private ArrayList<Player> awayMidfield = new ArrayList<>(); //The lists are used to seperate the lineup into each position 
     private ArrayList<Player> awayDefense = new ArrayList<>();
     private Player awayGoalie;
     private ArrayList<Player> awayAttack = new ArrayList<>();
@@ -65,11 +94,11 @@ public class MatchUIController implements Initializable {
     private Player homeGoalie;
     private ArrayList<Player> homeAttack = new ArrayList<>();
     
-    private List<String> ballLocations = 
+    private List<String> ballLocations =  //This is wherever the ball can be located hGoal stands for homeGoal and aGoal stands for away goal
             Arrays.asList("hGoal", "hDef", "Mid", "aDef", "aGoal");
-    private int ballLocation;
+    private int ballLocation; //Where the ball is located on the List ex 3 = midfield
     
-    int homeTeamOverall;
+    int homeTeamOverall; //Used from generateing how strong each team is
     int awayTeamOverall;
     
     int homeTeamAttack;
@@ -84,10 +113,12 @@ public class MatchUIController implements Initializable {
     
     int homeScore, awayScore;
     
-    private Match match;
+    int gameTime = 1; //What minute the game is in
+    
+    private Match match; //The match details pulled from the matchList
     
     @FXML
-    private Label homeAttackWeight;
+    private Label homeAttackWeight; //Used to display how strong each team is
     @FXML
     private Label homeMidfieldWeight;
     @FXML
@@ -107,11 +138,28 @@ public class MatchUIController implements Initializable {
     private Button startGameButton;
     
     PersistentDataCntl thePersistentDataCntl;
+    @FXML
+    private Text actionTarget1;
+    @FXML
+    private Label updateLabel1;
+    @FXML
+    private Label updateLabel2;
+    @FXML
+    private Label updateLabel3;
+    @FXML
+    private Label updateLabel4;
+    @FXML
+    private Label updateLabel5;
+    
+    private int updateLabelCounter = 1;
+    @FXML
+    private TextArea textArea; //Used to display what happens in game
     
 
 
     /**
      * Initializes the controller class.
+     * Calls the initial setup to update things like labels
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -151,7 +199,7 @@ public class MatchUIController implements Initializable {
      */
     private void setUpTeams()
     {
-        try{
+        try{ //Pull the nav ui to get the current match
         FXMLLoader loader=new FXMLLoader(getClass().getResource("NavigationUI.fxml"));
         Parent root = (Parent) loader.load();
         navUiCntl =loader.getController();
@@ -159,9 +207,9 @@ public class MatchUIController implements Initializable {
             e.printStackTrace();
         }
       
-        match = navUiCntl.getNextMatch();
+        match = navUiCntl.getNextMatch(); //Gehat teams will be playing  the match object to pull 
         
-        if(navUiCntl.getHome())
+        if(navUiCntl.getHome()) //Puts the teams into home and away respectively
         {
             homeTeam = ListController.getInstance().getTheTeamList().getCurrentUserTeam();
             awayTeam = navUiCntl.getOtherTeam();
@@ -208,7 +256,7 @@ public class MatchUIController implements Initializable {
         homeScore++;
         String updatedScore = Integer.toString(homeScore);
         homeTeamScore.setText(updatedScore);
-        System.out.println("Home Team Scored!");
+        displayUpdates("Home Team Scored!");
     }
 
     /**
@@ -220,7 +268,7 @@ public class MatchUIController implements Initializable {
         awayScore++;
         String updatedScore = Integer.toString(awayScore);
         awayTeamScore.setText(updatedScore);
-        System.out.println("away Team Scored!");
+        displayUpdates("Away Team Scored!");
     }
 
     /**
@@ -230,8 +278,7 @@ public class MatchUIController implements Initializable {
     public void playGame() {
         Simulation simulator = new Simulation();
         simulator.simulateOtherMatches();
-        fieldPosition();
-
+        fieldPosition(); //The "game loop" used to run the simulation
     }
     
     /**
@@ -239,28 +286,31 @@ public class MatchUIController implements Initializable {
      * 
      */
     public void fieldPosition() {
+        
         for (int i = 0; i < 90; i++) {
-
             switch (ballLocation) { //Where is the ball? 
                 case 0: //home goal
                     shotAttempt("A", this.homeGoalie); //Have away team shoot on home goalie
+                    gameTime++;
                     break;
-                case 1: //defense position
+                case 1: //home defense position
                     possessionChecker(this.homeTeamDefense, this.awayTeamAttack); //Determine who will win possession, home d vs away attack
+                    gameTime++;
                     break;
-                case 2: //midfield checker
-                    possessionChecker(this.homeTeamMidfield, this.awayTeamMidfield); 
+                case 2: //midfield 
+                    possessionChecker(this.homeTeamMidfield, this.awayTeamMidfield); //Checks which team will win the poessession in the midfield
+                    gameTime++;
                     break;
-                case 3: //shot position
-                    possessionChecker(this.homeTeamAttack, this.awayTeamDefense);
+                case 3: //away defense position
+                    possessionChecker(this.homeTeamAttack, this.awayTeamDefense); //Checks which team wins posession in the away defense side of field 
+                    gameTime++;
                     break;
-                default: //defense position
-                    shotAttempt("H", this.awayGoalie);
+                default: //away goal position
+                    shotAttempt("H", this.awayGoalie); //The home team attempts a shot on the away goalie
+                    gameTime++;
                     break;
             }
         }
-
-
     }
 
     /**
@@ -298,8 +348,6 @@ public class MatchUIController implements Initializable {
                 currentPoss = homeAttack.get(0);
             }
         }
-        
-        System.out.println("Game started!! Current ball position: " + ballLocations.get(ballLocation));
     }
     
     /**
@@ -308,11 +356,6 @@ public class MatchUIController implements Initializable {
      */
     public void changePossessionPlayer() {
         
-        Random r = new Random();
-        int randomNonAttacker = r.nextInt(3);
-        
-        r = new Random();
-        int randomAttacker = r.nextInt(2);
         
         switch (ballLocation) { //Where is the ball? 
             case 0: //home goal
@@ -360,10 +403,11 @@ public class MatchUIController implements Initializable {
      * Based on the player's overall, there is a weight assigned, then a random number 0-1,
      * this will then determine the % chance a player has of getting the ball
      * 
-     * @param newPlayersInvolved 
+     * @param newPlayersInvolved - The correct ArrayList<Player> like midfield or attack based
+     * on where the ball is located
      */
     private void changePossessionSucPass(ArrayList<Player> newPlayersInvolved) {
-        ArrayList<Player> playersInvolved = newPlayersInvolved; 
+        ArrayList<Player> playersInvolved = newPlayersInvolved; //Which teams were involved on the play
         int numPlayersInvolved = playersInvolved.size();
         ArrayList<Double> playerSkills; //list of %chance of player getting ball
         playerSkills = new ArrayList<Double>(); 
@@ -379,13 +423,13 @@ public class MatchUIController implements Initializable {
         }
         //This will then determine who will get the ball based on probability 
         
-        if (numPlayersInvolved == 2) {
+        if (numPlayersInvolved == 2) { //If the amount of players is based on attack
             if (randomNum > 0 && randomNum < playerSkills.get(0)) {
                 currentPoss = newPlayersInvolved.get(0);
             } else if (randomNum > playerSkills.get(0) && randomNum < (playerSkills.get(0) + playerSkills.get(1))) {
                 currentPoss = newPlayersInvolved.get(1);
             }
-        } else {
+        } else { //If the players were either midfielders or defenders
             if (randomNum > 0 && randomNum < playerSkills.get(0)) 
             {
                 currentPoss = newPlayersInvolved.get(0);//player 1 gets ball
@@ -424,7 +468,7 @@ public class MatchUIController implements Initializable {
                 determinePasserScore("H"); //determine how successfull
                 currentPoss.getStats().setPasses(currentPoss.getStats().getPasses() + 1);
             } else {
-                System.out.println(currentPoss.getName() + " Tries to move the ball and loses it");
+                displayUpdates(currentPoss.getName() + " Tries to move the ball and loses it");
                 homePoss = false; //switch poss
                 awayPoss = true;
             }
@@ -433,14 +477,14 @@ public class MatchUIController implements Initializable {
                 determinePasserScore("A");
                 currentPoss.getStats().setPasses(currentPoss.getStats().getPasses() + 1);
             } else { //If away team fails, switch possition and current poss player
-                System.out.println(currentPoss.getName() + " Tries to move the ball and loses it");
+                displayUpdates(currentPoss.getName() + " Tries to move the ball and loses it");
                 homePoss = true; //swithc poss
                 awayPoss = false;
             }
         }
         
-        changePossessionPlayer();
-        System.out.println(currentPoss.getName() + " Now has the ball");
+        changePossessionPlayer(); //Change possession based on where field position is 
+        displayUpdates(currentPoss.getName() + " Now has the ball");
     }
     
     
@@ -449,7 +493,7 @@ public class MatchUIController implements Initializable {
      * Normal outcome: Move position 1
      * Somewhat rare: move forward 2 (long pass)
      * Rare outcomes: Score, lose possession and go back position
-     * @param possessor 
+     * @param possessor  -- Whoever current has the ball - from variable currentPoss
      */
     private void determinePasserScore(String possessor)
     {
@@ -458,28 +502,30 @@ public class MatchUIController implements Initializable {
         int passerResult = r.nextInt(passerScore - 1) + 1;
 
         if (passerResult == 1) { //If passer score is low, go all the way back
-            System.out.println(currentPoss.getName() + " HAS A TERRIBLE FAILURE");
+            displayUpdates(currentPoss.getName() + " HAS A TERRIBLE FAILURE and lost the ball!");
             if (possessor.equals("H")) {
                 ballLocation = 1;
             } else {
                 ballLocation = 4;
             }
         } else if (passerResult >= 2 && passerResult < 75) { //If passer score is normal, move field position
-            System.out.println(currentPoss.getName() + " Goes forward with the ball!");
+            displayUpdates(currentPoss.getName() + " Goes forward with the ball!");
+         
+    
             if (possessor.equals("H")) {
                 ballLocation++;
             } else {
                 ballLocation--;
             }
         } else if (passerResult >= 75 && passerResult <= 97) { //If passer score is really high, have a chance to move to shot position
-            System.out.println(currentPoss.getName() + " Has a long pass! In Shot Position!");
+            displayUpdates(currentPoss.getName() + " Has a long pass! In Shot Position!");
             if (possessor.equals("H")) {
                 ballLocation = 4;
             } else {
                 ballLocation = 1;
             }
         } else { //If perfect role, get a goal 
-            System.out.println(currentPoss.getName() + " LONG SHOT SCORED");
+            displayUpdates(currentPoss.getName() + " LONG SHOT SCORED");
             if (possessor.equals("H")) {
                 updateHomeScore();
             }
@@ -497,7 +543,7 @@ public class MatchUIController implements Initializable {
      */
     private void shotAttempt(String possessor, Player goalie)
     {
-        int shooterScore = currentPoss.getPassing();
+        int shooterScore = currentPoss.getPassing(); //Generate random numbers to be used in simulation 
         Random r = new Random();
         int shooterResult = r.nextInt(shooterScore - 1) + 1;
         
@@ -508,23 +554,23 @@ public class MatchUIController implements Initializable {
         int differentScores = shooterResult - goalieResult; //subtract "skill" found by random
 
         if (differentScores <= 20) { //If the difference in scores is around this, its a save
-            System.out.println(currentPoss.getName() + " Shoots!!! " + goalie.getName() + " Saves it!");
+            displayUpdates(currentPoss.getName() + " Shoots!!! " + goalie.getName() + " Saves it!");
             if (possessor.equals("H")) {
                 ballLocation = 3;
                 homeGoalie.getStats().setShotsAgainst(homeGoalie.getStats().getShotsAgainst() + 1);
                 awayPoss = true;
                 homePoss = false;
                 changePossessionPlayer();
-            } else { //switch possessions
+            } else { //switch possessions if the ball is saved
                 ballLocation = 1;
                 awayGoalie.getStats().setShotsAgainst(awayGoalie.getStats().getShotsAgainst() + 1);
                 homePoss = true;
                 awayPoss = false;
                 changePossessionPlayer();
             }
-            System.out.println(goalie.getName() + " Passes to " + currentPoss.getName());
+            displayUpdates(goalie.getName() + " Passes to " + currentPoss.getName());
         } else { //If its a good shot, get a goal
-            System.out.println(currentPoss.getName() + "SHOOTS AND SCORRRRREEEEEEEs");
+            displayUpdates(currentPoss.getName() + " SHOOTS AND SCORRRRREEEEEEEs");
             if (possessor.equals("H")) {
                 updateHomeScore();
                 homePoss = false;
@@ -558,7 +604,7 @@ public class MatchUIController implements Initializable {
      */
     private void setLineUp(ArrayList<Player> team, String homeOrAway) {
         for (int i = 0; i < team.size(); i++) {
-            if (homeOrAway.equals("Home")) {
+            if (homeOrAway.equals("Home")) { //Put each player into the respective position based on the players attribute 
                 switch (team.get(i).getPosition()) {
                     case "A": //Atackers
                         homeAttack.add(team.get(i));
@@ -573,7 +619,7 @@ public class MatchUIController implements Initializable {
                         homeGoalie = team.get(i);
                         break;
                 }
-            } else {
+            } else { //Put each player into the respective player based on the players position attribute
                 switch (team.get(i).getPosition()) {
                     case "A": 
                         awayAttack.add(team.get(i));
@@ -597,14 +643,15 @@ public class MatchUIController implements Initializable {
      * This is designed to get an accurate representation of how good a team is
      * and will be used a lot in making the simulation based off who has the
      * better team
-     * @param team
-     * @param homeOrAway 
+     * @param homeTeam -- All the players from the homeTeam
+     * @param awayTeam -- All the players from the awayTeam
      */
-    private void determineWeight(ArrayList<Player> homeTeam, ArrayList<Player> awayTeam) {
+    private void determineWeight(ArrayList<Player> homeTeam, ArrayList<Player> awayTeam) 
+    {
         
         double homeAttackerPoints = 0, homeMidfieldPoints = 0, homeDefenderPoints = 0,
                 homeGoaliePoints = 0, awayAttackerPoints = 0, awayMidfieldPoints = 0, 
-                awayDefenderPoints = 0, awayGoaliePoints = 0;
+                awayDefenderPoints = 0, awayGoaliePoints = 0; //The scores that will be based from 1-1000
 
         for (int i = 0; i < homeTeam.size(); i++) { //Go through home team and calculate total overall for each position
             switch (homeTeam.get(i).getPosition()) {
@@ -649,7 +696,7 @@ public class MatchUIController implements Initializable {
     private void calculateWeight(double homeAttackPoints, double homeDefensePoints, 
             double homeMidfieldPoints, double awayAttackPoints, double awayDefensePoints,
             double awayMidfieldPoints){
-        homeTeamAttack = (int)(((homeAttackPoints) / (homeAttackPoints + awayAttackPoints)) * 1000);
+        homeTeamAttack = (int)(((homeAttackPoints) / (homeAttackPoints + awayAttackPoints)) * 1000); //Compare skills to the overall skill of both teams to set up a probability 1-1000
         homeTeamMidfield = (int)(((homeMidfieldPoints) / (homeMidfieldPoints + awayMidfieldPoints))* 1000);
         homeTeamDefense = (int)(((homeDefensePoints) / (homeDefensePoints + awayDefensePoints)) * 1000);
         homeTeamGoalie = (int) ((this.homeGoalie.getOverall() / (this.homeGoalie.getOverall() + this.awayGoalie.getOverall())) * 1000);
@@ -682,7 +729,10 @@ public class MatchUIController implements Initializable {
             ListController.getInstance().getTheTeamList().updateTeamPoints(homeTeam, 1);
         }
 
-        setPlayerTeamResult();
+        setPlayerTeamResult(); //Stores results of the game
+       
+        int currentCap = ListController.getInstance().getTheTeamList().getUserTeam().getCapSpace(); //gets users current cap to be added in next line
+        ListController.getInstance().getTheTeamList().getUserTeam().setCapSpace(currentCap + 25); //Adds 25 gold to the players team after playing a game
     }
     
     /**
@@ -723,7 +773,7 @@ public class MatchUIController implements Initializable {
     
     
     /**
-     * This saves data 
+     * This saves data using persistent data
      */
     private void saveData()
     {
@@ -738,4 +788,15 @@ public class MatchUIController implements Initializable {
                 getTheTeamList().getTheListOfTeams(), "teamList.ser");
     }
     
+   
+    /**
+     * This displays the gameText to the textArea 
+     * @param updateGameText 
+     */
+    private void displayUpdates(String updateGameText) {
+        
+        textArea.setText(textArea.getText() + "Minute: " + gameTime + " " +updateGameText + "\n");
+        
+    }
+
 }

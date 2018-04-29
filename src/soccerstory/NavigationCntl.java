@@ -57,7 +57,7 @@ public class NavigationCntl {
         }
 
         stage = theExistingStage;
-        this.setUpNavigationScene();
+        this.setUpNavigationScene(); //Sets up navUI
         stage.show();
 
     }

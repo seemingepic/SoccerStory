@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package soccerstory;
 
 import java.io.File;
@@ -25,8 +20,8 @@ import javafx.stage.Stage;
 /**
  * Class name: GameLoaderController
  * Purpose: This is where the user can create their team name and start 
- * the game
- *
+ * This also checks to see if there are any saved files to load from
+ * 
  * 
  */
 public class GameLoaderController implements Initializable {
@@ -48,16 +43,20 @@ public class GameLoaderController implements Initializable {
     private String currentGameName;
     
     
-    
+    /**
+     * This starts the class 
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadGame.setVisible(false);
-        if (loadTeamData())
+        loadGame.setVisible(false); //Hides the loadGame button default
+        if (loadTeamData()) //If there is a game saved
         {
-            getGameInputOne().setVisible(false);
-            createGame.setVisible(false);
-            loadGame.setVisible(true);
-            getGameNameTxt1().setText(ListController.getInstance().getTheTeamList().getUserTeam().getTeamName());
+            getGameInputOne().setVisible(false); //Do not display the text box for creating a team name 
+            createGame.setVisible(false); //Dont allow user to create a game
+            loadGame.setVisible(true); //Display the load game button
+            getGameNameTxt1().setText(ListController.getInstance().getTheTeamList().getUserTeam().getTeamName()); //Set team name by reading file 
         }
     }    
 
@@ -76,10 +75,10 @@ public class GameLoaderController implements Initializable {
         {
             getGameNameTxt1().setText(getGameInputOne().getText());
             this.setCurrentGameName(getGameNameTxt1().getText());
-            createTeam();
-            getGameInputOne().setVisible(false);
+            createTeam(); //Create new game 
+            getGameInputOne().setVisible(false); //Sets input text false
             getGameInputOne().setText("");
-            createGame.setVisible(false);
+            createGame.setVisible(false); // Does not allow user to create another game 
             loadGame.setVisible(true);
 
         }
@@ -128,7 +127,7 @@ public class GameLoaderController implements Initializable {
      */
     @FXML
     private void loadGame1(ActionEvent event) {
-        if (getGameNameTxt1().getText().length() > 0)
+        if (getGameNameTxt1().getText().length() > 0) //If the game name is longer then 0 charachters
         {
             setUpNewScene();
         }

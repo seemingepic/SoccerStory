@@ -1,8 +1,6 @@
-
 package soccerstory;
 
 import com.github.javafaker.Faker;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -17,7 +15,7 @@ import javafx.stage.Stage;
  *  Purpose: This controls the PlayerSHopUI.fxml
  * A user can buy different players here
  * This class generates those players for the team
- * 
+ * This class also uses the faker library to make sure each play is unique
  *
  * @author mockl
  */
@@ -244,6 +242,10 @@ public class PlayerShopUIController implements Initializable {
         }
     }
 
+    /**
+     * Displays what the class does for the user 
+     * @param event 
+     */
     @FXML
     private void viewHelp(ActionEvent event) {
             alert.setTitle("Help!");

@@ -2,30 +2,47 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.MatchUIController">
+<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="867.0" style="-fx-background-color: #B4FA84;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="soccerstory.MatchUIController">
    <children>
-      <Text layoutX="257.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Match Overview" />
-      <Text layoutX="78.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Team" />
-      <Text layoutX="456.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Away Team" />
-      <Label fx:id="homeTeamLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="95.0" text="home team name" />
-      <Label fx:id="awayTeamLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="441.0" layoutY="95.0" text="away team name" />
-      <Label layoutX="286.0" layoutY="113.0" text="Score" />
-      <Label fx:id="homeTeamScore" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="131.0" text="0" />
-      <Label fx:id="awayTeamScore" alignment="CENTER" contentDisplay="CENTER" layoutX="331.0" layoutY="131.0" text="0" />
-      <Button fx:id="startGameButton" layoutX="255.0" layoutY="321.0" mnemonicParsing="false" onAction="#startGame" text="Start Game" />
-      <Label fx:id="homeAttackWeight" layoutX="96.0" layoutY="171.0" text="Label" />
-      <Label fx:id="homeMidfieldWeight" layoutX="96.0" layoutY="191.0" text="Label" />
-      <Label fx:id="homeDefenseWeight" layoutX="96.0" layoutY="209.0" text="Label" />
-      <Label layoutX="258.0" layoutY="171.0" prefHeight="18.0" prefWidth="85.0" text="Attack Strength" />
-      <Label layoutX="254.0" layoutY="191.0" text="Midfield Strength" />
-      <Label layoutX="255.0" layoutY="209.0" text="Defense Strength" />
-      <Label fx:id="awayAttackWeight" layoutX="472.0" layoutY="171.0" text="Label" />
-      <Label fx:id="awayMidfieldWeight" layoutX="472.0" layoutY="191.0" text="Label" />
-      <Label fx:id="awayDefenseWeight" layoutX="472.0" layoutY="209.0" text="Label" />
-      <Button layoutX="37.0" layoutY="309.0" mnemonicParsing="false" onAction="#goHome" text="go home" />
+      <AnchorPane layoutY="-4.0" prefHeight="250.0" prefWidth="867.0" style="-fx-background-color: #18aa1d;">
+         <children>
+            <Text fx:id="actionTarget1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fill="WHITE" layoutX="294.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="5.0" text="Match Overview" wrappingWidth="506.59999084472656">
+               <font>
+                  <Font name="Verdana" size="40.0" />
+               </font>
+            </Text>
+            <Button layoutX="795.0" layoutY="15.0" mnemonicParsing="false" onAction="#goHome" text="go home" />
+            <Text layoutX="724.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Away Team" />
+            <Text layoutX="106.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Team" />
+            <Label fx:id="homeTeamLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="215.0" text="home team name" />
+            <Label fx:id="awayTeamLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="712.0" layoutY="215.0" text="away team name" />
+            <Label fx:id="homeMidfieldWeight" layoutX="302.0" layoutY="163.0" text="Label" />
+            <Label fx:id="homeDefenseWeight" layoutX="302.0" layoutY="200.0" text="Label" />
+            <Label layoutX="409.0" layoutY="163.0" text="Midfield Strength" />
+            <Label layoutX="409.0" layoutY="200.0" text="Defense Strength" />
+            <Label fx:id="awayAttackWeight" layoutX="575.0" layoutY="128.0" text="Label" />
+            <Label fx:id="awayMidfieldWeight" layoutX="575.0" layoutY="163.0" text="Label" />
+            <Label fx:id="awayDefenseWeight" layoutX="575.0" layoutY="200.0" text="Label" />
+            <Label layoutX="411.0" layoutY="128.0" prefHeight="18.0" prefWidth="85.0" text="Attack Strength" />
+            <Label fx:id="homeAttackWeight" layoutX="302.0" layoutY="128.0" text="Label" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="startGameButton" layoutX="409.0" layoutY="543.0" mnemonicParsing="false" onAction="#startGame" text="Start Game" />
       <Text fx:id="actionTarget" layoutX="99.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Label layoutX="433.0" layoutY="246.0" text="Score" />
+      <Label fx:id="awayTeamScore" alignment="CENTER" contentDisplay="CENTER" layoutX="477.0" layoutY="270.0" text="0" />
+      <Label fx:id="homeTeamScore" alignment="CENTER" contentDisplay="CENTER" layoutX="405.0" layoutY="270.0" text="0" />
+      <Label fx:id="updateLabel1" layoutX="420.0" layoutY="305.0" text="Label" />
+      <Label fx:id="updateLabel2" layoutX="420.0" layoutY="339.0" text="Label" />
+      <Label fx:id="updateLabel3" layoutX="420.0" layoutY="373.0" text="Label" />
+      <Label fx:id="updateLabel4" layoutX="420.0" layoutY="407.0" text="Label" />
+      <Label fx:id="updateLabel5" layoutX="420.0" layoutY="441.0" text="Label" />
+      <TextArea fx:id="textArea" layoutX="207.0" layoutY="291.0" prefHeight="250.0" prefWidth="482.0" />
    </children>
 </AnchorPane>

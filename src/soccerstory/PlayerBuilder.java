@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 /**
+ * This class ias based of the builder design pattern
+ * This makes creating players a lot easier to understand
+ * Used in generating randomplayers along with the faker library
  *
  * @author mockl
  */
@@ -106,7 +105,10 @@ public class PlayerBuilder {
         return this;
     }
     
-    
+    /**
+     * Creates the player object with the data from playerbuilder
+     * @return  - player 
+     */
     public Player getPlayer()
     {
         return new Player(name, teamPlayFor, position, benched, speed, 

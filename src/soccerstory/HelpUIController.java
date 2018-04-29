@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 import java.net.URL;
@@ -16,13 +12,15 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
+ * This class displays help for all the other classes
+ * Helps user figure out what to do
  *
  * @author mockl
  */
 public class HelpUIController implements Initializable {
 
     @FXML
-    private Text actionTarget;
+    private Text actionTarget; //Used to leave screen
 
     /**
      * Initializes the controller class.
@@ -32,14 +30,8 @@ public class HelpUIController implements Initializable {
         // TODO
     }    
 
-    @FXML
-    private void viewHelp(MouseEvent event) {
-    }
 
-    @FXML
-    private void viewPlayers(MouseEvent event) {
-    }
-
+    //Go Home
     @FXML
     private void goHome(ActionEvent event) {
         actionTarget.setText("log on pressed");
@@ -47,18 +39,6 @@ public class HelpUIController implements Initializable {
         stage.hide();
             
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
-    }
-
-    @FXML
-    private void viewShop(MouseEvent event) {
-    }
-
-    @FXML
-    private void viewTeams(MouseEvent event) {
-    }
-
-    @FXML
-    private void startMatch(MouseEvent event) {
     }
     
 }

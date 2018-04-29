@@ -8,7 +8,7 @@ package soccerstory;
  */
 public class ListController {
     
-    private PlayerList thePlayerList;
+    private PlayerList thePlayerList; 
     private TeamList theTeamList;
     private MatchList theMatchList;
     private static ListController instance = null;
@@ -18,13 +18,12 @@ public class ListController {
      */
     private ListController()
     {
-        theTeamList = new TeamList();
-        //thePlayerList = new PlayerList();
+        theTeamList = new TeamList(); //Creates the TeamList first to be displayed 
     }
     
     /**
-     * if the controller isnt created create it, else just return it
-     * @return 
+     * Singleton initialization 
+     * @returns the listController
      */
     public static ListController getInstance()
     {

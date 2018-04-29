@@ -31,26 +31,26 @@ public class NavigationUICntl implements Initializable {
 
     @FXML
     private Text tester;
-    private Button playersButton;
+    private Button playersButton; //Button to go to playerScreen 
     @FXML
-    private Text actionTarget;
+    private Text actionTarget; //Used to get the current window 
     private GameLoaderController GameLoaderController;
     @FXML
-    private Label weekLabel;
+    private Label weekLabel; // displays Current week 
     @FXML
-    private Label teamLabel;
+    private Label teamLabel; //displays team name 
     private CalendarUIController calendarController;
 
-    private String otherTeam;
-    private Match nextMatch;
-    private Boolean home;
+    private String otherTeam; //Displays next team you will be playing 
+    private Match nextMatch; //Displays next match info 
+    private Boolean home; //If user is home or away next game 
     @FXML
     private Label homeOrAway;
     private PlayerShopUIController playerController;
     
-    private static Boolean hasDrafted = false;
+    private static Boolean hasDrafted = false; //If the user has drafted at the end of the season 
     @FXML
-    private ImageView newSeasonButton;
+    private ImageView newSeasonButton; //Restarts season button
     
     PersistentDataCntl thePersistentDataCntl;
     @FXML
@@ -74,6 +74,7 @@ public class NavigationUICntl implements Initializable {
      * page
      */
     private void updateDate() {
+        //Gets the calendar controller to grab the current week
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CalendarUI.fxml"));
             Parent root = (Parent) loader.load();
@@ -82,26 +83,26 @@ public class NavigationUICntl implements Initializable {
             e.printStackTrace();
         }
         
+        //If the season is not over, display the normal information
         if (getCalendarController().getCurrentWeek() < 10) { 
             String date = "week ";
             date = date + getCalendarController().getCurrentWeek();
-            weekLabel.setText(date);
+            weekLabel.setText(date); //display week
             setNextMatch(getCalendarController().getNextMatch());
-            getMatchInfo();
-            teamLabel.setText(otherTeam);
-        } else {
-            String date = "SEASON OVER";
-            weekLabel.setText(date);
+            getMatchInfo(); //Display match info for next week 
+            teamLabel.setText(otherTeam); //set other team name 
+        } else { //If the season is over 
+            String date = "SEASON OVER"; 
+            weekLabel.setText(date); 
             setNextMatch(getCalendarController().getNextMatch());
-            teamLabel.setText("NONE");
+            teamLabel.setText("NONE"); 
             matchButton.setVisible(false);
             playText.setVisible(false);
             
-            
-            if (hasDrafted == false)
-            {
-                draftDay();
-                hasDrafted = true;
+            if (hasDrafted == false) //If the player has not drafted yer 
+            { 
+                draftDay(); //display a draft screen
+                hasDrafted = true; 
             }
             
             newSeasonButton.setVisible(true);
@@ -125,7 +126,7 @@ public class NavigationUICntl implements Initializable {
             e.printStackTrace();
         }
         
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION); //Sets up alert 
         alert.setTitle("It's Draft Day!");
         alert.setHeaderText("You have the oppurtunity to pick between three players");
         alert.setContentText("Choose who you want");
@@ -134,8 +135,8 @@ public class NavigationUICntl implements Initializable {
         ButtonType buttonTypeTwo = new ButtonType("Good and has potential");
         ButtonType buttonTypeThree = new ButtonType("Lots of upside");
 
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree);
-        Optional<ButtonType> result = alert.showAndWait();
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree); //Displays the three choice 
+        Optional<ButtonType> result = alert.showAndWait(); //Stores the button users clicks 
 
         if (result.get() == buttonTypeOne) {
             playerController.developNewPlayer(4);// ... user chose "One"
@@ -163,7 +164,7 @@ public class NavigationUICntl implements Initializable {
     }
 
 
-    private void getTeamName() {
+    private void getTeamName() { //Get the team name to display 
         getTester().setText(ListController.getInstance().getTheTeamList().getCurrentUserTeam());
     }
 

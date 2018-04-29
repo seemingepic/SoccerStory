@@ -1,42 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package soccerstory;
 
 import java.io.Serializable;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
-/**
- *
- * @author mockl
+
+/** Class name: Player
+ * Purpose: Used for storing all of the information for each player
+ * Each team will have a set of players with all distinct names and stats
+ * 
  */
 public class Player implements Serializable{
     
-    private String name;
-    private String teamPlayFor;
-    private String position;
-    private boolean benched;
+    private String name; //name of player
+    private String teamPlayFor; //what team the play for 
+    private String position; //what position Attacker, midfield defense goalie
+    private boolean benched; //are they benched or not 
     
-    private int speed;
+    private int speed; //each player has skills 
     private int ballskill;
     private int shooting;
     private int defense;
     private int passing;
     private int goalie;
     
-    private int goals;
-    private Stats stats;
+    private Stats stats; //other stats to be displayed 
     
     public Player()
     {
         
     }
 
+    /**
+     * 
+     * @param newName - name of player
+     * @param newTeam - team where player will go
+     * @param newPosition  -- what position
+     */
     public Player(String newName, String newTeam, String newPosition)
     {
         this.name = newName;
@@ -51,6 +49,19 @@ public class Player implements Serializable{
         this.benched = false;
     }
     
+   /**
+    * 
+    * @param newName - name 
+    * @param newTeam - team name 
+    * @param newPosition - position of player 
+    * @param newIsBenched -- are they banched 
+    * @param newSpeed -- stats of player 
+    * @param newBallskill
+    * @param newShooting
+    * @param newDefense
+    * @param newPassing
+    * @param newGoalie 
+    */
     public Player(String newName, String newTeam, String newPosition, boolean newIsBenched, int newSpeed,
     int newBallskill, int newShooting, int newDefense, int newPassing, int newGoalie)
     {
@@ -217,7 +228,10 @@ public class Player implements Serializable{
         this.benched = benched;
     }
     
- 
+ /**
+  * Gets the overall of the player based on what position they are  
+  * @return - overall of player 
+  */
     public int getOverall() {
         int overall;
         switch (getPosition()) {
@@ -241,8 +255,7 @@ public class Player implements Serializable{
     /**
      * Determines overall for the attacker using a weight based system
      * that is based off point distrubution in racing
-     * @param player
-     * @return 
+     * @return -- attacker overall
      */
     public int attackerOverall()
     {
@@ -255,8 +268,7 @@ public class Player implements Serializable{
         /**
      * Determines overall for the modfield using a weight based system
      * that is based off point distrubution in racing
-     * @param player
-     * @return 
+     * @return  -- integer overall
      */
     public int midfieldOverall()
     {
@@ -268,8 +280,7 @@ public class Player implements Serializable{
     /**
      * Determines overall for the defense using a weight based system
      * that is based off point distrubution in racing
-     * @param player
-     * @return 
+     * @return - overall
      */
     public int defenseOverall() {
         double overall = (this.getDefense() * .287) + (this.getPassing() * .2045)
@@ -281,8 +292,7 @@ public class Player implements Serializable{
      /**
      * Determines overall for the goalie using a weight based system
      * that is based off point distrubution in racing
-     * @param player
-     * @return 
+     * @return - integer based off calculated results 
      */
     public int goalieOverall()
     {

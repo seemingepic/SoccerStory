@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -25,28 +20,28 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *  This class is used to control the TeamSTandingsUI.fxml and show how each team is doing in the league
- *  
+ *  Displays each teams points, name and game played 
  * @author mockl
  */
 public class TeamStandingsUIController implements Initializable {
 
     @FXML
-    private TableView<Team> teamTable;
+    private TableView<Team> teamTable; //Table of all the teams 
     @FXML
-    private TableColumn<Team, String> teamColumn;
+    private TableColumn<Team, String> teamColumn; //where the name is displayed 
     @FXML
-    private TableColumn<Team, String> gamesPlayedColumn;
+    private TableColumn<Team, String> gamesPlayedColumn; //how many games the team has played 
     @FXML
-    private TableColumn<Team, String> pointsColumn;
+    private TableColumn<Team, String> pointsColumn; //how many points the team has 
     
      ObservableList<Team> theObservableTeamList = FXCollections.observableArrayList();
-     ArrayList<Team> theTeamList;
+     ArrayList<Team> theTeamList; //List of teams 
     @FXML
     private Text actionTarget;
     @FXML
     private Text actionTarget1;
     @FXML
-    private Text currentPlace;
+    private Text currentPlace; //Current place of the team 
      Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     /**
@@ -54,8 +49,8 @@ public class TeamStandingsUIController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        theObservableTeamList = ListController.getInstance().getTheTeamList().getTeamData(); //grabs the teamlist
-        theTeamList = ListController.getInstance().getTheTeamList().getTheListOfTeams();
+        theObservableTeamList = ListController.getInstance().getTheTeamList().getTeamData(); //grabs the observablelist teamlist
+        theTeamList = ListController.getInstance().getTheTeamList().getTheListOfTeams(); //Grabs an arrayList of team 
         setUpList();
         displayPlace();
         // TODO
@@ -102,6 +97,10 @@ public class TeamStandingsUIController implements Initializable {
         currentPlace.setText("Your team is currently in " + displayPlace + ending + " place"); //display place
     }
 
+    /**
+     * Sends user back to navUi 
+     * @param event - player clicks home button
+     */
     @FXML
     private void goHome(ActionEvent event) {
         actionTarget.setText("log on pressed");
@@ -111,6 +110,10 @@ public class TeamStandingsUIController implements Initializable {
         NavigationCntl.getNavigationCntl(stage).setUpNavigationScene();
     }
 
+    /**
+     * Displays help for the user to read
+     * @param event -- player clicks help button
+     */
     @FXML
     private void viewHelp(ActionEvent event) {
             alert.setTitle("Help!");

@@ -11,28 +11,25 @@ import javafx.collections.ObservableList;
  * Class: TeamList
  * Purpose: This stores the list of teams into a list
  * This is then used for getting specific teams, getting players from that team
- * 
- *
- * @author mockl
  */
 public class TeamList implements Serializable {
     
-    private ArrayList<Team> theListOfTeams;
-    private String currentUserTeam;
+    private ArrayList<Team> theListOfTeams; //List of teams
+    private String currentUserTeam; //Current users team 
     
     
     public TeamList()
     {
-        theListOfTeams = testTeams();
+        theListOfTeams = testTeams(); //Creates new teams
     }
 
     /**
      * create test teams for testing
-     * @return 
+     * @return - list of teams
      */
     public ArrayList<Team> testTeams()
     {
-        ArrayList<Team> testTeams = new ArrayList();
+        ArrayList<Team> testTeams = new ArrayList(); //generate and add random teams 
         Team newTeam = new Team("Drunk Whales", "Bob", "Tom");
         Team newTeam2 = new Team("Horny Badgers", "Bob", "Tom");
         Team newTeam3 = new Team("German Shepherds", "Bob", "Tom");
@@ -55,6 +52,10 @@ public class TeamList implements Serializable {
         return testTeams;    
     }
 
+    /**
+     * Turns the data into an observablelist to be displayed 
+     * @return - ObservableList<Team>
+     */
     public ObservableList<Team> getTeamData() 
     {
         ObservableList<Team> theNewListOfTeams;
@@ -146,7 +147,7 @@ public class TeamList implements Serializable {
      * 
      * This is used to determine if the team is human or computer
      * 
-     * @return the user team name theListOfTEams.get(i)
+     * @return the user team name 
      */ 
     public Team getUserTeam()
     {

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package soccerstory;
 
 import java.io.FileInputStream;
@@ -13,6 +9,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
+ * This class uses singleton framework
+ * Used to save the lists to .ser file
+ * Saves the data after every match played 
  *
  * @author mockl
  */
@@ -35,8 +34,8 @@ public class PersistentDataCntl {
     
     /**
      * reads list from file
-     * @param fileName
-     * @return 
+     * @param fileName --The name of the file that was  saved 
+     * @return An arrayList of the object that was stored 
      */
     public static ArrayList<?> deserialize(String fileName) {
         FileInputStream fis = null;
@@ -55,8 +54,8 @@ public class PersistentDataCntl {
     }
     /**
      * writes serialized list to file
-     * @param obj
-     * @param fileName 
+     * @param obj --The list that will be saved 
+     * @param fileName --what the list will be called 
      */
     public static void serialize(ArrayList<?> obj, String fileName){
         

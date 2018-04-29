@@ -32,6 +32,7 @@ public class MatchList implements Serializable{
     
         /**
      * Creates a calander to be stored into another class 
+     * Based on a round robin system
      * Code partially from: https://stackoverflow.com/questions/26471421/round-robin-algorithm-implementation-java
      * @param listTeam - list of team names to be stored
      */

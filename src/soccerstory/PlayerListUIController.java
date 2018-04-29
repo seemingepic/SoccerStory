@@ -3,13 +3,10 @@
  * The team is broken down into midfield, attack, defense, and goalie by the computer
     Each position has a different table, each table is managed seperately
     The player must have a full lineup before leaving
- *
- *
  */
 package soccerstory;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,19 +25,19 @@ import javafx.stage.Stage;
 public class PlayerListUIController implements Initializable {
 
 
-    ObservableList<Player> theTeamPlayerList = FXCollections.observableArrayList();
+    ObservableList<Player> theTeamPlayerList = FXCollections.observableArrayList(); 
     ObservableList<Player> thePlayerList = FXCollections.observableArrayList();
-    private String currentTeamName;
+    private String currentTeamName; //Users team name 
     @FXML
-    private TableView<Player> benchTable;
+    private TableView<Player> benchTable; //Where all the players on the bench are stored 
     @FXML
-    private TableColumn<Player, String> nameBenchColumn;
+    private TableColumn<Player, String> nameBenchColumn; //names for benched players
+    @FXML 
+    private TableColumn<Player, String> positionBenchColumn; //what position the benched players are 
     @FXML
-    private TableColumn<Player, String> positionBenchColumn;
+    private Text actionTarget; //used for going to nav ui
     @FXML
-    private Text actionTarget;
-    @FXML
-    private TableView<Player> attackerTable;
+    private TableView<Player> attackerTable; //all the attackers are displayed here 
     @FXML
     private TableView<Player> midfieldTable;
     @FXML
@@ -49,16 +45,16 @@ public class PlayerListUIController implements Initializable {
     @FXML
     private TableView<Player> goalieTable;
     @FXML
-    private TableColumn<Player, String> attackerNameColumn;
+    private TableColumn<Player, String> attackerNameColumn; //name of attackers 
  
     @FXML
-    private TableColumn<Player, String> attackerPositionColumn;
+    private TableColumn<Player, String> attackerPositionColumn; //position of attackers 
     @FXML
     private TableColumn<Player, String> defenderNameColumn;
     @FXML
     private TableColumn<Player, String> defenderPositionColumn;
     
-    private ObservableList<Player> attackerListTable = FXCollections.observableArrayList();
+    private ObservableList<Player> attackerListTable = FXCollections.observableArrayList(); //List of each table 
     private ObservableList<Player> defenderListTable = FXCollections.observableArrayList();
     private ObservableList<Player> midfieldListTable = FXCollections.observableArrayList();
     private ObservableList<Player> goalieListTable = FXCollections.observableArrayList();
@@ -72,11 +68,11 @@ public class PlayerListUIController implements Initializable {
     @FXML
     private TableColumn<Player, String> goaliePositionColumn;
     
-    Player clickedPlayer;
+    Player clickedPlayer; //Player that has been clicked on 
     
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); //Alert to display info 
     @FXML
-    private TableColumn<Player, Integer> attackerOverallColumn;
+    private TableColumn<Player, Integer> attackerOverallColumn; // Player Overall for each of the columns 
     @FXML
     private TableColumn<Player, Integer> midfieldOverallColumn;
     @FXML
@@ -129,6 +125,9 @@ public class PlayerListUIController implements Initializable {
         attackerTable.setItems(attackerListTable);
     }
     
+    /**
+     * Displays all of the starting midfielders 
+     */
     public void setUpMidfieldList()
     {
         midfieldNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
@@ -138,6 +137,9 @@ public class PlayerListUIController implements Initializable {
         midfieldTable.setItems(midfieldListTable);
     }
     
+    /**
+     * Displays all the starting defenseman
+     */
     public void setUpDefenderList()
     {
         defenderNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
@@ -147,6 +149,9 @@ public class PlayerListUIController implements Initializable {
         defenderTable.setItems(defenderListTable);
     }
 
+    /**
+     * Displays the starting goalie 
+     */
     public void setUpGoalieList()
     {
         goalieNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
@@ -156,6 +161,9 @@ public class PlayerListUIController implements Initializable {
         goalieTable.setItems(goalieListTable);
     }
     
+    /**
+     * Displays all of the players on the bench
+     */
     public void setUpBench()
     {
         nameBenchColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
@@ -192,7 +200,7 @@ public class PlayerListUIController implements Initializable {
      * This method is called when the player clicks the button to move to starter
      * This gets the player selected, checks their position, then moves them to
      * that players position
-     * @param name 
+     * @param name -- Name of player that is moving
      */
     public void movePlayerToAppropriateTable(String name) {
         for (int i = theTeamPlayerList.size() - 1; i >= 0; i--) {
@@ -258,24 +266,24 @@ public class PlayerListUIController implements Initializable {
 
     /**
      * Removes the player from the starter table
-     * @param name
-     * @param table 
+     * @param name -- Name of player 
+     * @param table - The table that the player is being move from
      */
     public void removeFromStarter(String name, ObservableList<Player> table) 
     {
         for(int i = table.size()-1; i>= 0; i--)
         {
-            if (table.get(i).getName().equals(name))
+            if (table.get(i).getName().equals(name)) //if the names match 
             {
-                table.remove(i);
+                table.remove(i); //remove the player
             }
         }
         
     }
     
     /**
-     * removes the player passed to remove from bench
-     * @param name 
+     *  Removes a player from the bench 
+     * @param name -- name of player being moved 
      */
     public void removeFromBench(String name)
     {
@@ -289,8 +297,10 @@ public class PlayerListUIController implements Initializable {
     }
 
     /**
+     * 
      * Sends user home if they have a full team
-     * @param event 
+     * If not, display an error
+     * @param event  -- The user clicking the go home button
      */
     @FXML
     private void goHome(ActionEvent event) {
@@ -311,6 +321,10 @@ public class PlayerListUIController implements Initializable {
         }
     }
     
+    /**
+     * Grabs the clicked player
+     * Displays all of the stats of the player
+     */
     private void viewPlayerInfo()
     {
             alert.setTitle("Player Stats");
@@ -322,27 +336,29 @@ public class PlayerListUIController implements Initializable {
                     + "Passing:         " + clickedPlayer.getPassing() + "\n"
                     + "Shooting:       " + clickedPlayer.getShooting() + "\n"
                     + "Speed:           " + clickedPlayer.getSpeed() + "\n");
-                    if (clickedPlayer.getPosition().equals("A"))
-                    {
-                     alert.setContentText(alert.getContentText() + "Goals             " + clickedPlayer.getStats().getGoals());
-                    }
-                    else if (clickedPlayer.getPosition().equals("G"))
-                    {
-                        alert.setContentText(alert.getContentText() + "Shots against:          " + clickedPlayer.getStats().getShotsAgainst());
-                        alert.setContentText(alert.getContentText() + "Goals against:          " + clickedPlayer.getStats().getGoalsAllowed());
-                    }
-                    else if (clickedPlayer.getPosition().equals("M"))
-                    {
-                        alert.setContentText(alert.getContentText() + "Successful Passes:          " + clickedPlayer.getStats().getPasses());  
-                    }
+        //The code below gives the proper stats based on whatever the position is, the spacing makes it look good
+        switch (clickedPlayer.getPosition()) {
+            case "A":
+                alert.setContentText(alert.getContentText() + "Goals             " + clickedPlayer.getStats().getGoals());
+                break;
+            case "G":
+                alert.setContentText(alert.getContentText() + "Shots against:          " + clickedPlayer.getStats().getShotsAgainst());
+                alert.setContentText(alert.getContentText() + "Goals against:          " + clickedPlayer.getStats().getGoalsAllowed());
+                break;
+            case "M":
+                alert.setContentText(alert.getContentText() + "Successful Passes:          " + clickedPlayer.getStats().getPasses());
+                break;
+            default:
+                break;
+        }
 
             alert.showAndWait();
         System.out.println(clickedPlayer.getDefense());
     }
 
     /**
-     * Sends selected player to the play area
-     * @param event 
+     * Sends selected player to the correct player table
+     * @param event - Click the Move Player button 
      */
     @FXML
     private void moveToPlay(ActionEvent event) {
@@ -368,38 +384,66 @@ public class PlayerListUIController implements Initializable {
         
     }
     
+    /**
+     * Update player list with new attribute for if the player is benched or not
+     * Used if the player gets moved from the starter table or moved from the bench table
+     * 
+     * @param name - name of player
+     */
     private void updateMainList(String name)
     {
         ListController.getInstance().getThePlayerList().changePlayerBench(name);
     }
 
+    /**
+     * Gets and saves the player that has been clicked in the attacker table 
+     * @param event - mouse click
+     */
     @FXML
     private void getSelectedClick(MouseEvent event) {
         clickedPlayer = attackerTable.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Gets selected player from the midfield table 
+     * @param event - mouse click
+     */
     @FXML
     private void getSelectedMidfielder(MouseEvent event) {
         clickedPlayer = midfieldTable.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Gets selected defender from the defense table
+     * @param event - mouse click
+     */
     @FXML
     private void getSelectedDefender(MouseEvent event) {
         clickedPlayer = defenderTable.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Gets selected goalie from the goalie table
+     * @param event - mouse click
+     */
     @FXML
     private void getSelectedGoalie(MouseEvent event) {
        clickedPlayer = goalieTable.getSelectionModel().getSelectedItem();
     }
     
+    /**
+     * Gets selected player from the bench 
+     * @param event - mouse click
+     */
     @FXML
     private void getSelectedBench(MouseEvent event) {
        clickedPlayer = benchTable.getSelectionModel().getSelectedItem();
     }
     
     
-    
+    /**
+     * Displays an error if the table already has too many players
+     */
     private void displayError()
     {
             alert.setTitle("Player cannot be added");
@@ -436,11 +480,19 @@ public class PlayerListUIController implements Initializable {
             return true;
     }
 
+    /**
+     * Views stats of player if the button is clicked 
+     * @param event - view stats button
+     */
     @FXML
     private void viewStats(ActionEvent event) {
         viewPlayerInfo();
     }
 
+    /**
+     * Displays help for the player 
+     * @param event - help button
+     */
     @FXML
     private void viewHelp(ActionEvent event) {
         alert.setTitle("Help Information");
@@ -458,6 +510,7 @@ public class PlayerListUIController implements Initializable {
     @FXML
     private void viewPlayers(MouseEvent event) {
     }
+
 
     
 
